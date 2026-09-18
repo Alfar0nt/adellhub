@@ -22,11 +22,33 @@ PATCH — Bug fix, perbaikan kecil, perubahan teks
 ## [Unreleased]
 
 ### Planned
-- Phase 4: Kotak 2 (Adelltech) & Kotak 3 (Adellbooth)
 - Waitlist modal dengan form email terintegrasi
 - Portfolio section dengan gambar AI-generated
 - Contact & footer section
 - Responsive polish & QA
+
+---
+
+## [0.6.0] — 2026-09-18
+
+### Added
+- **Kotak 2: Adelltech by Adellhub** (`src/components/services.js`):
+  - Icon SVG minimalis bertema tools/gear: obeng diagonal (hitam), cincin aksen merah (dashed ring), dan pusat kotak merah
+  - Judul: "Service Ringan & Debloating Laptop/Komputer"
+  - Deskripsi optimasi performa perangkat & pembersihan sistem operasi
+  - Poin keunggulan (service maintenance ringan, upgrade SSD & RAM, repasta thermal paste & pembersihan menyeluruh)
+  - Tombol "Selengkapnya" aktif yang terhubung ke dialog modal "Coming Soon"
+- **Kotak 3: Adellbooth by Adellhub** (`src/components/services.js`):
+  - Icon SVG minimalis bertema camera/frame: badan kamera, viewfinder bump, lensa dengan inti merah, dan tripod
+  - Judul: "Platform Software Photobooth All-in-One"
+  - Deskripsi solusi piranti lunak terintegrasi untuk event modern
+  - Poin keunggulan (kompatibilitas kamera & printer, pembayaran QRIS otomatis, filter wajah & upload otomatis ke Google Drive)
+  - Tombol "Selengkapnya" aktif yang terhubung ke dialog modal "Coming Soon"
+- Refactor handler tombol layanan menjadi satu peta konfigurasi (`serviceModalConfig`) yang mencakup ketiga layanan (Adellwork, Adelltech, Adellbooth) dengan pesan & CTA waitlist masing-masing
+
+### Changed
+- Kotak 2 & 3 beralih dari status placeholder (`service-card-placeholder`, tombol disabled) menjadi card aktif (`service-card-active`) dengan badge "Coming Soon"
+- Original content preserved: judul dan deskripsi placeholder dipertahankan sesuai spec minimal TASKS.md
 
 ---
 

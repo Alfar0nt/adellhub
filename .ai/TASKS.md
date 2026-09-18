@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.0.0  
+**Versi Dokumen:** 1.1.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟡 In Progress (Phase 4: Kotak 1 Selesai)
+**Status Keseluruhan:** 🟢 Phase 4 Selesai — Menunggu instruksi Phase 5
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -90,23 +90,23 @@
   - [x] Judul: "Adellwork by Adellhub"
   - [x] Deskripsi: "Bantuan & Mentoring Asisten Tugas IT, Desain, Jaringan"
   - [x] Tombol "Selengkapnya" (terkoneksi ke overlay modal)
-- [ ] **Kotak 2: Adelltech** (Menunggu instruksi lanjutan)
-  - [ ] Icon minimalis SVG (tools/gear)
-  - [ ] Judul: "Adelltech by Adellhub"
-  - [ ] Deskripsi: "Service Ringan & Debloating Laptop/Komputer"
-  - [ ] Tombol "Selengkapnya"
-- [ ] **Kotak 3: Adellbooth** (Menunggu instruksi lanjutan)
-  - [ ] Icon minimalis SVG (camera/frame)
-  - [ ] Judul: "Adellbooth by Adellhub"
-  - [ ] Deskripsi: "Platform Software Photobooth All-in-One"
-  - [ ] Tombol "Selengkapnya"
+- [x] **Kotak 2: Adelltech**
+  - [x] Icon minimalis SVG (tools/gear)
+  - [x] Judul: "Adelltech by Adellhub"
+  - [x] Deskripsi: "Service Ringan & Debloating Laptop/Komputer"
+  - [x] Tombol "Selengkapnya"
+- [x] **Kotak 3: Adellbooth**
+  - [x] Icon minimalis SVG (camera/frame)
+  - [x] Judul: "Adellbooth by Adellhub"
+  - [x] Deskripsi: "Platform Software Photobooth All-in-One"
+  - [x] Tombol "Selengkapnya"
 - [x] Buat komponen overlay/modal "Coming Soon" (`src/components/modal.js`)
   - [x] Pesan: "Layanan ini masih dalam progress pengerjaan. Terima kasih atas antusiasme Anda!"
   - [x] CTA 1: "Gabung Waitlist via Email" → buka modal form email / mailto
   - [x] CTA 2: "@adellhub via Sosial Media" → link ke Instagram @adellhub
   - [x] Tombol close overlay (klik backdrop atau tombol X)
   - [x] Animasi masuk/keluar overlay
-- [/] Verifikasi semua tombol "Selengkapnya" memicu overlay yang benar (Kotak 1 terverifikasi)
+- [x] Verifikasi semua tombol "Selengkapnya" memicu overlay yang benar (Kotak 1, 2, dan 3 terverifikasi)
 
 ---
 
@@ -194,11 +194,11 @@
 
 | Phase | Nama | Status |
 |-------|------|--------|
-| Phase 0 | Project Initialization | 🟡 Sebagian |
-| Phase 1 | Design System & Foundation | 🔴 Belum |
-| Phase 2 | Pre-loader & Header | 🔴 Belum |
-| Phase 3 | Hero Section | 🔴 Belum |
-| Phase 4 | Services Section | 🔴 Belum |
+| Phase 0 | Project Initialization | ✅ Selesai |
+| Phase 1 | Design System & Foundation | ✅ Selesai |
+| Phase 2 | Pre-loader & Header | ✅ Selesai |
+| Phase 3 | Hero Section | ✅ Selesai |
+| Phase 4 | Services Section | ✅ Selesai |
 | Phase 5 | Waitlist Modal & Form | 🔴 Belum |
 | Phase 6 | Portfolio Section | 🔴 Belum |
 | Phase 7 | Contact & Footer | 🔴 Belum |
