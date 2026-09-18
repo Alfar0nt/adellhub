@@ -1306,5 +1306,96 @@ p, .text-body {
   width: 100%;
 }
 
+/* --------------------------------------------------------------------------
+   12B. WAITLIST FORM MODAL
+   -------------------------------------------------------------------------- */
+/* Slide-up entrance for the waitlist form dialog */
+.waitlist-backdrop .modal-dialog {
+  transform: scale(0.97) translateY(24px);
+}
+
+.waitlist-backdrop.modal-active .modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.waitlist-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.form-label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+
+.form-required {
+  color: var(--color-accent);
+}
+
+.form-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 0.875rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-dark);
+  background-color: var(--color-white);
+  border: var(--border-width-thick) solid var(--color-dark);
+  border-radius: var(--radius-none);
+  touch-action: manipulation;
+}
+
+.form-input::placeholder {
+  color: var(--color-gray-light);
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 4px 4px 0px var(--color-dark);
+}
+
+.form-input[aria-invalid="true"] {
+  border-color: var(--color-accent);
+  box-shadow: none;
+}
+
+.form-error {
+  display: none;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.form-error-visible {
+  display: block;
+}
+
+/* Success state after form submission */
+.waitlist-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-4) 0;
+}
+
+.waitlist-success .modal-message {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 

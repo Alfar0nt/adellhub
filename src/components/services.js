@@ -3,7 +3,7 @@
  * Displays 3 geometric service cards. Currently executing Kotak 1: Adellwork.
  */
 
-import { openModal } from './modal.js';
+import { openModal, openWaitlistForm } from './modal.js';
 
 export function initServices() {
   const servicesSection = document.createElement('section');
@@ -193,6 +193,7 @@ export function initServices() {
       subtitle: 'Asisten & Mentoring IT',
       message: 'Layanan Adellwork saat ini masih dalam progress pengerjaan intensif. Terima kasih atas antusiasme Anda! Daftarkan email Anda untuk mendapatkan akses awal saat kami resmi diluncurkan.',
       cta1Text: 'Gabung Waitlist via Email',
+      cta1Action: () => openWaitlistForm({ service: 'Adellwork' }),
       cta2Text: '@adellhub via Sosial Media',
       cta2Url: 'https://instagram.com/adellhub',
     },
@@ -201,6 +202,7 @@ export function initServices() {
       subtitle: 'Reparasi & Optimasi Teknologi',
       message: 'Layanan Adelltech saat ini masih dalam progress pengerjaan intensif. Solusi optimasi performa perangkat dan pembersihan sistem akan segera hadir. Terima kasih atas antusiasme Anda! Daftarkan email Anda untuk mendapatkan akses awal saat kami resmi diluncurkan.',
       cta1Text: 'Gabung Waitlist via Email',
+      cta1Action: () => openWaitlistForm({ service: 'Adelltech' }),
       cta2Text: '@adellhub via Sosial Media',
       cta2Url: 'https://instagram.com/adellhub',
     },
@@ -209,6 +211,7 @@ export function initServices() {
       subtitle: 'Platform Photobooth Digital',
       message: 'Layanan Adellbooth saat ini masih dalam progress pengerjaan intensif. Platform photobooth all-in-one untuk event modern akan segera hadir. Terima kasih atas antusiasme Anda! Daftarkan email Anda untuk mendapatkan akses awal saat kami resmi diluncurkan.',
       cta1Text: 'Gabung Waitlist via Email',
+      cta1Action: () => openWaitlistForm({ service: 'Adellbooth' }),
       cta2Text: '@adellhub via Sosial Media',
       cta2Url: 'https://instagram.com/adellhub',
     },

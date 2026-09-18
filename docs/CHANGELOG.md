@@ -19,13 +19,49 @@ PATCH — Bug fix, perbaikan kecil, perubahan teks
 
 ---
 
+## 📌 Catatan Tim — Aksi yang Perlu Dilakukan
+
+### 1. Konfigurasi Cloudflare Email Routing (SEBELUM LAUNCH)
+Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`**. Alamat ini belum berfungsi sampai Email Routing diaktifkan di Cloudflare.
+
+**Langkah yang harus dilakukan (manual, di luar kode):**
+1. Login ke [Cloudflare Dashboard](https://dash.cloudflare.com) → pilih domain **`adellhub.biz.id`**
+2. Buka menu **Email → Email Routing**
+3. Klik **Get started / Enable** (Cloudflare otomatis menambahkan record `MX` dan `TXT` yang diperlukan di DNS)
+4. Verifikasi alamat tujuan (email pribadi Anda) lewat email konfirmasi
+5. Buat **Routing rule**: `waitlist@` → email pribadi Anda
+6. Opsional: aktifkan **Catch-all** atau tambahkan rule `hello@` untuk kebutuhan lain
+
+**Jika tidak sempat konfigurasi:** ganti nilai konstanta `WAITLIST_EMAIL` di `src/components/modal.js` ke alamat email lain.
+
+---
+
 ## [Unreleased]
 
 ### Planned
-- Waitlist modal dengan form email terintegrasi
 - Portfolio section dengan gambar AI-generated
 - Contact & footer section
 - Responsive polish & QA
+
+---
+
+## [0.7.0] — 2026-09-18
+
+### Added
+- Komponen Modal Form Waitlist (`openWaitlistForm` di `src/components/modal.js`):
+  - Modal terpisah dari overlay layanan ("Coming Soon")
+  - Field form: Nama & Email (wajib) dengan label aksesibel dan mark `*`
+  - Validasi client-side (field kosong, format email) dengan pesan error inline & `aria-invalid`
+  - Submit action `mailto:` ke `waitlist@adellhub.biz.id` dengan body berisi Nama, Email, dan layanan yang diminati
+  - State konfirmasi sukses setelah submit (ikon geometris Bauhaus + pesan terima kasih) dengan tombol "Selesai"
+  - Animasi masuk slide-up dari bawah (`.waitlist-backdrop`)
+  - Penutupan via tombol X, klik backdrop, dan tombol Escape (ESC)
+- Integrasi CTA layanan → form waitlist: tombol "Gabung Waitlist via Email" pada overlay Adellwork, Adelltech, dan Adellbooth kini membuka form waitlist dengan konteks layanan masing-masing (`src/components/services.js`)
+- Konstanta `WAITLIST_EMAIL` di `src/components/modal.js` untuk email tujuan terpusat
+
+### Changed
+- Email tujuan waitlist diperbarui dari placeholder `waitlist@adellhub.com` menjadi `waitlist@adellhub.biz.id` (domain web aktif via Cloudflare Email Routing)
+- Refactor manajemen modal: handler ESC kini dibersihkan saat modal ditutup (memperbaiki kebocoran event listener), teks dinamis di-escape (`escapeHtml`) untuk keamanan
 
 ---
 

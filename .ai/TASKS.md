@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.1.0  
+**Versi Dokumen:** 1.2.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟢 Phase 4 Selesai — Menunggu instruksi Phase 5
+**Status Keseluruhan:** 🟢 Phase 5 Selesai — Menunggu instruksi Phase 6
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -115,14 +115,16 @@
 **Estimasi:** 2 Jam
 **Skill Terkait:** `semantic-html-and-seo` (untuk form accessibility)
 
-- [ ] Buat modal form waitlist terpisah dari overlay layanan
-- [ ] Field: Nama, Email (wajib)
-- [ ] Validasi client-side (email format, field kosong)
-- [ ] Submit action: `mailto:` ke email Adellhub dengan data terisi
-- [ ] Pesan konfirmasi setelah submit
-- [ ] Animasi modal (slide-in dari bawah atau fade-in)
-- [ ] Tombol close modal (backdrop click + tombol X)
-- [ ] Verifikasi form di mobile
+- [x] Buat modal form waitlist terpisah dari overlay layanan (`openWaitlistForm` di `src/components/modal.js`)
+- [x] Field: Nama, Email (wajib)
+- [x] Validasi client-side (email format, field kosong)
+- [x] Submit action: `mailto:` ke `waitlist@adellhub.biz.id` dengan data terisi (Nama, Email, layanan yang diminati)
+- [x] Pesan konfirmasi setelah submit
+- [x] Animasi modal (slide-in dari bawah atau fade-in)
+- [x] Tombol close modal (backdrop click + tombol X)
+- [x] Verifikasi form di mobile (layout responsif, touch target ≥ 48px)
+
+> **Catatan:** Email tujuan menggunakan Cloudflare Email Routing di domain `adellhub.biz.id` — tim perlu mengonfigurasi routing `waitlist@` → email pribadi di dashboard Cloudflare.
 
 ---
 
@@ -199,7 +201,7 @@
 | Phase 2 | Pre-loader & Header | ✅ Selesai |
 | Phase 3 | Hero Section | ✅ Selesai |
 | Phase 4 | Services Section | ✅ Selesai |
-| Phase 5 | Waitlist Modal & Form | 🔴 Belum |
+| Phase 5 | Waitlist Modal & Form | ✅ Selesai |
 | Phase 6 | Portfolio Section | 🔴 Belum |
 | Phase 7 | Contact & Footer | 🔴 Belum |
 | Phase 8 | Polish & QA | 🔴 Belum |
