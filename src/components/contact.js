@@ -6,6 +6,8 @@
 export const CONTACT_EMAIL = 'hello@adellhub.biz.id';
 export const CONTACT_WHATSAPP = 'https://wa.me/6285179697112';
 export const CONTACT_INSTAGRAM = 'https://instagram.com/adellhub';
+export const PRIVACY_URL = '/privacy-policy.html';
+export const TERMS_URL = '/terms-of-service.html';
 
 const mailIcon = `
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
@@ -89,6 +91,10 @@ export function initFooter() {
           </svg>
         <span class="footer-logo-text">ADELLHUB</span>
       </span>
+      <nav class="footer-legal" aria-label="Dokumen legal">
+        <a class="footer-legal-btn" href="${PRIVACY_URL}" target="_blank" rel="noopener noreferrer">Kebijakan Privasi</a>
+        <a class="footer-legal-btn" href="${TERMS_URL}" target="_blank" rel="noopener noreferrer">Syarat &amp; Ketentuan</a>
+      </nav>
       <p class="footer-copyright">© 2026 Adellhub. All rights reserved.</p>
     </div>
   `;

@@ -19,26 +19,41 @@ PATCH — Bug fix, perbaikan kecil, perubahan teks
 
 ---
 
-## 📌 Catatan Tim — Aksi yang Perlu Dilakukan
+## 📌 Catatan Tim — Checklist Sebelum Launch
 
-### 1. Konfigurasi Cloudflare Email Routing (SEBELUM LAUNCH)
+Checklist ini juga tersedia di `README.md`. Operasi manual tidak bisa dilakukan oleh agent.
+
+### 1. Konfigurasi Cloudflare Email Routing
 Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`** dan section kontak (Phase 7) menggunakan **`hello@adellhub.biz.id`**. Kedua alamat ini belum berfungsi sampai Email Routing diaktifkan di Cloudflare.
 
-**Langkah yang harus dilakukan (manual, di luar kode):**
-1. Login ke [Cloudflare Dashboard](https://dash.cloudflare.com) → pilih domain **`adellhub.biz.id`**
-2. Buka menu **Email → Email Routing**
-3. Klik **Get started / Enable** (Cloudflare otomatis menambahkan record `MX` dan `TXT` yang diperlukan di DNS)
-4. Verifikasi alamat tujuan (email pribadi Anda) lewat email konfirmasi
-5. Buat **Routing rule**: `waitlist@` → email pribadi Anda
-6. Buat **Routing rule**: `hello@` → email pribadi Anda (wajib — digunakan di section kontak, `src/components/contact.js`)
+- [ ] Login ke [Cloudflare Dashboard](https://dash.cloudflare.com) → pilih domain **`adellhub.biz.id`**
+- [ ] Buka menu **Email → Email Routing** → klik **Enable** (Cloudflare menambahkan record `MX` & `TXT` otomatis di DNS)
+- [ ] Verifikasi alamat tujuan (email pribadi Anda) lewat email konfirmasi
+- [ ] Buat **Routing rule**: `waitlist@` → email pribadi Anda
+- [ ] Buat **Routing rule**: `hello@` → email pribadi Anda (wajib — section kontak, `src/components/contact.js`)
 
 **Jika tidak sempat konfigurasi:** ganti nilai konstanta `WAITLIST_EMAIL` di `src/components/modal.js` dan `CONTACT_EMAIL` di `src/components/contact.js` ke alamat email lain.
 
-### 2. Prepare Share Image (SEBELUM LAUNCH)
-Meta `og:image` / `twitter:image` menunjuk ke `https://adellhub.biz.id/og-image.png`, **file `og-image.png` (1200×630) belum dibuat**. Upload gambar OG ke root domain (atau `/public/og-image.png` lalu build), atau hapus kedua meta tersebut sampai gambar tersedia.
+### 2. Buat Share Image (og-image.png)
+Meta `og:image` / `twitter:image` menunjuk ke `https://adellhub.biz.id/og-image.png`, **file belum dibuat** — tanpa ini preview social media akan kosong.
 
-### 3. Verifikasi Browser Manual (SEBELUM LAUNCH)
-Tooling berikut tidak tersedia di environment agent dan wajib dicek manual: W3C validator, Lighthouse (Performance & Accessibility), dan uji interaksi lintas browser (Chrome/Firefox). Jalankan `npm run dev` lalu buka di browser.
+- [ ] Siapkan gambar 1200×630 px (PNG/JPG, ≤ 8 MB)
+- [ ] Simpan sebagai `og-image.png` di `public/`
+- [ ] `npm run build` → file tercopy ke `dist/og-image.png`
+
+**Fallback:** hapus `<meta property="og:image">` dan `<meta name="twitter:image">` di `index.html` sampai gambar tersedia.
+
+### 3. Verifikasi Browser & Tooling Manual
+Tooling berikut tidak tersedia di environment agent dan wajib dicek manual di browser lokal.
+
+- [ ] Jalankan `npm run dev`, buka di **Chrome & Firefox**
+- [ ] **Lighthouse** (Chrome DevTools → Lighthouse) — target Performance ≥ 90, Accessibility ≥ 90
+- [ ] **W3C validator** pada URL dev server
+- [ ] Uji semua link: WhatsApp (`wa.me/6285179697112`), email (`hello@adellhub.biz.id`), Instagram (`@adellhub`)
+- [ ] Uji form waitlist: input kosong, email salah format, submit → mailto opens
+- [ ] Uji tutup modal: klik backdrop, klik ✕, tekan Escape
+- [ ] Uji tab trap modal: Tab/Shift+Tab tidak boleh keluar dari dialog
+- [ ] Uji `prefers-reduced-motion: reduce` (DevTools → Rendering → Emulate)
 
 ---
 
@@ -57,12 +72,19 @@ Tooling berikut tidak tersedia di environment agent dan wajib dicek manual: W3C 
 - **Dialog sukses waitlist:** `<h3>` diberi `id="waitlist-success-title"` dan `aria-labelledby` dialog diperbarui agar accessible name tetap valid setelah konten diganti; fokus pindah ke tombol "Selesai"; hapus atribut `aria-describedby` yang menunjuk ke elemen tidak ada di input email
 - **Reduced motion untuk smooth scroll JS:** `scrollTo({ behavior })` di header & hero memilih `'auto'` saat `prefers-reduced-motion: reduce` (CSS sudah menangani animasi/transisi)
 - **Anchor clearance:** `section[id] { scroll-margin-top: 88px }` agar navigasi hash (URL langsung/`scrollIntoView`) tidak tertutup header sticky
+- **Animasi buka/tutup menu mobile:** drawer kini transisi smooth `grid-template-rows: 0fr → 1fr` + fade opacity + visibility (buka & tutup), menggantikan lompatan `display: none → block`. Border-top & padding dipindah ke `.mobile-nav-list` agar collapse sempurna; `visibility` tertunda saat menutup sehingga animasi collapse terlihat penuh. Ikon hamburger (2 garis → X) tetap bertransisi. Hormati `prefers-reduced-motion` (+ reset `transition-delay: 0s`)
+- **Header mobile lebih kompak:** tinggi `.header-inner` diturunkan 72px → **56px** hanya di `@media (max-width: 768px)` sehingga jarak kosong di bawah logo & tombol hamburger hilang; target sentuh tombol tetap ≥44px. Desktop tidak berubah. Offset smooth-scroll memakai `header.offsetHeight` dinamis sehingga pergeseran anchor tetap akurat
+- **Halaman Kebijakan Privasi & Syarat Ketentuan:** dua halaman statis bahasa Indonesia (`privacy-policy.html`, `terms-of-service.html`) dengan gaya Bauhaus yang konsisten (top bar logo + tombol kembali, section bernomor 01–09/10, kotak kontak, footer). Memakai stylesheet bersama `public/legal.css`; terindeks (index, follow); dimasukkan ke input build Vite (multi-page) sehingga ikut terdeploy
+- **Link legal di footer:** tombol outline "Kebijakan Privasi" & "Syarat &amp; Ketentuan" di `.footer-legal` membuka halaman masing-masing di **tab baru** (`target="_blank" rel="noopener noreferrer"`), target sentuh ≥44px, invert warna saat hover, stack rapi di mobile ≤960px
 - **Performa:** hapus `@import` font ganda di CSS (font dimuat tunggal via `<link>` di `index.html` dengan preconnect)
 
 ### Changed
 - **CTA "Gabung Waitlist"** (hero + header desktop/mobile) kini **membuka form waitlist modal** langsung (keputusan tim; sebelumnya hanya scroll ke `#services`). Elemen diubah dari `<a>` menjadi `<button>`
 - **Domain SEO/social** `index.html`: `adellhub.com` → **`adellhub.biz.id`** untuk canonical, og:url, og:image, twitter:image, dan JSON-LD (konsisten dengan email & Cloudflare)
 - Logo footer kini memakai `var(--color-accent)` (terdahulu hardcode `#E63329`) agar selaras dengan token baru
+
+### Docs
+- **Checklist "Sebelum Launch"** di `README.md` + `docs/CHANGELOG.md` berisi 3 aksi manual (Cloudflare Email Routing, `og-image.png`, verifikasi browser/Lighthouse/W3C) dalam format checkbox agar tidak terlupakan saat release
 
 ### Verified
 - `npm run build` sukses; smoke test `vite preview` HTTP 200 untuk HTML/JS/CSS
