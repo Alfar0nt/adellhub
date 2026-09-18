@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "find-animation-opportunities": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-animation-opportunities/SKILL.md",
+      "computedHash": "465d087c41768e4f14ed640dd049036009f613feb55baaa5831b68b33178f9d2"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "b146008599c31057cef1c145774cea5d5afb30e8f43fa802e47a4b461419aaaf"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "89496d5dd00f4810205f351759594fc2742bf8eea85a2f2b2d1de59f4bd91576"
+    },
+    "landing-page-generator": {
+      "source": "kostja94/marketing-skills",
+      "sourceType": "github",
+      "skillPath": "skills/pages/marketing/landing-page/SKILL.md",
+      "computedHash": "b9645cb518fe8704539cc2e48c27c48d13e8e3656a7b9c3d2ed522a48dd75a44"
+    },
+    "semantic-html-and-seo": {
+      "source": "dembrandt/dembrandt-skills",
+      "sourceType": "github",
+      "skillPath": "skills/semantic-html-and-seo/SKILL.md",
+      "computedHash": "bf498b949c76a3500fdd0ea31df24f410bca00aae152e7112e69d8fb1516e268"
+    },
+    "svg-icon-generator": {
+      "source": "jeremylongshore/tons-of-skills-marketplace",
+      "sourceType": "github",
+      "skillPath": "skills/18-visual-content/svg-icon-generator/SKILL.md",
+      "computedHash": "e7072891f0e26294ec9c2ff534b299d3a56da1d635785744b2f2eb9752528384"
+    }
+  }
+}
