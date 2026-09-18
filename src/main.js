@@ -4,6 +4,7 @@ import { initHeader } from './components/header.js';
 import { initHero } from './components/hero.js';
 import { initServices } from './components/services.js';
 import { initPortfolio } from './components/portfolio.js';
+import { initContact, initFooter } from './components/contact.js';
 
 // Initialize Preloader (1.8s duration)
 initPreloader(1800);
@@ -34,21 +35,13 @@ if (app) {
   const portfolio = initPortfolio();
   main.appendChild(portfolio);
 
-  // Placeholder for Contact Section (Phase 7)
-  const subsequentSections = document.createElement('div');
-  subsequentSections.innerHTML = `
-    <!-- Target Section: Hubungi Kami (Phase 7) -->
-    <section id="contact" class="container section-spacing" style="min-height: 50vh;">
-      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-        <span class="text-label text-muted">03. Hubungi Kami</span>
-        <h2 class="text-h2">Mari Terhubung</h2>
-        <p class="text-body text-muted">
-          Tertarik bermitra atau ingin bergabung dalam daftar tunggu peluncuran? Hubungi tim kami via Instagram @adellhub.
-        </p>
-      </div>
-    </section>
-  `;
+  // 4. Mount Contact Section (Phase 7)
+  const contact = initContact();
+  main.appendChild(contact);
 
-  main.appendChild(subsequentSections);
   app.appendChild(main);
+
+  // 5. Mount Footer (Phase 7)
+  const footer = initFooter();
+  app.appendChild(footer);
 }

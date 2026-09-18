@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.3.0  
+**Versi Dokumen:** 1.4.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟢 Phase 6 Selesai — Menunggu instruksi Phase 7
+**Status Keseluruhan:** 🟢 Phase 7 Selesai — Menunggu instruksi Phase 8
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -150,14 +150,14 @@
 **Tujuan:** Membangun bagian kontak dan footer yang bersih.
 **Estimasi:** 1 Jam
 
-- [ ] Buat section kontak dengan judul "HUBUNGI KAMI"
-- [ ] Email: `[email protected]` (link `mailto:`)
-- [ ] WhatsApp: `+62 812-XXXX-XXXX` (link `https://wa.me/62812XXXXXXXX`)
-- [ ] Instagram: `@adellhub` (link ke profil Instagram)
-- [ ] Tagline: "Untuk update terbaru, ikuti perjalanan kami di sosial media."
-- [ ] Icon sosmed minimalis (outline SVG style)
-- [ ] Footer bar: Copyright © 2026 Adellhub. All rights reserved.
-- [ ] Verifikasi semua link dapat diklik dan berfungsi
+- [x] Buat section kontak dengan judul "MARI TERHUBUNG" (label "03. Hubungi Kami")
+- [x] Email: `hello@adellhub.biz.id` (link `mailto:`) — keputusan tim, konsisten dengan domain & Cloudflare Email Routing
+- [x] WhatsApp: `+62 851-7969-7112` (link `https://wa.me/6285179697112`) — nomor asli dari pemilik
+- [x] Instagram: `@adellhub` (link ke profil Instagram)
+- [x] Tagline: "Untuk update terbaru, ikuti perjalanan kami di sosial media."
+- [x] Icon sosmed minimalis (outline SVG style, stroke currentColor mengikuti warna hover)
+- [x] Footer bar: Copyright © 2026 Adellhub. All rights reserved.
+- [x] Verifikasi semua link dapat diklik dan berfungsi (mailto, wa.me, instagram — build sukses, DOM ter-mount di `src/main.js`)
 
 ---
 
@@ -203,6 +203,6 @@
 | Phase 4 | Services Section | ✅ Selesai |
 | Phase 5 | Waitlist Modal & Form | ✅ Selesai |
 | Phase 6 | Portfolio Section | ✅ Selesai |
-| Phase 7 | Contact & Footer | 🔴 Belum |
+| Phase 7 | Contact & Footer | ✅ Selesai |
 | Phase 8 | Polish & QA | 🔴 Belum |
 | Phase 9 | Build & Deployment | 🔴 Belum |

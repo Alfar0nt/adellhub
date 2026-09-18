@@ -22,7 +22,7 @@ PATCH — Bug fix, perbaikan kecil, perubahan teks
 ## 📌 Catatan Tim — Aksi yang Perlu Dilakukan
 
 ### 1. Konfigurasi Cloudflare Email Routing (SEBELUM LAUNCH)
-Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`**. Alamat ini belum berfungsi sampai Email Routing diaktifkan di Cloudflare.
+Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`** dan section kontak (Phase 7) menggunakan **`hello@adellhub.biz.id`**. Kedua alamat ini belum berfungsi sampai Email Routing diaktifkan di Cloudflare.
 
 **Langkah yang harus dilakukan (manual, di luar kode):**
 1. Login ke [Cloudflare Dashboard](https://dash.cloudflare.com) → pilih domain **`adellhub.biz.id`**
@@ -30,17 +30,40 @@ Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`**. Alamat
 3. Klik **Get started / Enable** (Cloudflare otomatis menambahkan record `MX` dan `TXT` yang diperlukan di DNS)
 4. Verifikasi alamat tujuan (email pribadi Anda) lewat email konfirmasi
 5. Buat **Routing rule**: `waitlist@` → email pribadi Anda
-6. Opsional: aktifkan **Catch-all** atau tambahkan rule `hello@` untuk kebutuhan lain
+6. Buat **Routing rule**: `hello@` → email pribadi Anda (wajib — digunakan di section kontak, `src/components/contact.js`)
 
-**Jika tidak sempat konfigurasi:** ganti nilai konstanta `WAITLIST_EMAIL` di `src/components/modal.js` ke alamat email lain.
+**Jika tidak sempat konfigurasi:** ganti nilai konstanta `WAITLIST_EMAIL` di `src/components/modal.js` dan `CONTACT_EMAIL` di `src/components/contact.js` ke alamat email lain.
 
 ---
 
 ## [Unreleased]
 
 ### Planned
-- Contact & footer section
 - Responsive polish & QA
+
+---
+
+## [0.9.0] — 2026-09-18
+
+### Added
+- Komponen Contact & Footer (`src/components/contact.js`):
+  - Section kontak judul "MARI TERHUBUNG" dengan label "03. Hubungi Kami"
+  - 3 kartu channel kontak (grid responsif 3 → 1 kolom) yang dapat diklik:
+    - **Email** — `mailto:hello@adellhub.biz.id`
+    - **WhatsApp** — `https://wa.me/6285179697112` (`+62 851-7969-7112`, `target="_blank"` + `rel="noopener noreferrer"`)
+    - **Instagram** — `https://instagram.com/adellhub` (`@adellhub`, `target="_blank"` + `rel="noopener noreferrer"`)
+  - Tagline: "Untuk update terbaru, ikuti perjalanan kami di sosial media."
+  - Icon sosmed minimalis outline SVG (envelope, chat bubble, kamera/instagram) — `stroke="currentColor"` agar mengikuti warna hover
+  - `aria-label` deskriptif di setiap kartu link
+  - Hover effect kartu kontak: card diangkat + bayangan keras, latar berbalik hitam dan teks putih
+- Footer bar (`initFooter`):
+  - Logo geometris Adellhub (versi terang untuk latar gelap) + teks "ADELLHUB"
+  - Copyright: "© 2026 Adellhub. All rights reserved."
+  - Footer berlatarbelakang `--color-dark`, responsif (flex-wrap, center pada mobile)
+- Wiring ke `src/main.js`: placeholder kontak diganti implementasi penuh; urutan DOM sekarang Header → Hero → Services → Portfolio → Contact → Footer
+
+### Changed
+- Catatan Tim Cloudflare: `hello@adellhub.biz.id` kini wajib dibuatkan routing rule (digunakan di section kontak)
 
 ---
 
