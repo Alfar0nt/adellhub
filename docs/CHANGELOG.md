@@ -22,12 +22,47 @@ PATCH — Bug fix, perbaikan kecil, perubahan teks
 ## [Unreleased]
 
 ### Planned
-- Hero section dengan komposisi SVG
-- Services section dengan overlay "coming soon"
-- Waitlist modal dengan form email
+- Phase 4: Kotak 2 (Adelltech) & Kotak 3 (Adellbooth)
+- Waitlist modal dengan form email terintegrasi
 - Portfolio section dengan gambar AI-generated
 - Contact & footer section
 - Responsive polish & QA
+
+---
+
+## [0.5.1] — 2026-09-18
+
+### Added
+- Struktur grid section Layanan (`src/components/services.js`) dengan layout 3-kolom geometris
+- **Kotak 1: Adellwork by Adellhub**:
+  - Icon SVG arsitektural kustom (simbol terminal / monitor dengan code brackets `< />` dan aksen merah)
+  - Judul: "Bantuan & Mentoring Asisten Tugas IT, Desain, Jaringan"
+  - Deskripsi dan poin keunggulan (mentoring coding, desain UI/UX, konfigurasi jaringan)
+  - Tombol aksi "Selengkapnya" yang terhubung langsung ke dialog modal "Coming Soon"
+- Komponen Dialog Modal / Overlay Bauhaus (`src/components/modal.js`):
+  - Pesan antusiasme dan status dalam progres pengerjaan
+  - Dua aksi interaktif: "Gabung Waitlist via Email" (mailto langsung) dan "@adellhub via Sosial Media" (Instagram)
+  - Aksesibilitas ARIA dialog, penanganan tombol Escape (ESC), dan penutupan melalui klik backdrop
+
+---
+
+## [0.5.0] — 2026-09-18
+
+### Added
+- Komponen Hero Section Bauhaus (`src/components/hero.js`):
+  - Headline berani dan terstruktur: "ADELLHUB: EKOSISTEM IT MASA DEPAN." dengan skala tipografi Space Grotesk responsif
+  - Sub-heading value proposition: "Satu wadah, ribuan solusi teknologi. Mengubah ide menjadi realitas digital..."
+  - Komposisi grafis geometris Bauhaus SVG (`src/assets/images/bauhaus-hero-composition.svg`) terinspirasi gaya referensi MOCA (`image.png`):
+    - Busur lengkung konsentris merah (concentric red arcs)
+    - Lingkaran solid arang gelap dengan animasi slow-float
+    - Grid matriks titik modular (dot matrix 6×6)
+    - Setengah lingkaran aksen merah melayang halus
+    - Arsiran diagonal geometris 45 derajat (architectural hatching)
+    - Bujur sangkar hitam berbingkai lingkaran cutout off-white
+    - Indikator panah geometris directional
+  - Metrik nilai dan kepercayaan (3 Layanan Terpadu, 100% Fokus Solusi, Beta Early Access)
+  - CTA ganda: "Bergabung Waitlist" (primer) dan "Eksplorasi Layanan" (sekunder) dengan smooth scroll
+  - Desain layout responsif: 2 kolom asimetris di desktop, single-column rapi di tablet & smartphone
 
 ---
 

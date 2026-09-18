@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%" fill="none" aria-label="Komposisi Geometris Bauhaus Adellhub">
+  <!-- Warm canvas background matching theme -->
+  <rect width="600" height="380" fill="#F5F0E8" />
+
+  <!-- Left vertical dot accent bar -->
+  <g fill="#1A1A1A" opacity="0.6">
+    <circle cx="20" cy="140" r="3" />
+    <circle cx="20" cy="165" r="3" />
+    <circle cx="20" cy="190" r="3" />
+    <circle cx="20" cy="215" r="3" />
+    <circle cx="20" cy="240" r="3" />
+  </g>
+
+  <!-- MODULE 1: Top-Left Concentric Red Arcs -->
+  <g transform="translate(60, 40)">
+    <path d="M 10 120 A 110 110 0 0 1 230 120" stroke="#E63329" stroke-width="4" fill="none" />
+    <path d="M 24 120 A 96 96 0 0 1 216 120" stroke="#E63329" stroke-width="4" fill="none" />
+    <path d="M 38 120 A 82 82 0 0 1 202 120" stroke="#E63329" stroke-width="4" fill="none" />
+    <path d="M 52 120 A 68 68 0 0 1 188 120" stroke="#E63329" stroke-width="4" fill="none" />
+    <path d="M 66 120 A 54 54 0 0 1 174 120" stroke="#E63329" stroke-width="4" fill="none" />
+    <path d="M 80 120 A 40 40 0 0 1 160 120" stroke="#E63329" stroke-width="4" fill="none" />
+    <path d="M 94 120 A 26 26 0 0 1 146 120" stroke="#E63329" stroke-width="4" fill="none" />
+    <path d="M 108 120 A 12 12 0 0 1 132 120" stroke="#E63329" stroke-width="4" fill="none" />
+  </g>
+
+  <!-- MODULE 2: Large Solid Charcoal Circle -->
+  <circle cx="240" cy="160" r="65" fill="#1A1A1A" class="hero-geo-circle" />
+
+  <!-- MODULE 3: Modular Dot Matrix Grid (6x6) -->
+  <g transform="translate(320, 95)" fill="#1A1A1A">
+    <circle cx="10" cy="10" r="4.5" /><circle cx="32" cy="10" r="4.5" /><circle cx="54" cy="10" r="4.5" /><circle cx="76" cy="10" r="4.5" /><circle cx="98" cy="10" r="4.5" /><circle cx="120" cy="10" r="4.5" />
+    <circle cx="10" cy="32" r="4.5" /><circle cx="32" cy="32" r="4.5" /><circle cx="54" cy="32" r="4.5" /><circle cx="76" cy="32" r="4.5" /><circle cx="98" cy="32" r="4.5" /><circle cx="120" cy="32" r="4.5" />
+    <circle cx="10" cy="54" r="4.5" /><circle cx="32" cy="54" r="4.5" /><circle cx="54" cy="54" r="4.5" /><circle cx="76" cy="54" r="4.5" /><circle cx="98" cy="54" r="4.5" /><circle cx="120" cy="54" r="4.5" />
+    <circle cx="10" cy="76" r="4.5" /><circle cx="32" cy="76" r="4.5" /><circle cx="54" cy="76" r="4.5" /><circle cx="76" cy="76" r="4.5" /><circle cx="98" cy="76" r="4.5" /><circle cx="120" cy="76" r="4.5" />
+    <circle cx="10" cy="98" r="4.5" /><circle cx="32" cy="98" r="4.5" /><circle cx="54" cy="98" r="4.5" /><circle cx="76" cy="98" r="4.5" /><circle cx="98" cy="98" r="4.5" /><circle cx="120" cy="98" r="4.5" />
+    <circle cx="10" cy="120" r="4.5" /><circle cx="32" cy="120" r="4.5" /><circle cx="54" cy="120" r="4.5" /><circle cx="76" cy="120" r="4.5" /><circle cx="98" cy="120" r="4.5" /><circle cx="120" cy="120" r="4.5" />
+  </g>
+
+  <!-- MODULE 4: Solid Red Semicircle / Crescent facing left -->
+  <path d="M 460 95 A 65 65 0 0 1 525 160 L 525 225 A 65 65 0 0 1 460 95 Z" fill="#E63329" class="hero-geo-red-arc" />
+
+  <!-- MODULE 5: Solid Red Semicircle facing downwards (bottom left) -->
+  <path d="M 175 225 A 65 65 0 0 1 305 225 Z" fill="#E63329" class="hero-geo-red-semi" />
+
+  <!-- MODULE 6: Diagonal Parallel Black Hatching Lines (45 deg) -->
+  <g transform="translate(305, 225)">
+    <clipPath id="hatchClip">
+      <rect width="130" height="130" />
+    </clipPath>
+    <g clip-path="url(#hatchClip)" stroke="#1A1A1A" stroke-width="5">
+      <line x1="-30" y1="30" x2="30" y2="-30" />
+      <line x1="-15" y1="45" x2="45" y2="-15" />
+      <line x1="0" y1="60" x2="60" y2="0" />
+      <line x1="15" y1="75" x2="75" y2="15" />
+      <line x1="30" y1="90" x2="90" y2="30" />
+      <line x1="45" y1="105" x2="105" y2="45" />
+      <line x1="60" y1="120" x2="120" y2="60" />
+      <line x1="75" y1="135" x2="135" y2="75" />
+      <line x1="90" y1="150" x2="150" y2="90" />
+      <line x1="105" y1="165" x2="165" y2="105" />
+    </g>
+  </g>
+
+  <!-- MODULE 7: Solid Charcoal Square with Inscribed Cream Cutout Circle -->
+  <g transform="translate(435, 225)">
+    <rect width="130" height="130" fill="#1A1A1A" />
+    <circle cx="65" cy="65" r="50" fill="#F5F0E8" />
+  </g>
+
+  <!-- MODULE 8: Vertical Parallel Red Lines in Half-Circle / Sector -->
+  <g transform="translate(565, 225)">
+    <clipPath id="verticalRedClip">
+      <path d="M 0 0 A 65 65 0 0 1 130 0 Z" />
+    </clipPath>
+    <g clip-path="url(#verticalRedClip)" stroke="#E63329" stroke-width="4">
+      <line x1="10" y1="-70" x2="10" y2="10" />
+      <line x1="22" y1="-70" x2="22" y2="10" />
+      <line x1="34" y1="-70" x2="34" y2="10" />
+      <line x1="46" y1="-70" x2="46" y2="10" />
+      <line x1="58" y1="-70" x2="58" y2="10" />
+      <line x1="70" y1="-70" x2="70" y2="10" />
+      <line x1="82" y1="-70" x2="82" y2="10" />
+      <line x1="94" y1="-70" x2="94" y2="10" />
+      <line x1="106" y1="-70" x2="106" y2="10" />
+      <line x1="118" y1="-70" x2="118" y2="10" />
+    </g>
+  </g>
+</svg>

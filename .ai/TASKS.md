@@ -2,7 +2,7 @@
 
 **Versi Dokumen:** 1.0.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟡 In Progress (Phase 2 Selesai)
+**Status Keseluruhan:** 🟡 In Progress (Phase 4: Kotak 1 Selesai)
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -67,15 +67,15 @@
 **Estimasi:** 3 Jam
 **Skill Terkait:** `landing-page-generator`, `svg-icon-generator`
 
-- [ ] Generate gambar placeholder composisi geometris Bauhaus via AI (mirip `image.png`)
-- [ ] Buat HTML structure Hero section di `index.html`
-- [ ] Implementasi layout Hero (tipografi besar di kiri, grafis geometris di kanan)
-- [ ] Heading: "ADELLHUB: EKOSISTEM IT MASA DEPAN." (bold, uppercase, 80px+)
-- [ ] Sub-heading: "Satu wadah, ribuan solusi teknologi..."
-- [ ] Komposisi SVG geometris Bauhaus (lingkaran merah, kotak hitam, setengah lingkaran, grid titik)
-- [ ] Animasi slow-float / parallax ringan pada elemen geometris
-- [ ] CTA button "Bergabung Waitlist"
-- [ ] Verifikasi layout responsif Hero
+- [x] Buat asset & komposisi geometris Bauhaus SVG (`src/assets/images/bauhaus-hero-composition.svg`) terinspirasi `image.png`
+- [x] Buat modular component Hero section di `src/components/hero.js`
+- [x] Implementasi layout Hero (tipografi besar di kiri, grafis geometris di kanan)
+- [x] Heading: "ADELLHUB: EKOSISTEM IT MASA DEPAN." (bold, uppercase, responsive clamp)
+- [x] Sub-heading: "Satu wadah, ribuan solusi teknologi..."
+- [x] Komposisi SVG geometris Bauhaus (lingkaran merah, kotak hitam, setengah lingkaran, grid titik, hatching diagonal)
+- [x] Animasi slow-float / parallax ringan pada elemen geometris (`hero-float-circle`, `hero-float-red`)
+- [x] CTA button "Bergabung Waitlist" & secondary CTA "Eksplorasi Layanan"
+- [x] Verifikasi layout responsif Hero (desktop 2-kolom, tablet & mobile stacked)
 
 ---
 
@@ -84,29 +84,29 @@
 **Estimasi:** 3 Jam
 **Skill Terkait:** `landing-page-generator`, `find-animation-opportunities`
 
-- [ ] Buat struktur tiga kotak geometris untuk tiga layanan
-- [ ] **Kotak 1: Adellwork**
-  - [ ] Icon minimalis SVG (laptop/code/mentoring)
-  - [ ] Judul: "Adellwork by Adellhub"
-  - [ ] Deskripsi: "Bantuan & Mentoring Asisten Tugas IT, Desain, Jaringan"
-  - [ ] Tombol "Selengkapnya"
-- [ ] **Kotak 2: Adelltech**
+- [x] Buat struktur tiga kotak geometris untuk tiga layanan (`src/components/services.js`)
+- [x] **Kotak 1: Adellwork**
+  - [x] Icon minimalis SVG (laptop/code/mentoring)
+  - [x] Judul: "Adellwork by Adellhub"
+  - [x] Deskripsi: "Bantuan & Mentoring Asisten Tugas IT, Desain, Jaringan"
+  - [x] Tombol "Selengkapnya" (terkoneksi ke overlay modal)
+- [ ] **Kotak 2: Adelltech** (Menunggu instruksi lanjutan)
   - [ ] Icon minimalis SVG (tools/gear)
   - [ ] Judul: "Adelltech by Adellhub"
   - [ ] Deskripsi: "Service Ringan & Debloating Laptop/Komputer"
   - [ ] Tombol "Selengkapnya"
-- [ ] **Kotak 3: Adellbooth**
+- [ ] **Kotak 3: Adellbooth** (Menunggu instruksi lanjutan)
   - [ ] Icon minimalis SVG (camera/frame)
   - [ ] Judul: "Adellbooth by Adellhub"
   - [ ] Deskripsi: "Platform Software Photobooth All-in-One"
   - [ ] Tombol "Selengkapnya"
-- [ ] Buat komponen overlay/modal "Coming Soon" (`src/components/modal.js`)
-  - [ ] Pesan: "Layanan ini masih dalam progress pengerjaan. Terima kasih atas antusiasme Anda!"
-  - [ ] CTA 1: "Gabung Waitlist via Email" → buka modal form email
-  - [ ] CTA 2: "@adellhub via Sosial Media" → link ke Instagram @adellhub
-  - [ ] Tombol close overlay (klik backdrop atau tombol X)
-  - [ ] Animasi masuk/keluar overlay
-- [ ] Verifikasi semua tombol "Selengkapnya" memicu overlay yang benar
+- [x] Buat komponen overlay/modal "Coming Soon" (`src/components/modal.js`)
+  - [x] Pesan: "Layanan ini masih dalam progress pengerjaan. Terima kasih atas antusiasme Anda!"
+  - [x] CTA 1: "Gabung Waitlist via Email" → buka modal form email / mailto
+  - [x] CTA 2: "@adellhub via Sosial Media" → link ke Instagram @adellhub
+  - [x] Tombol close overlay (klik backdrop atau tombol X)
+  - [x] Animasi masuk/keluar overlay
+- [/] Verifikasi semua tombol "Selengkapnya" memicu overlay yang benar (Kotak 1 terverifikasi)
 
 ---
 
