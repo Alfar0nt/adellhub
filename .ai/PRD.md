@@ -1,6 +1,6 @@
 # PRD — Adellhub Landing Page
 
-**Versi Dokumen:** 1.1.0  
+**Versi Dokumen:** 1.2.0  
 **Tanggal:** 2026-09-18  
 **Status:** Disetujui  
 **Author:** Adellhub Team  
@@ -90,12 +90,12 @@ Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holdi
 - **Semua gambar wajib punya atribut `alt` deskriptif** (dari skill `semantic-html-and-seo`)
 
 ### 4.5 Kontak & Footer (Step 5: Make the Ask)
-- Judul: **"HUBUNGI KAMI"**
-- Email: `[email protected]` (mailto: link)
-- WhatsApp: `+62 812-XXXX-XXXX` *(placeholder — ganti sesuai data asli)*
-- Sosial Media: `@adellhub` (Instagram)
+- Label section: **"03. HUBUNGI KAMI"** — judul utama "*MARI TERHUBUNG*" (keputusan tim, menggantikan usulan awal "HUBUNGI KAMI")
+- Email: `hello@adellhub.biz.id` (mailto: link) — keputusan tim, konsisten dengan domain & Cloudflare Email Routing
+- WhatsApp: `+62 851-7969-7112` (link `https://wa.me/6285179697112`) — nomor asli pemilik
+- Instagram: `@adellhub` (link ke profil Instagram)
 - Tagline: *"Untuk update terbaru, ikuti perjalanan kami di sosial media."*
-- Copyright footer
+- Footer: Copyright © 2026 Adellhub + dua tombol legal **"Kebijakan Privasi"** & **"Syarat & Ketentuan"** yang membuka halaman statis (bahasa Indonesia) di tab baru
 
 ---
 
@@ -143,9 +143,9 @@ File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
 |-------|-------|------------|
 | `--color-bg` | `#F5F0E8` | Off-white / krem latar belakang |
 | `--color-dark` | `#1A1A1A` | Hitam arang untuk teks & bentuk gelap |
-| `--color-accent` | `#E63329` | Merah terang (HANYA untuk aksen geometris) |
+| `--color-accent` | `#D2251C` | Merah Bauhaus — diturunkan dari `#E63329` agar lolos kontras WCAG AA (teks di white 5.22:1, di bg 4.60:1) |
 | `--color-white` | `#FFFFFF` | Putih murni |
-| `--color-gray` | `#888888` | Teks sekunder |
+| `--color-gray` | `#757575` | Teks sekunder — diturunkan dari `#888888` (~4.6:1 rasio kontras placeholder) |
 
 ### 6.3 Tipografi
 - **Font:** `Space Grotesk` (Google Fonts) — primary display
@@ -203,10 +203,23 @@ File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
 ## 9. Batasan & Asumsi
 
 - **Tidak ada backend:** Semua form diarahkan ke mailto:
+  - Waitlist form → `waitlist@adellhub.biz.id` (Cloudflare Email Routing)
+  - Kontak → `hello@adellhub.biz.id` (Cloudflare Email Routing)
 - **Semua layanan Coming Soon:** Tidak ada halaman detail layanan
-- **Kontak placeholder:** Nomor WA dan link sosmed akan diisi oleh tim
-- **Single-page application (SPA):** Build via Vite + Vanilla JS
+- **Kontak final (keputusan tim):** WhatsApp `+62 851-7969-7112` & Instagram `@adellhub` — menggantikan placeholder PRD awal
+- **Dokumen legal:** Halaman statis `privacy-policy.html` & `terms-of-service.html` (bahasa Indonesia, gaya Bauhaus, dibuka di tab baru dari footer)
+- **Single-page application (SPA) + halaman statis legal:** Build via Vite + Vanilla JS; multi-page (Vite `rollupOptions.input`)
 - **Bahasa konten:** Bahasa Indonesia (campuran dengan Inggris untuk label teknis)
+
+---
+
+## 11. Riwayat Perubahan
+
+| Versi | Tanggal | Perubahan |
+|-------|---------|-----------|
+| 1.0.0 | 2026-09-18 | Versi awal PRD |
+| 1.1.0 | 2026-09-18 | Sinkronisasi skill referensi & struktur |
+| 1.2.0 | 2026-09-18 | Kontak final (email, WA, IG), palet warna kontras AA (`#D2251C`/`#757575`), tambahan dokumen legal (privacy/terms), judul kontak "MARI TERHUBUNG" |
 
 ---
 

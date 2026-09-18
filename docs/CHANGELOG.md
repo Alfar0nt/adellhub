@@ -59,8 +59,21 @@ Tooling berikut tidak tersedia di environment agent dan wajib dicek manual di br
 
 ## [Unreleased]
 
-### Planned
-- Phase 9: Build & Deployment Prep (v1.0.0, release tag)
+## [1.0.0] — 2026-09-18
+
+Rilis pertama — Adellhub landing page siap deploy ke **Cloudflare Pages**.
+
+### Security
+- **Security hardening (audit `vibe-check/AI-CHECKLIST.md`, 17 kategori):** tanpa temuan CRITICAL/HIGH. Perbaikan diterapkan: security headers via `public/_headers` (Cloudflare Pages), hardening XSS `safeExternalUrl()` di `src/components/modal.js`, aturan `.gitignore` untuk `.env` & `vibe-check/`, vite dipin eksak `8.3.0` (`npm audit` = 0 vulnerabilities), perbaikan meta `twitter:url` → `adellhub.biz.id`. Hasil lengkap: `security/reports/*`, `security/plans/*`, `security/AUDIT_SUMMARY.md`
+
+### Added
+- **Instruksi deployment lengkap** di `README.md`: setup & development commands, deployment **Cloudflare Pages** (Git Integration & Wrangler CLI), custom domain `adellhub.biz.id`, penjelasan `_headers` yang aktif otomatis, project structure & tech stack
+
+### Changed
+- **Build & deployment verified:** `npm run build` sukses (multi-page: `index.html`, `privacy-policy.html`, `terms-of-service.html`); semua asset & `_headers` ter-copy ke `dist/`; smoke test `vite preview` HTTP 200 untuk seluruh route (HTML/CSS/JS/favicon)
+
+### Docs
+- PRD → **1.2.0**, TECH-STACK → **1.2.0**, TASKS → **1.6.0** (seluruh phase selesai; commit + tag `v1.0.0` dilakukan manual)
 
 ---
 
@@ -76,6 +89,8 @@ Tooling berikut tidak tersedia di environment agent dan wajib dicek manual di br
 - **Header mobile lebih kompak:** tinggi `.header-inner` diturunkan 72px → **56px** hanya di `@media (max-width: 768px)` sehingga jarak kosong di bawah logo & tombol hamburger hilang; target sentuh tombol tetap ≥44px. Desktop tidak berubah. Offset smooth-scroll memakai `header.offsetHeight` dinamis sehingga pergeseran anchor tetap akurat
 - **Halaman Kebijakan Privasi & Syarat Ketentuan:** dua halaman statis bahasa Indonesia (`privacy-policy.html`, `terms-of-service.html`) dengan gaya Bauhaus yang konsisten (top bar logo + tombol kembali, section bernomor 01–09/10, kotak kontak, footer). Memakai stylesheet bersama `public/legal.css`; terindeks (index, follow); dimasukkan ke input build Vite (multi-page) sehingga ikut terdeploy
 - **Link legal di footer:** tombol outline "Kebijakan Privasi" & "Syarat &amp; Ketentuan" di `.footer-legal` membuka halaman masing-masing di **tab baru** (`target="_blank" rel="noopener noreferrer"`), target sentuh ≥44px, invert warna saat hover, stack rapi di mobile ≤960px
+- **Audit PRD vs implementasi (pra-Phase 9):** sempurnakan gating `:hover` arcs hero (`@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)`); seluruh 17 rule `:hover` kini memenuhi aturan PRD. Sinkronisasi dokumen: PRD → **1.2.0**, TECH-STACK → **1.2.0** (warna `#D2251C`/`#757575`, kontak final, legal pages, struktur proyek). Keputusan hosting: **Cloudflare Pages**
+- **Security hardening (audit `vibe-check/AI-CHECKLIST.md`, 17 kategori):** tanpa temuan CRITICAL/HIGH. Fix diterapkan: (1) **security headers** via `public/_headers` (Cloudflare Pages) — CSP self+Google Fonts+inline SVG, HSTS, X-Content-Type-Options, X-Frame-Options DENY, Referrer-Policy, Permissions-Policy; (2) **XSS hardening** `safeExternalUrl()` di `src/components/modal.js` (allowlist skema http/https/mailto + escape atribut pada `cta2Url`); (3) **`.gitignore`** + aturan `.env`/`.env.*`/`!.env.example` dan `vibe-check/`; (4) **vite dipin eksak `8.3.0`** (tanpa `^`), `npm audit` = 0 vulnerabilities; (5) perbaikan `twitter:url` meta → `adellhub.biz.id`. Kategori N/A (tanpa backend/DB/auth/payment/upload) terdokumentasi. Hasil lengkap: `security/reports/*` + `security/plans/*` + `security/AUDIT_SUMMARY.md`. Verifikasi manual pasca-deploy: header via `curl -I`, CSP smoke test, XSS form test (lihat AUDIT_SUMMARY)
 - **Performa:** hapus `@import` font ganda di CSS (font dimuat tunggal via `<link>` di `index.html` dengan preconnect)
 
 ### Changed

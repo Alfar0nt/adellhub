@@ -15,7 +15,14 @@ dist/
 dist-ssr/
 
 # Local env files
+.env
+.env.*
+!.env.example
 *.local
+
+# Security tooling (vibe-check prompt/*)
+vibe-check/
+security/
 
 # Editor & OS
 .vscode/*

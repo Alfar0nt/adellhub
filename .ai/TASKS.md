@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.5.0  
+**Versi Dokumen:** 1.6.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟢 Phase 8 Selesai — Menunggu instruksi Phase 9
+**Status Keseluruhan:** 🟢 Seluruh Phase Selesai (0–9) — Siap commit + tag `v1.0.0` + deploy Cloudflare Pages
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -183,12 +183,14 @@
 **Tujuan:** Menyiapkan build produksi dan dokumentasi final.
 **Estimasi:** 1 Jam
 
-- [ ] Run `npm run build` dan verifikasi output `dist/`
-- [ ] Preview build produksi dengan `npm run preview`
-- [ ] Update `README.md` dengan instruksi setup & deployment
-- [ ] Update `CHANGELOG.md` dengan entry versi `1.0.0`
-- [ ] Commit semua perubahan dengan pesan commit yang deskriptif
-- [ ] Tag git release: `v1.0.0`
+- [x] Run `npm run build` dan verifikasi output `dist/` — build sukses (vite 8.3.0, 17 modules); `dist/` berisi `index.html`, `privacy-policy.html`, `terms-of-service.html`, `legal.css`, `favicon.svg`, `_headers`, asset JS/CSS
+- [x] Preview build produksi dengan `npm run preview` — smoke test HTTP 200 untuk seluruh route (`/`, `/privacy-policy.html`, `/terms-of-service.html`, `/legal.css`, `/favicon.svg`, `/assets/*`)
+- [x] Update `README.md` dengan instruksi setup & deployment — **target hosting: Cloudflare Pages** (keputusan tim), build command `npm run build`, output dir `dist/`; instruksi Git Integration + Wrangler CLI + custom domain `adellhub.biz.id`
+- [x] Update `CHANGELOG.md` dengan entry versi `1.0.0`
+- [ ] Commit semua perubahan dengan pesan commit yang deskriptif — **dilakukan manual oleh tim**
+- [ ] Tag git release: `v1.0.0` — **dilakukan manual oleh tim**
+
+> **Catatan audit PRD (sebelum Phase 9):** Semua rule `:hover` kini di-gate `@media (hover: hover)` (item functional checklist PRD) — perbaikan terakhir: hover arcs hero dibungkus `(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)`. Dokumen PRD (1.2.0), TECH-STACK (1.2.0) sudah disinkronkan (warna, kontak, legal pages, hosting).
 
 ---
 
@@ -205,4 +207,4 @@
 | Phase 6 | Portfolio Section | ✅ Selesai |
 | Phase 7 | Contact & Footer | ✅ Selesai |
 | Phase 8 | Polish & QA | ✅ Selesai |
-| Phase 9 | Build & Deployment | 🔴 Belum |
+| Phase 9 | Build & Deployment | ✅ Selesai (commit + tag manual oleh tim) |

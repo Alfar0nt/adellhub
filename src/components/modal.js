@@ -19,6 +19,14 @@ const escapeHtml = (str) =>
     "'": '&#39;',
   }[c]));
 
+const ALLOWED_EXTERNAL_SCHEMES = /^(https?:|mailto:)/;
+const DEFAULT_CTA2_URL = 'https://instagram.com/adellhub';
+
+const safeExternalUrl = (url) => {
+  const candidate = String(url || '').trim();
+  return ALLOWED_EXTERNAL_SCHEMES.test(candidate) ? escapeHtml(candidate) : escapeHtml(DEFAULT_CTA2_URL);
+};
+
 const closeIcon = `
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
     <line x1="4" y1="4" x2="16" y2="16" />
@@ -121,7 +129,7 @@ export function openModal({ title, subtitle, message, cta1Text, cta1Action, cta2
         <button type="button" class="btn btn-primary modal-btn-cta1">
           ${escapeHtml(cta1Text || 'Gabung Waitlist via Email')}
         </button>
-        <a href="${cta2Url || 'https://instagram.com/adellhub'}" target="_blank" rel="noopener noreferrer" class="btn btn-outline modal-btn-cta2">
+        <a href="${safeExternalUrl(cta2Url)}" target="_blank" rel="noopener noreferrer" class="btn btn-outline modal-btn-cta2">
           ${escapeHtml(cta2Text || '@adellhub via Sosial Media')}
         </a>
       </div>

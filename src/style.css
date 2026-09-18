@@ -993,7 +993,10 @@ section[id] {
   .hero-layer-arcs path {
     transition: stroke var(--duration-base) var(--ease-out);
   }
+}
 
+/* Hover state on hero arcs — gated to fine pointers only (PRD §5.1) */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .hero-visual-frame:hover .hero-layer-arcs path {
     stroke: var(--color-dark);
   }

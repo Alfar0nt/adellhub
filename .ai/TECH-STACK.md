@@ -1,6 +1,6 @@
 # TECH-STACK — Adellhub Landing Page
 
-**Versi Dokumen:** 1.1.0  
+**Versi Dokumen:** 1.2.0  
 **Tanggal:** 2026-09-18
 
 ---
@@ -23,7 +23,9 @@
 | Font Display | [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) | Heading, bold, Bauhaus feel |
 | Font Body | [Inter](https://fonts.google.com/specimen/Inter) | Body text, readability |
 | Icons | Inline SVG | Custom geometris, tidak ada dependensi icon library |
-| Gambar Portfolio | Generated (AI) | Placeholder artistik bergaya Bauhaus |
+| Gambar Portfolio | Handcrafted SVG (keputusan tim) | 3 placeholder artistik Bauhaus (`adellwork/adelltech/adellbooth-preview.svg`) — **bukan** AI-generated |
+| Favicon | `public/favicon.svg` | Logo geometris Adellhub |
+| Stylesheet Legal | `public/legal.css` | Style bersama halaman privacy-policy & terms-of-service |
 
 ---
 
@@ -37,6 +39,9 @@ adellhub/
 │   └── TASKS.md
 ├── docs/                   # Changelog & release notes
 │   └── CHANGELOG.md
+├── public/                 # Static files (di-copy langsung ke dist/)
+│   ├── favicon.svg
+│   └── legal.css           # Stylesheet bersama halaman legal
 ├── src/                    # Source code (setelah init Vite)
 │   ├── main.js             # Entry point JS
 │   ├── style.css           # Global styles & design tokens
@@ -51,8 +56,10 @@ adellhub/
 │   ├── utils/              # Helper functions (smooth scroll, observer)
 │   └── assets/             # Gambar & SVG statis
 │       └── images/
-├── index.html              # Entry HTML
-├── vite.config.js          # Konfigurasi Vite
+├── index.html              # Entry point SPA utama
+├── privacy-policy.html     # Halaman statis Kebijakan Privasi (multi-page entry)
+├── terms-of-service.html   # Halaman statis Syarat & Ketentuan (multi-page entry)
+├── vite.config.js          # Konfigurasi Vite (rollupOptions.input untuk multi-page)
 ├── package.json
 └── README.md
 ```
@@ -68,9 +75,9 @@ adellhub/
   /* Colors */
   --color-bg:      #F5F0E8;   /* Off-white / krem */
   --color-dark:    #1A1A1A;   /* Hitam arang */
-  --color-accent:  #E63329;   /* Merah Bauhaus */
+  --color-accent:  #D2251C;   /* Merah Bauhaus (kontras WCAG AA) */
   --color-white:   #FFFFFF;
-  --color-gray:    #888888;
+  --color-gray:    #757575;   /* Teks sekunder (kontras AA) */
 
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;
@@ -116,10 +123,11 @@ Daftar skills yang harus digunakan AI Agent selama pengerjaan:
 
 | Aspek | Detail |
 |-------|--------|
-| Target Hosting | GitHub Pages / Vercel / Netlify (TBD) |
+| Target Hosting | **Cloudflare Pages** (keputusan tim — domain & email routing sudah di Cloudflare) |
 | Build Command | `npm run build` |
 | Output Dir | `dist/` |
 | Dev Command | `npm run dev` |
+| Build Config | Multi-page: `index.html` + `privacy-policy.html` + `terms-of-service.html` (`vite.config.js` → `rollupOptions.input`) |
 
 ---
 
