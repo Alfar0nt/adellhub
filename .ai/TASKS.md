@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.6.0  
+**Versi Dokumen:** 1.7.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟢 Seluruh Phase Selesai (0–9) — Siap commit + tag `v1.0.0` + deploy Cloudflare Pages
+**Status Keseluruhan:** 🟢 Seluruh Phase Selesai (0–9) — Post-launch tweaks (auto-hide header mobile) diterapkan
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -191,6 +191,15 @@
 - [ ] Tag git release: `v1.0.0` — **dilakukan manual oleh tim**
 
 > **Catatan audit PRD (sebelum Phase 9):** Semua rule `:hover` kini di-gate `@media (hover: hover)` (item functional checklist PRD) — perbaikan terakhir: hover arcs hero dibungkus `(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)`. Dokumen PRD (1.2.0), TECH-STACK (1.2.0) sudah disinkronkan (warna, kontak, legal pages, hosting).
+
+---
+
+## Post-Launch — Task Tambahan
+
+Task kecil hasil review setelah website live/deploy.
+
+- [x] **5. Fix mobile view top navbar makan space** — header mobile dipangkas **72px → 56px → 48px** dan kini **auto-hide**: saat user scroll ke bawah (melewati 120px) header slide keluar (transform `translateY(-100%)`), muncul kembali saat scroll ke atas. Header tidak pernah disembunyikan saat menu mobile terbuka. Target sentuh tetap ≥44px (hamburger 44px pas di bar 48px). Reduced-motion tetap dihormati (transisi near-instant)
+- [x] **6. Smooth scroll buat tiap section (opsional)** — sudah terpasang dua lapis sejak awal: `html { scroll-behavior: smooth }` di `src/style.css` + handler JS `window.scrollTo({ behavior: 'smooth' })` di `src/components/header.js` (offset header dinamis, hormati `prefers-reduced-motion`). Tidak perlu perubahan kode — dicatat sebagai task terpenuhi
 
 ---
 

@@ -782,7 +782,19 @@ section[id] {
 
 @media (max-width: 768px) {
   .header-inner {
-    height: 56px;
+    height: 48px;
+  }
+
+  /* Auto-hide header on scroll down: slide out of view, slide back in on scroll up */
+  .site-header {
+    transition: background-color var(--duration-base) var(--ease-out),
+                border-bottom-width var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                transform var(--duration-base) var(--ease-out);
+  }
+
+  .site-header.header-hidden {
+    transform: translateY(-100%);
   }
 
   .header-nav,

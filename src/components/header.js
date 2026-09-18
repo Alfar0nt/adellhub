@@ -62,12 +62,22 @@ export function initHeader() {
   `;
 
   // Attach Sticky scroll behavior
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  let lastScrollY = window.scrollY;
+
   const handleScroll = () => {
-    if (window.scrollY > 50) {
-      header.classList.add('header-scrolled');
-    } else {
-      header.classList.remove('header-scrolled');
+    const currentY = window.scrollY;
+    header.classList.toggle('header-scrolled', currentY > 50);
+
+    // Hide header on scroll down (mobile only), reveal on scroll up
+    if (isMobile && !header.classList.contains('mobile-menu-open')) {
+      if (currentY > lastScrollY && currentY > 120) {
+        header.classList.add('header-hidden');
+      } else {
+        header.classList.remove('header-hidden');
+      }
     }
+    lastScrollY = currentY;
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });
@@ -83,6 +93,7 @@ export function initHeader() {
       toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
       mobileNav.setAttribute('aria-hidden', String(isExpanded));
       header.classList.toggle('mobile-menu-open', !isExpanded);
+      header.classList.remove('header-hidden');
     };
 
     toggleBtn.addEventListener('click', toggleMenu);
@@ -93,6 +104,7 @@ export function initHeader() {
         toggleBtn.setAttribute('aria-expanded', 'false');
         mobileNav.setAttribute('aria-hidden', 'true');
         header.classList.remove('mobile-menu-open');
+        header.classList.remove('header-hidden');
       });
     });
   }

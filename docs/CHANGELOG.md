@@ -59,6 +59,11 @@ Tooling berikut tidak tersedia di environment agent dan wajib dicek manual di br
 
 ## [Unreleased]
 
+## [1.0.1] — 2026-09-18
+
+### Changed
+- **Header mobile lebih ramping + auto-hide:** tinggi `.header-inner` mobile diturunkan 56px → **48px**. Header kini **menghilang saat user scroll ke bawah** (slide-out via `translateY(-100%)` setelah melewati 120px) dan **muncul kembali saat scroll ke atas** — konten tidak tertutup header saat membaca di mobile. Header tidak pernah disembunyikan saat menu mobile terbuka, dan auto-hide hanya aktif di `max-width: 768px` (desktop tidak berubah). Target sentuh hamburger tetap ≥44px; transisi slide dihormati `prefers-reduced-motion`
+
 ## [1.0.0] — 2026-09-18
 
 Rilis pertama — Adellhub landing page siap deploy ke **Cloudflare Pages**.
