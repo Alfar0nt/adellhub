@@ -3,6 +3,10 @@
  * Sticky navigation, Bauhaus wordmark with geometric SVG accent, smooth scroll, mobile menu.
  */
 
+import { openWaitlistForm } from './modal.js';
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function initHeader() {
   const header = document.createElement('header');
   header.id = 'site-header';
@@ -32,7 +36,7 @@ export function initHeader() {
 
         <!-- Right Action CTA -->
         <div class="header-actions">
-          <a href="#services" class="btn btn-primary header-cta">Gabung Waitlist</a>
+          <button type="button" class="btn btn-primary header-cta" data-waitlist-cta>Gabung Waitlist</button>
           
           <!-- Mobile Menu Toggle Button -->
           <button type="button" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Buka navigasi">
@@ -50,7 +54,7 @@ export function initHeader() {
           <li><a href="#portfolio" class="mobile-nav-link">Portofolio</a></li>
           <li><a href="#contact" class="mobile-nav-link">Hubungi Kami</a></li>
           <li class="mobile-nav-cta-item">
-            <a href="#services" class="btn btn-accent w-full mobile-nav-cta">Gabung Waitlist</a>
+            <button type="button" class="btn btn-accent w-full mobile-nav-cta" data-waitlist-cta>Gabung Waitlist</button>
           </li>
         </ul>
       </nav>
@@ -93,6 +97,11 @@ export function initHeader() {
     });
   }
 
+  // Waitlist CTA buttons open the waitlist form modal
+  header.querySelectorAll('[data-waitlist-cta]').forEach((btn) => {
+    btn.addEventListener('click', () => openWaitlistForm());
+  });
+
   // Smooth scroll handler for all hash anchors
   header.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
@@ -107,7 +116,7 @@ export function initHeader() {
 
           window.scrollTo({
             top: offsetPosition,
-            behavior: 'smooth',
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
           });
         }
       }

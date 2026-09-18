@@ -3,6 +3,10 @@
  * High-impact typographic title, Bauhaus geometric SVG composition, value proposition, and CTA.
  */
 
+import { openWaitlistForm } from './modal.js';
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function initHero() {
   const heroSection = document.createElement('section');
   heroSection.id = 'hero';
@@ -28,9 +32,9 @@ export function initHero() {
 
         <!-- CTAs -->
         <div class="hero-cta-group">
-          <a href="#services" class="btn btn-primary hero-btn-main">
+          <button type="button" class="btn btn-primary hero-btn-main" data-waitlist-cta>
             Bergabung Waitlist
-          </a>
+          </button>
           <a href="#services" class="btn btn-outline hero-btn-sub">
             Eksplorasi Layanan
           </a>
@@ -137,6 +141,11 @@ export function initHero() {
     </div>
   `;
 
+  // Waitlist CTA opens the waitlist form modal
+  heroSection.querySelectorAll('[data-waitlist-cta]').forEach((btn) => {
+    btn.addEventListener('click', () => openWaitlistForm());
+  });
+
   // Attach smooth scroll logic for hero CTAs
   heroSection.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
@@ -152,7 +161,7 @@ export function initHero() {
 
           window.scrollTo({
             top: offsetPosition,
-            behavior: 'smooth',
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
           });
         }
       }

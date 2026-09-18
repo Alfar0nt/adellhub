@@ -1,9 +1,8 @@
 /* ==========================================================================
    ADELLHUB DESIGN SYSTEM — BAUHAUS UI FOUNDATION
    Form follows function. Geometric precision, high-contrast, clean whitespace.
+   Fonts loaded via <link> in index.html (preconnect + single stylesheet).
    ========================================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700;800&display=swap');
 
 /* --------------------------------------------------------------------------
    1. DESIGN TOKENS (CSS CUSTOM PROPERTIES)
@@ -14,11 +13,11 @@
   --color-surface: #FFFFFF;       /* Pure white for functional containers */
   --color-surface-tint: #EBE5DB;  /* Subtle tinted off-white */
   --color-dark: #1A1A1A;          /* Charcoal black for primary ink & dark masses */
-  --color-accent: #E63329;        /* Bauhaus vermilion red — restrained accent only */
+  --color-accent: #D2251C;        /* Bauhaus vermilion red — AA-safe for text on light bg */
   --color-accent-hover: #CC281F;  /* Deepened red for interactive states */
   --color-white: #FFFFFF;
   --color-gray: #555555;          /* Legible secondary text */
-  --color-gray-light: #888888;    /* Muted metadata */
+  --color-gray-light: #757575;    /* Muted metadata — AA-safe on white */
   --color-border: #1A1A1A;        /* High-contrast architectural structural lines */
   --color-border-subtle: rgba(26, 26, 26, 0.18);
 
@@ -211,6 +210,11 @@ p, .text-body {
 .section-spacing {
   padding-top: clamp(3.5rem, 8vw, 7rem);
   padding-bottom: clamp(3.5rem, 8vw, 7rem);
+}
+
+/* Sticky header clearance for anchor targets */
+section[id] {
+  scroll-margin-top: 88px;
 }
 
 /* Flexbox */

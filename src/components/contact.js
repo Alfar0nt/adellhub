@@ -84,9 +84,9 @@ export function initFooter() {
     <div class="container footer-inner">
       <span class="footer-brand">
         <svg class="logo-icon" width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="12" cy="16" r="10" fill="#F5F0E8" />
-          <rect x="12" y="4" width="12" height="12" fill="#E63329" />
-        </svg>
+            <circle cx="12" cy="16" r="10" fill="var(--color-bg)" />
+            <rect x="12" y="4" width="12" height="12" fill="var(--color-accent)" />
+          </svg>
         <span class="footer-logo-text">ADELLHUB</span>
       </span>
       <p class="footer-copyright">© 2026 Adellhub. All rights reserved.</p>

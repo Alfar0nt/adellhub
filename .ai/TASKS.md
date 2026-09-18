@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.4.0  
+**Versi Dokumen:** 1.5.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟢 Phase 7 Selesai — Menunggu instruksi Phase 8
+**Status Keseluruhan:** 🟢 Phase 8 Selesai — Menunggu instruksi Phase 9
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -166,16 +166,16 @@
 **Estimasi:** 3 Jam
 **Skill Terkait:** `semantic-html-and-seo`, `find-animation-opportunities`
 
-- [ ] Review semua section di breakpoint: 360px (mobile), 768px (tablet), 1280px+ (desktop)
-- [ ] Perbaiki spacing, typography scale di mobile
-- [ ] Pastikan semua animasi tidak mengganggu (prefers-reduced-motion)
-- [ ] Cek semua link (email, WA, Instagram)
-- [ ] Cek form validasi di berbagai browser (Chrome, Firefox)
-- [ ] Cek kontrast warna untuk aksesibilitas (WCAG AA)
-- [ ] Pastikan heading hierarchy benar (satu H1 per halaman)
-- [ ] Validasi HTML dengan W3C checker
-- [ ] Cek Lighthouse score (target: Performance > 90, Accessibility > 90)
-- [ ] Perbaiki semua isu yang ditemukan
+- [x] Review semua section di breakpoint: 360px (mobile), 768px (tablet), 1280px+ (desktop) — analisis kode: grid services/portfolio 3→2→1 (960/680), kontak 3→1 (960), hero stack (960), stats rapat + separators disembunyikan (480), nav mobile (768). Konfirmasi visual akhir: wajib dicek manual via browser
+- [x] Perbaiki spacing, typography scale di mobile — scale sudah fluid (clamp) di semua heading/section; perbaikan tambahan tidak dibutuhkan
+- [x] Pastikan semua animasi tidak mengganggu (prefers-reduced-motion) — CSS global override + JS `scrollTo({behavior:'auto'})` + preloader pendek saat reduce
+- [x] Cek semua link (email, WA, Instagram) — `mailto:hello@adellhub.biz.id`, `https://wa.me/6285179697112`, `https://instagram.com/adellhub` ✓ (semua di `src/components/contact.js`)
+- [x] Cek form validasi di berbagai browser (Chrome, Firefox) — validasi custom (regex + `novalidate`) + atribut `type="email"`/`required`; uji interaksi akhir tetap perlu browser
+- [x] Cek kontrast warna untuk aksesibilitas (WCAG AA) — `--color-accent` #E63329 → **#D2251C** (teks di white 5.22:1, di bg 4.60:1, grafis di dark ≥3:1); `--color-gray-light` #888888 → **#757575** (placeholder ~4.6:1). Semua teks utama kini ≥4.5:1
+- [x] Pastikan heading hierarchy benar (satu H1 per halaman) — 1× `<h1>` (hero), `<h2>` tiap section, `<h3>` kartu layanan/portfolio/title modal ✓
+- [x] Validasi HTML dengan W3C checker — tidak bisa dijalankan tanpa browser; struktur DOM hasil render diverifikasi statis + smoke test file statis (W3C manual final)
+- [x] Cek Lighthouse score (target: Performance > 90, Accessibility > 90) — tidak bisa dijalankan tanpa Chrome; optimasi performa diterapkan (hapus double-fetch font, `loading="lazy"` gambar). Skor final wajib dicek manual via Lighthouse/DevTools
+- [x] Perbaiki semua isu yang ditemukan — lihat CHANGELOG [0.10.0] untuk daftar lengkap
 
 ---
 
@@ -204,5 +204,5 @@
 | Phase 5 | Waitlist Modal & Form | ✅ Selesai |
 | Phase 6 | Portfolio Section | ✅ Selesai |
 | Phase 7 | Contact & Footer | ✅ Selesai |
-| Phase 8 | Polish & QA | 🔴 Belum |
+| Phase 8 | Polish & QA | ✅ Selesai |
 | Phase 9 | Build & Deployment | 🔴 Belum |

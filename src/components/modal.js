@@ -7,7 +7,8 @@
 export const WAITLIST_EMAIL = 'waitlist@adellhub.biz.id';
 
 let activeModal = null;
-let activeEscHandler = null;
+let activeKeyHandler = null;
+let lastFocusedElement = null;
 
 const escapeHtml = (str) =>
   String(str).replace(/[&<>"']/g, (c) => ({
@@ -25,21 +26,57 @@ const closeIcon = `
   </svg>
 `;
 
-// Shared modal mounting: append, lock scroll, animate in, bind ESC.
+// Shared modal mounting: append, lock scroll, animate in, manage focus (trap + restore).
 function attachModal(modalBackdrop) {
   document.body.appendChild(modalBackdrop);
   document.body.style.overflow = 'hidden';
   activeModal = modalBackdrop;
+  lastFocusedElement = document.activeElement;
+
+  const dialog = modalBackdrop.querySelector('.modal-dialog');
+  if (dialog && !dialog.hasAttribute('tabindex')) {
+    dialog.setAttribute('tabindex', '-1');
+  }
 
   requestAnimationFrame(() => {
     modalBackdrop.classList.add('modal-active');
+    if (dialog && typeof dialog.focus === 'function') {
+      dialog.focus({ preventScroll: true });
+    }
   });
 
-  const escHandler = (e) => {
-    if (e.key === 'Escape') closeModal();
+  const keyHandler = (e) => {
+    // Close on Escape
+    if (e.key === 'Escape') {
+      closeModal();
+      return;
+    }
+
+    // Keep focus inside the dialog (WCAG 2.4.3 Focus Order)
+    if (e.key === 'Tab') {
+      const focusables = Array.from(
+        modalBackdrop.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute('disabled'));
+
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   };
-  document.addEventListener('keydown', escHandler);
-  activeEscHandler = escHandler;
+
+  document.addEventListener('keydown', keyHandler, true);
+  activeKeyHandler = keyHandler;
 }
 
 export function openModal({ title, subtitle, message, cta1Text, cta1Action, cta2Text, cta2Url }) {
@@ -157,7 +194,7 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
 
           <div class="form-field">
             <label class="form-label" for="waitlist-email">Email <span class="form-required" aria-hidden="true">*</span></label>
-            <input class="form-input" type="email" id="waitlist-email" name="email" autocomplete="email" placeholder="nama@email.com" required aria-describedby="waitlist-email-hint" />
+            <input class="form-input" type="email" id="waitlist-email" name="email" autocomplete="email" placeholder="nama@email.com" required />
             <span class="form-error" data-error-for="waitlist-email" aria-live="polite"></span>
           </div>
         </form>
@@ -237,12 +274,12 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
       </div>
 
       <div class="modal-body">
-        <div class="waitlist-success" role="status" aria-live="polite">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-            <circle cx="28" cy="28" r="26" fill="var(--color-dark)" />
-            <path d="M18 29 L25 36 L39 22" stroke="var(--color-accent)" stroke-width="4" stroke-linecap="square" />
-          </svg>
-          <h3 class="modal-title">Terima kasih, ${escapeHtml(name)}!</h3>
+<div class="waitlist-success" role="status" aria-live="polite">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+              <circle cx="28" cy="28" r="26" fill="var(--color-dark)" />
+              <path d="M18 29 L25 36 L39 22" stroke="var(--color-accent)" stroke-width="4" stroke-linecap="square" />
+            </svg>
+            <h3 id="waitlist-success-title" class="modal-title">Terima kasih, ${escapeHtml(name)}!</h3>
           <p class="modal-message">
             Permintaan akses awal ${safeService} telah kami terima. Kami akan mengirim kabar melalui email Anda segera setelah layanan resmi diluncurkan.
           </p>
@@ -254,10 +291,13 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
       </div>
     `;
 
+    dialog.setAttribute('aria-labelledby', 'waitlist-success-title');
+
     const newCloseBtn = dialog.querySelector('.modal-close-btn');
     newCloseBtn.addEventListener('click', closeModal);
     const doneBtn = dialog.querySelector('.waitlist-done-btn');
     doneBtn.addEventListener('click', closeModal);
+    doneBtn.focus({ preventScroll: true });
   };
 
   form.addEventListener('submit', (e) => {
@@ -295,12 +335,14 @@ export function closeModal() {
   if (!activeModal) return;
 
   const current = activeModal;
+  const previousFocus = lastFocusedElement;
   current.classList.remove('modal-active');
   document.body.style.overflow = '';
+  lastFocusedElement = null;
 
-  if (activeEscHandler) {
-    document.removeEventListener('keydown', activeEscHandler);
-    activeEscHandler = null;
+  if (activeKeyHandler) {
+    document.removeEventListener('keydown', activeKeyHandler, true);
+    activeKeyHandler = null;
   }
 
   setTimeout(() => {
@@ -309,6 +351,10 @@ export function closeModal() {
     }
     if (activeModal === current) {
       activeModal = null;
+    }
+    // Restore focus to the element that opened the modal (WCAG 2.4.3)
+    if (previousFocus && typeof previousFocus.focus === 'function') {
+      previousFocus.focus({ preventScroll: true });
     }
   }, 300);
 }

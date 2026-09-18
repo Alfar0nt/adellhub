@@ -34,12 +34,40 @@ Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`** dan sec
 
 **Jika tidak sempat konfigurasi:** ganti nilai konstanta `WAITLIST_EMAIL` di `src/components/modal.js` dan `CONTACT_EMAIL` di `src/components/contact.js` ke alamat email lain.
 
+### 2. Prepare Share Image (SEBELUM LAUNCH)
+Meta `og:image` / `twitter:image` menunjuk ke `https://adellhub.biz.id/og-image.png`, **file `og-image.png` (1200×630) belum dibuat**. Upload gambar OG ke root domain (atau `/public/og-image.png` lalu build), atau hapus kedua meta tersebut sampai gambar tersedia.
+
+### 3. Verifikasi Browser Manual (SEBELUM LAUNCH)
+Tooling berikut tidak tersedia di environment agent dan wajib dicek manual: W3C validator, Lighthouse (Performance & Accessibility), dan uji interaksi lintas browser (Chrome/Firefox). Jalankan `npm run dev` lalu buka di browser.
+
 ---
 
 ## [Unreleased]
 
 ### Planned
-- Responsive polish & QA
+- Phase 9: Build & Deployment Prep (v1.0.0, release tag)
+
+---
+
+## [0.10.0] — 2026-09-18
+
+### Added
+- **Accessibility — kontras WCAG AA:** `--color-accent` #E63329 → **#D2251C** (teks di white 5.22:1, di bg 4.60:1, ≥3:1 untuk grafis di latar gelap). `--color-gray-light` #888888 → **#757575** (placeholder ~4.6:1)
+- **Accessibility — manajemen fokus modal** (`src/components/modal.js`): dialog mendapat `tabindex="-1"` dan fokus dipindah ke dalam dialog saat dibuka; fokus di-trap di dalam modal (Tab/Shift+Tab siklus); fokus dikembalikan ke elemen pemicu saat ditutup (WCAG 2.4.3)
+- **Dialog sukses waitlist:** `<h3>` diberi `id="waitlist-success-title"` dan `aria-labelledby` dialog diperbarui agar accessible name tetap valid setelah konten diganti; fokus pindah ke tombol "Selesai"; hapus atribut `aria-describedby` yang menunjuk ke elemen tidak ada di input email
+- **Reduced motion untuk smooth scroll JS:** `scrollTo({ behavior })` di header & hero memilih `'auto'` saat `prefers-reduced-motion: reduce` (CSS sudah menangani animasi/transisi)
+- **Anchor clearance:** `section[id] { scroll-margin-top: 88px }` agar navigasi hash (URL langsung/`scrollIntoView`) tidak tertutup header sticky
+- **Performa:** hapus `@import` font ganda di CSS (font dimuat tunggal via `<link>` di `index.html` dengan preconnect)
+
+### Changed
+- **CTA "Gabung Waitlist"** (hero + header desktop/mobile) kini **membuka form waitlist modal** langsung (keputusan tim; sebelumnya hanya scroll ke `#services`). Elemen diubah dari `<a>` menjadi `<button>`
+- **Domain SEO/social** `index.html`: `adellhub.com` → **`adellhub.biz.id`** untuk canonical, og:url, og:image, twitter:image, dan JSON-LD (konsisten dengan email & Cloudflare)
+- Logo footer kini memakai `var(--color-accent)` (terdahulu hardcode `#E63329`) agar selaras dengan token baru
+
+### Verified
+- `npm run build` sukses; smoke test `vite preview` HTTP 200 untuk HTML/JS/CSS
+- Kontras teks utama ≥4.5:1 (dihitung, bukan perkiraan)
+- Treeshaking heading: 1× H1, H2 per section, H3 kartu/modal
 
 ---
 
