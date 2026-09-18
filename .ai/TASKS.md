@@ -2,7 +2,7 @@
 
 **Versi Dokumen:** 1.0.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟡 In Progress (Phase 1 Selesai)
+**Status Keseluruhan:** 🟡 In Progress (Phase 2 Selesai)
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -48,17 +48,17 @@
 **Estimasi:** 2 Jam
 **Skill Terkait:** `find-animation-opportunities`, `svg-icon-generator`
 
-- [ ] Buat komponen pre-loader geometris (`src/components/preloader.js`)
-  - [ ] Animasi bentuk-bentuk geometris (merah, hitam) berputar/bergerak
-  - [ ] Auto-dismiss setelah animasi selesai (min. 1.5s, max. 3s)
-  - [ ] Fade-out smooth ke konten utama
-- [ ] Buat komponen header (`src/components/header.js`)
-  - [ ] Logo wordmark "ADELLHUB" dengan aksen geometris SVG kecil
-  - [ ] Navigasi: Layanan · Portofolio · Hubungi Kami
-  - [ ] Smooth scroll ke masing-masing section saat link diklik
-  - [ ] Sticky behavior saat scroll (tambahkan class saat scroll > 50px)
-  - [ ] Hover effect minimal pada nav links
-- [ ] Verifikasi pre-loader dan header di mobile & desktop
+- [x] Buat komponen pre-loader geometris (`src/components/preloader.js`)
+  - [x] Animasi bentuk-bentuk geometris (merah, hitam) berputar/bergerak
+  - [x] Auto-dismiss setelah animasi selesai (min. 1.5s, max. 3s)
+  - [x] Fade-out smooth ke konten utama
+- [x] Buat komponen header (`src/components/header.js`)
+  - [x] Logo wordmark "ADELLHUB" dengan aksen geometris SVG kecil
+  - [x] Navigasi: Layanan · Portofolio · Hubungi Kami
+  - [x] Smooth scroll ke masing-masing section saat link diklik
+  - [x] Sticky behavior saat scroll (tambahkan class saat scroll > 50px)
+  - [x] Hover effect minimal pada nav links
+- [x] Verifikasi pre-loader dan header di mobile & desktop
 
 ---
 

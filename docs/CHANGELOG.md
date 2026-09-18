@@ -22,13 +22,30 @@ PATCH — Bug fix, perbaikan kecil, perubahan teks
 ## [Unreleased]
 
 ### Planned
-- Pre-loader geometris
 - Hero section dengan komposisi SVG
 - Services section dengan overlay "coming soon"
 - Waitlist modal dengan form email
 - Portfolio section dengan gambar AI-generated
 - Contact & footer section
 - Responsive polish & QA
+
+---
+
+## [0.4.0] — 2026-09-18
+
+### Added
+- Komponen Pre-loader Geometris Bauhaus (`src/components/preloader.js`):
+  - Animasi SVG geometris: lingkaran orbit berputar, setengah lingkaran charcoal, dan kotak aksen merah bergerak
+  - Progress track arsitektural dengan animasi durasi terukur (1.8s)
+  - Auto-dismiss mulus dengan efek fade-out transisi 400ms dan pembersihan elemen dari DOM
+  - Dukungan aksesibilitas ARIA status dan mode `prefers-reduced-motion`
+- Komponen Header Navigasi Bauhaus (`src/components/header.js`):
+  - Wordmark tipografi "ADELLHUB" dengan aksen geometris SVG khusus
+  - Navigasi utama (Layanan, Portofolio, Hubungi Kami) dan tombol CTA "Gabung Waitlist"
+  - Interaksi smooth-scroll ke masing-masing target ID dengan offset header otomatis
+  - Navigasi sticky dengan deteksi scroll (`.header-scrolled`) dan efek backdrop blur
+  - Animasi garis aksen merah minimal pada hover nav link
+  - Drawer menu navigasi mobile responsif dengan tombol hamburger geometris
 
 ---
 
