@@ -39,9 +39,29 @@ Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`**. Alamat
 ## [Unreleased]
 
 ### Planned
-- Portfolio section dengan gambar AI-generated
 - Contact & footer section
 - Responsive polish & QA
+
+---
+
+## [0.8.0] — 2026-09-18
+
+### Added
+- Komponen Portfolio Section (`src/components/portfolio.js`):
+  - Judul "REKAM JEJAK KAMI" dengan label "02. Rekam Jejak" dan lead section
+  - Grid geometris 3 kolom (responsif 3 → 2 → 1 kolom)
+  - Cards menggunakan `<figure>` + `<figcaption>`: gambar artistik, eyebrow, judul, dan deskripsi
+  - Hover effect: card naik + bayangan keras, gambar subtle scale, dan overlay teks gelap dengan aksen merah (gated `@media (hover: hover)`)
+  - `alt` deskriptif per item dan `loading="lazy"` + `width`/`height` untuk stabilitas layout
+- 3 gambar placeholder artistik bergaya Bauhaus sebagai komposisi SVG (`src/assets/images/`):
+  - `adellwork-preview.svg` — flowchart mentoring (satu titik pusat → tiga titik bimbingan, garis koneksi ortho)
+  - `adelltech-preview.svg` — workspace reparasi laptop (laptop terbuka, bar progress, roda gigi, kotak cutout)
+  - `adellbooth-preview.svg` — UI photobooth (layar siluet pelanggan, hitung mundur, tombol capture, strip foto)
+- Wiring ke `src/main.js`: section portfolio menggantikan placeholder, urutan Hero → Services → Portfolio → (Contact placeholder)
+
+### Changed
+- Placeholder "Portofolio & Eksplorasi" diganti implementasi penuh sesuai TASKS.md
+- Gambar placeholder dibuat sebagai SVG geometris (keputusan tim) menggantikan rencana "AI-generated PNG" yang semula di TASKS.md
 
 ---
 

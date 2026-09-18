@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" fill="none">
+  <rect width="400" height="250" fill="#F5F0E8" />
+
+  <!-- Bus connector lines (mentoring flow) -->
+  <path d="M 105 125 H 200 M 200 55 V 195 M 200 55 H 280 M 200 125 H 280 M 200 195 H 280" stroke="#1A1A1A" stroke-width="3" />
+
+  <!-- Mentor node: dark square with red core -->
+  <rect x="36" y="90" width="70" height="70" fill="#1A1A1A" />
+  <rect x="48" y="102" width="34" height="34" fill="#E63329" />
+
+  <!-- Mentee nodes: three circles -->
+  <circle cx="300" cy="55" r="20" stroke="#1A1A1A" stroke-width="3" />
+  <circle cx="300" cy="125" r="20" fill="#E63329" />
+  <circle cx="300" cy="195" r="20" stroke="#1A1A1A" stroke-width="3" />
+
+  <!-- Top-right accent dots -->
+  <circle cx="360" cy="40" r="4" fill="#1A1A1A" />
+  <circle cx="380" cy="40" r="4" fill="#1A1A1A" />
+
+  <!-- Top-left small red square accent -->
+  <rect x="24" y="24" width="14" height="14" fill="#E63329" />
+</svg>

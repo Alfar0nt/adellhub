@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.2.0  
+**Versi Dokumen:** 1.3.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟢 Phase 5 Selesai — Menunggu instruksi Phase 6
+**Status Keseluruhan:** 🟢 Phase 6 Selesai — Menunggu instruksi Phase 7
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -133,16 +133,16 @@
 **Estimasi:** 2 Jam
 **Skill Terkait:** `semantic-html-and-seo` (untuk proper alt text)
 
-- [ ] Generate 3 gambar placeholder artistik bergaya Bauhaus via AI:
-  - [ ] `adellbooth-preview.png` — UI mockup software photobooth
-  - [ ] `adelltech-preview.png` — Workspace reparasi laptop
-  - [ ] `adellwork-preview.png` — Flowchart/diagram mentoring
-- [ ] Simpan gambar ke `src/assets/images/`
-- [ ] Buat grid geometris bergaya Bauhaus untuk portfolio
-- [ ] Judul section: "REKAM JEJAK KAMI"
-- [ ] Tampilkan gambar dalam kotak-kotak bersih dengan label
-- [ ] Hover effect pada kotak portfolio (slight scale + overlay teks)
-- [ ] Verifikasi grid layout di berbagai ukuran layar
+- [x] Buat 3 gambar placeholder artistik bergaya Bauhaus (komposisi SVG geometris, not AI-generated sesuai keputusan tim):
+  - [x] `adellbooth-preview.svg` — UI mockup software photobooth
+  - [x] `adelltech-preview.svg` — Workspace reparasi laptop
+  - [x] `adellwork-preview.svg` — Flowchart/diagram mentoring
+- [x] Simpan gambar ke `src/assets/images/`
+- [x] Buat grid geometris bergaya Bauhaus untuk portfolio (`src/components/portfolio.js`)
+- [x] Judul section: "REKAM JEJAK KAMI"
+- [x] Tampilkan gambar dalam kotak-kotak bersih dengan label (`<figure>` + `<figcaption>`, `alt` deskriptif, `loading="lazy"`)
+- [x] Hover effect pada kotak portfolio (slight scale + overlay teks)
+- [x] Verifikasi grid layout di berbagai ukuran layar (3 → 2 → 1 kolom)
 
 ---
 
@@ -202,7 +202,7 @@
 | Phase 3 | Hero Section | ✅ Selesai |
 | Phase 4 | Services Section | ✅ Selesai |
 | Phase 5 | Waitlist Modal & Form | ✅ Selesai |
-| Phase 6 | Portfolio Section | 🔴 Belum |
+| Phase 6 | Portfolio Section | ✅ Selesai |
 | Phase 7 | Contact & Footer | 🔴 Belum |
 | Phase 8 | Polish & QA | 🔴 Belum |
 | Phase 9 | Build & Deployment | 🔴 Belum |

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" fill="none">
+  <rect width="400" height="250" fill="#F5F0E8" />
+
+  <!-- Countdown squares -->
+  <rect x="40" y="56" width="14" height="14" fill="#1A1A1A" />
+  <rect x="62" y="56" width="14" height="14" fill="#E63329" />
+  <rect x="84" y="56" width="14" height="14" stroke="#1A1A1A" stroke-width="3" />
+
+  <!-- Main camera screen -->
+  <rect x="100" y="50" width="170" height="150" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="4" />
+  <!-- Customer geometric silhouette -->
+  <circle cx="185" cy="105" r="24" stroke="#1A1A1A" stroke-width="3" />
+  <rect x="143" y="133" width="84" height="42" fill="#1A1A1A" />
+  <rect x="180" y="140" width="10" height="10" fill="#E63329" />
+
+  <!-- Capture button -->
+  <circle cx="296" cy="120" r="18" fill="#E63329" />
+  <circle cx="296" cy="120" r="7" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2" />
+
+  <!-- Printed photo strip -->
+  <rect x="318" y="46" width="60" height="158" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="3" />
+  <rect x="328" y="56" width="40" height="48" stroke="#1A1A1A" stroke-width="2" />
+  <rect x="328" y="112" width="40" height="48" stroke="#1A1A1A" stroke-width="2" />
+  <rect x="338" y="76" width="20" height="10" fill="#E63329" />
+
+  <!-- Bottom-left hatching accent -->
+  <g stroke="#1A1A1A" stroke-width="3">
+    <line x1="20" y1="200" x2="60" y2="230" />
+    <line x1="32" y1="200" x2="72" y2="230" />
+    <line x1="44" y1="200" x2="84" y2="230" />
+  </g>
+</svg>

@@ -3,6 +3,7 @@ import { initPreloader } from './components/preloader.js';
 import { initHeader } from './components/header.js';
 import { initHero } from './components/hero.js';
 import { initServices } from './components/services.js';
+import { initPortfolio } from './components/portfolio.js';
 
 // Initialize Preloader (1.8s duration)
 initPreloader(1800);
@@ -25,25 +26,18 @@ if (app) {
   const hero = initHero();
   main.appendChild(hero);
 
-  // 2. Mount Services Section (Phase 4 - Kotak 1: Adellwork Active)
+  // 2. Mount Services Section (Phase 4)
   const services = initServices();
   main.appendChild(services);
 
-  // 3. Placeholder for Target Sections (To be completed in upcoming phases)
+  // 3. Mount Portfolio Section (Phase 6)
+  const portfolio = initPortfolio();
+  main.appendChild(portfolio);
+
+  // Placeholder for Contact Section (Phase 7)
   const subsequentSections = document.createElement('div');
   subsequentSections.innerHTML = `
-    <!-- Target Section: Portofolio (Phase 5) -->
-    <section id="portfolio" class="container section-spacing" style="min-height: 50vh; border-bottom: var(--border-width) solid var(--color-border);">
-      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-        <span class="text-label text-muted">02. Rekam Jejak</span>
-        <h2 class="text-h2">Portofolio & Eksplorasi</h2>
-        <p class="text-body text-muted">
-          Dokumentasi proyek, standar mutu teknis, dan inovasi yang sedang kami kembangkan.
-        </p>
-      </div>
-    </section>
-
-    <!-- Target Section: Hubungi Kami (Phase 6) -->
+    <!-- Target Section: Hubungi Kami (Phase 7) -->
     <section id="contact" class="container section-spacing" style="min-height: 50vh;">
       <div style="display: flex; flex-direction: column; gap: var(--space-4);">
         <span class="text-label text-muted">03. Hubungi Kami</span>
