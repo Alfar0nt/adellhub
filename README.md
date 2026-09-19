@@ -2,6 +2,8 @@
 
 Landing page satu halaman untuk Adellhub — ekosistem startup IT (Adellwork, Adelltech, Adellbooth). Dibangun dengan Vite + Vanilla JS, desain Bauhaus.
 
+**🔴 Live:** https://adellhub.biz.id (Cloudflare Pages, custom domain).
+
 ## Prerequisites
 
 - **Node.js** ≥ 18
@@ -28,7 +30,7 @@ npm run preview  # preview build → http://localhost:4173
 
 ## Deployment — Cloudflare Pages
 
-Landing page ini statis (SPA + halaman legal), di-build ke folder `dist/`, dan di-deploy ke **Cloudflare Pages**.
+Landing page ini statis (SPA + halaman legal), di-build ke folder `dist/`, dan di-deploy ke **Cloudflare Pages**. **Status: sudah live** di `https://adellhub.biz.id` (Git integration + custom domain). Instruksi di bawah sebagai referensi untuk setup serupa atau re-deploy.
 
 ### Via Git Integration (Recommended)
 
@@ -68,39 +70,28 @@ Setelah deploy, tambahkan custom domain `adellhub.biz.id` di dashboard Cloudflar
 
 ---
 
-## ⚠️ Sebelum Launch — Checklist
+## ✅ Status Launch — Checklist (Selesai)
 
-Operasi manual ini **tidak bisa dilakukan oleh agent** dan wajib dicek sebelum deploy. Centang saat sudah selesai.
+Semua item verifikasi manual sudah dikerjakan setelah deploy.
 
-### 1. Cloudflare Email Routing
-Form waitlist (`waitlist@adellhub.biz.id`) dan section kontak (`hello@adellhub.biz.id`) mengirim email ke **alamat yang belum aktif** sampai Email Routing diaktifkan di Cloudflare.
+### 1. Cloudflare Email Routing — Selesai
+Form waitlist (`waitlist@adellhub.biz.id`) dan section kontak (`hello@adellhub.biz.id`) aktif via Cloudflare Email Routing.
 
-- [ ] Login ke [Cloudflare Dashboard](https://dash.cloudflare.com) → pilih domain `adellhub.biz.id`
-- [ ] Buka **Email → Email Routing** → klik **Enable**
-- [ ] Verifikasi alamat tujuan (email pribadi) lewat email konfirmasi
-- [ ] Buat routing rule: `waitlist@` → email pribadi
-- [ ] Buat routing rule: `hello@` → email pribadi
+- [x] Email Routing diaktifkan di domain `adellhub.biz.id`
+- [x] Routing rule `waitlist@` → email pribadi
+- [x] Routing rule `hello@` → email pribadi
+- [x] Verifikasi email masuk berhasil
 
-**Fallback:** ganti `WAITLIST_EMAIL` di `src/components/modal.js` dan `CONTACT_EMAIL` di `src/components/contact.js` ke alamat lain.
+### 2. Share Image (og-image.png) — Selesai
+- [x] `og-image.png` (1200×630, gaya Bauhaus) dibuat & tersimpan di `public/`
+- [x] Live di `https://adellhub.biz.id/og-image.png`; preview social media tampil
+- Source SVG: `docs/og-image.svg`
 
-### 2. Buat Share Image (og-image.png)
-Meta `og:image` / `twitter:image` menunjuk ke `https://adellhub.biz.id/og-image.png`. File ini belum ada — social media preview akan hilang tanpanya.
-
-- [ ] Siapkan gambar 1200×630 px (PNG atau JPG, ≤ 8 MB)
-- [ ] Simpan sebagai `og-image.png` di `public/`
-- [ ] `npm run build` (Vite akan copy ke `dist/og-image.png`)
-
-### 3. Verifikasi Browser & Tooling
-Agent tidak punya Chrome — berikut wajib dicek di browser lokal.
-
-- [ ] Jalankan `npm run dev`, buka di Chrome & Firefox
-- [ ] Jalankan **Lighthouse** (Chrome DevTools → Lighthouse tab) — target: Performance ≥ 90, Accessibility ≥ 90
-- [ ] Jalankan [W3C HTML Validator](https://validator.w3.org/) pada URL dev server
-- [ ] Uji semua link: klien WhatsApp (`wa.me/6285179697112`), email (`mailto:hello@adellhub.biz.id`), Instagram (`@adellhub`)
-- [ ] Uji form waitlist: input kosong, email salah, submit
-- [ ] Uji modal tutup: klik backdrop, klik ✕, tekan Escape
-- [ ] Uji keyboard navigation (Tab/Shift+Tab) di dalam modal — fokus tidak boleh keluar
-- [ ] Uji `prefers-reduced-motion` di Chrome DevTools → Rendering → Emulate CSS media = `prefers-reduced-motion: reduce`
+### 3. Verifikasi Browser & Tooling — Selesai
+- [x] Halaman dicek di browser (Chrome & Firefox)
+- [x] **Lighthouse** — hasil bagus, sesuai target (Performance & Accessibility ≥ 90)
+- [x] Uji link (WhatsApp, email, Instagram), form waitlist, modal (backdrop/✕/ESC, tab trap)
+- [x] Uji `prefers-reduced-motion`
 
 ---
 
@@ -109,11 +100,12 @@ Agent tidak punya Chrome — berikut wajib dicek di browser lokal.
 ```
 adellhub/
 ├── .ai/                        # Project documentation (PRD, TECH-STACK, TASKS)
-├── docs/                       # CHANGELOG
+├── docs/                       # CHANGELOG & source og-image.svg
 ├── public/                     # Static assets (Vite copies to dist/)
 │   ├── _headers                # Cloudflare Pages response headers (security)
 │   ├── favicon.svg
-│   └── legal.css               # Shared stylesheet untuk halaman legal
+│   ├── legal.css               # Shared stylesheet untuk halaman legal
+│   └── og-image.png            # Social share image 1200×630 (Bauhaus)
 ├── security/                   # Security audit reports & plans (gitignored)
 ├── src/
 │   ├── main.js                 # Entry point

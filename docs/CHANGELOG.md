@@ -19,41 +19,27 @@ PATCH — Bug fix, perbaikan kecil, perubahan teks
 
 ---
 
-## 📌 Catatan Tim — Checklist Sebelum Launch
+## ✅ Checklist Verifikasi Launch (Selesai)
 
-Checklist ini juga tersedia di `README.md`. Operasi manual tidak bisa dilakukan oleh agent.
+Semua item manual sudah dikerjakan setelah deploy (detail juga tersedia di `README.md`).
 
-### 1. Konfigurasi Cloudflare Email Routing
-Form waitlist (Phase 5) mengirim email ke **`waitlist@adellhub.biz.id`** dan section kontak (Phase 7) menggunakan **`hello@adellhub.biz.id`**. Kedua alamat ini belum berfungsi sampai Email Routing diaktifkan di Cloudflare.
+### 1. Konfigurasi Cloudflare Email Routing — Selesai
+Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke **`hello@adellhub.biz.id`** — keduanya aktif via Cloudflare Email Routing.
 
-- [ ] Login ke [Cloudflare Dashboard](https://dash.cloudflare.com) → pilih domain **`adellhub.biz.id`**
-- [ ] Buka menu **Email → Email Routing** → klik **Enable** (Cloudflare menambahkan record `MX` & `TXT` otomatis di DNS)
-- [ ] Verifikasi alamat tujuan (email pribadi Anda) lewat email konfirmasi
-- [ ] Buat **Routing rule**: `waitlist@` → email pribadi Anda
-- [ ] Buat **Routing rule**: `hello@` → email pribadi Anda (wajib — section kontak, `src/components/contact.js`)
+- [x] Email Routing diaktifkan di domain `adellhub.biz.id`
+- [x] Routing rule `waitlist@` → email pribadi
+- [x] Routing rule `hello@` → email pribadi (section kontak)
+- [x] Verifikasi email masuk berhasil
 
-**Jika tidak sempat konfigurasi:** ganti nilai konstanta `WAITLIST_EMAIL` di `src/components/modal.js` dan `CONTACT_EMAIL` di `src/components/contact.js` ke alamat email lain.
+### 2. Share Image (og-image.png) — Selesai
+- [x] `og-image.png` (1200×630, gaya Bauhaus) dibuat & tersimpan di `public/` (source: `docs/og-image.svg`)
+- [x] Live di `https://adellhub.biz.id/og-image.png`, preview social media tampil
 
-### 2. Buat Share Image (og-image.png)
-Meta `og:image` / `twitter:image` menunjuk ke `https://adellhub.biz.id/og-image.png`, **file belum dibuat** — tanpa ini preview social media akan kosong.
-
-- [ ] Siapkan gambar 1200×630 px (PNG/JPG, ≤ 8 MB)
-- [ ] Simpan sebagai `og-image.png` di `public/`
-- [ ] `npm run build` → file tercopy ke `dist/og-image.png`
-
-**Fallback:** hapus `<meta property="og:image">` dan `<meta name="twitter:image">` di `index.html` sampai gambar tersedia.
-
-### 3. Verifikasi Browser & Tooling Manual
-Tooling berikut tidak tersedia di environment agent dan wajib dicek manual di browser lokal.
-
-- [ ] Jalankan `npm run dev`, buka di **Chrome & Firefox**
-- [ ] **Lighthouse** (Chrome DevTools → Lighthouse) — target Performance ≥ 90, Accessibility ≥ 90
-- [ ] **W3C validator** pada URL dev server
-- [ ] Uji semua link: WhatsApp (`wa.me/6285179697112`), email (`hello@adellhub.biz.id`), Instagram (`@adellhub`)
-- [ ] Uji form waitlist: input kosong, email salah format, submit → mailto opens
-- [ ] Uji tutup modal: klik backdrop, klik ✕, tekan Escape
-- [ ] Uji tab trap modal: Tab/Shift+Tab tidak boleh keluar dari dialog
-- [ ] Uji `prefers-reduced-motion: reduce` (DevTools → Rendering → Emulate)
+### 3. Verifikasi Browser & Tooling — Selesai
+- [x] Halaman dicek di Chrome & Firefox
+- [x] **Lighthouse** — hasil bagus, sesuai target (Performance ≥ 90, Accessibility ≥ 90)
+- [x] Uji semua link (WhatsApp, email, Instagram), form waitlist, modal (backdrop/✕/ESC, tab trap)
+- [x] Uji `prefers-reduced-motion`
 
 ---
 

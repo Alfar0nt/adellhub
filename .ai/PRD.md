@@ -1,8 +1,8 @@
 # PRD — Adellhub Landing Page
 
-**Versi Dokumen:** 1.2.0  
+**Versi Dokumen:** 1.3.0  
 **Tanggal:** 2026-09-18  
-**Status:** Disetujui  
+**Status:** Live — deploy Cloudflare Pages, seluruh checklist terverifikasi  
 **Author:** Adellhub Team  
 **Skills yang Direferensikan:** `frontend-design`, `landing-page-generator`, `semantic-html-and-seo`, `find-animation-opportunities`, `svg-icon-generator`
 
@@ -220,6 +220,7 @@ File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
 | 1.0.0 | 2026-09-18 | Versi awal PRD |
 | 1.1.0 | 2026-09-18 | Sinkronisasi skill referensi & struktur |
 | 1.2.0 | 2026-09-18 | Kontak final (email, WA, IG), palet warna kontras AA (`#D2251C`/`#757575`), tambahan dokumen legal (privacy/terms), judul kontak "MARI TERHUBUNG" |
+| 1.3.0 | 2026-09-18 | Status **live** di `https://adellhub.biz.id` (Cloudflare Pages); Functional Checklist terverifikasi; Email Routing & og-image aktif |
 
 ---
 
@@ -234,16 +235,16 @@ File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
 | TTI (Time to Interactive) | < 3s |
 
 ### Functional Checklist
-- [ ] Landing page load time < 2.5 detik (dari skill `landing-page-generator`)
-- [ ] Overlay "coming soon" muncul saat tombol layanan diklik
-- [ ] Form waitlist dapat diisi dan submit via email
-- [ ] Tampilan responsive di breakpoint: 360px, 480px, 768px, 1024px, 1280px, 1440px
-- [ ] Pre-loader berjalan saat halaman pertama kali dimuat
-- [ ] Seluruh navigasi smooth scroll berfungsi
-- [ ] Semua link (email, WA, Instagram) berfungsi
-- [ ] `prefers-reduced-motion` dihormati
-- [ ] Hover states di-gate dengan `@media (hover: hover)`
-- [ ] Touch targets ≥ 44px pada `@media (pointer: coarse)`
-- [ ] Images menggunakan `loading="lazy"` untuk below-the-fold
-- [ ] Open Graph tags lengkap untuk social sharing
-- [ ] Lighthouse: Performance > 90, Accessibility > 90
+- [x] Landing page load time < 2.5 detik (dari skill `landing-page-generator`)
+- [x] Overlay "coming soon" muncul saat tombol layanan diklik
+- [x] Form waitlist dapat diisi dan submit via email
+- [x] Tampilan responsive di breakpoint: 360px, 480px, 768px, 1024px, 1280px, 1440px
+- [x] Pre-loader berjalan saat halaman pertama kali dimuat
+- [x] Seluruh navigasi smooth scroll berfungsi
+- [x] Semua link (email, WA, Instagram) berfungsi
+- [x] `prefers-reduced-motion` dihormati
+- [x] Hover states di-gate dengan `@media (hover: hover)`
+- [x] Touch targets ≥ 44px pada `@media (pointer: coarse)`
+- [x] Images menggunakan `loading="lazy"` untuk below-the-fold
+- [x] Open Graph tags lengkap untuk social sharing
+- [x] Lighthouse: Performance > 90, Accessibility > 90 — terverifikasi di production (hasil bagus)

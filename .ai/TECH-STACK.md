@@ -9,7 +9,7 @@
 
 | Layer | Teknologi | Versi | Alasan |
 |-------|-----------|-------|--------|
-| Build Tool | **Vite** | ^6.x | Fast HMR, zero-config, output optimal |
+| Build Tool | **Vite** | 8.3.0 (pinned) | Fast HMR, zero-config, output optimal |
 | Base Language | **Vanilla JavaScript** | ES2022+ | Ringan, tidak perlu framework berat untuk SPA sederhana |
 | Markup | **HTML5** | - | Semantic & accessible |
 | Styling | **Vanilla CSS** | CSS3 | Kontrol penuh untuk Bauhaus geometry & animasi |
@@ -26,6 +26,8 @@
 | Gambar Portfolio | Handcrafted SVG (keputusan tim) | 3 placeholder artistik Bauhaus (`adellwork/adelltech/adellbooth-preview.svg`) — **bukan** AI-generated |
 | Favicon | `public/favicon.svg` | Logo geometris Adellhub |
 | Stylesheet Legal | `public/legal.css` | Style bersama halaman privacy-policy & terms-of-service |
+| Share Image | `public/og-image.png` | 1200×630, gaya Bauhaus (source: `docs/og-image.svg`) |
+| Security Headers | `public/_headers` | Headers keamanan untuk Cloudflare Pages (CSP, HSTS, dll) |
 
 ---
 
@@ -40,8 +42,10 @@ adellhub/
 ├── docs/                   # Changelog & release notes
 │   └── CHANGELOG.md
 ├── public/                 # Static files (di-copy langsung ke dist/)
+│   ├── _headers            # Headers keamanan (Cloudflare Pages)
 │   ├── favicon.svg
-│   └── legal.css           # Stylesheet bersama halaman legal
+│   ├── legal.css           # Stylesheet bersama halaman legal
+│   └── og-image.png        # Social share image 1200×630
 ├── src/                    # Source code (setelah init Vite)
 │   ├── main.js             # Entry point JS
 │   ├── style.css           # Global styles & design tokens
@@ -101,7 +105,7 @@ adellhub/
 ### DevDependencies
 | Package | Versi | Fungsi |
 |---------|-------|--------|
-| `vite` | ^6.x | Build tool & dev server |
+| `vite` | 8.3.0 (pinned, tanpa `^`) | Build tool & dev server — version pinning agar `npm audit` bersih |
 
 ---
 
@@ -123,11 +127,14 @@ Daftar skills yang harus digunakan AI Agent selama pengerjaan:
 
 | Aspek | Detail |
 |-------|--------|
-| Target Hosting | **Cloudflare Pages** (keputusan tim — domain & email routing sudah di Cloudflare) |
+| Status | **LIVE** di `https://adellhub.biz.id` (Cloudflare Pages, custom domain) |
+| Platform | **Cloudflare Pages** — Git integration (push ke `main` → auto deploy) |
 | Build Command | `npm run build` |
 | Output Dir | `dist/` |
 | Dev Command | `npm run dev` |
 | Build Config | Multi-page: `index.html` + `privacy-policy.html` + `terms-of-service.html` (`vite.config.js` → `rollupOptions.input`) |
+| Security Headers | `public/_headers` → otomatis diterapkan Cloudflare Pages ke seluruh route |
+| Email | Cloudflare Email Routing **aktif**: `waitlist@adellhub.biz.id` & `hello@adellhub.biz.id` → email pribadi |
 
 ---
 

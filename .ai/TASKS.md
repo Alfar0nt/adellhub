@@ -1,8 +1,8 @@
 # TASKS — Adellhub Landing Page
 
-**Versi Dokumen:** 1.7.0  
+**Versi Dokumen:** 1.8.0  
 **Terakhir Diperbarui:** 2026-09-18  
-**Status Keseluruhan:** 🟢 Seluruh Phase Selesai (0–9) — Post-launch tweaks (auto-hide header mobile) diterapkan
+**Status Keseluruhan:** 🟢 **LIVE** di `https://adellhub.biz.id` — deploy, Email Routing & verifikasi pasca-deploy selesai
 
 > **Instruksi untuk AI Agent:**
 > - Tandai task dengan `[/]` saat mulai mengerjakan
@@ -200,6 +200,7 @@ Task kecil hasil review setelah website live/deploy.
 
 - [x] **5. Fix mobile view top navbar makan space** — header mobile dipangkas **72px → 56px → 48px** dan kini **auto-hide**: saat user scroll ke bawah (melewati 120px) header slide keluar (transform `translateY(-100%)`), muncul kembali saat scroll ke atas. Header tidak pernah disembunyikan saat menu mobile terbuka. Target sentuh tetap ≥44px (hamburger 44px pas di bar 48px). Reduced-motion tetap dihormati (transisi near-instant)
 - [x] **6. Smooth scroll buat tiap section (opsional)** — sudah terpasang dua lapis sejak awal: `html { scroll-behavior: smooth }` di `src/style.css` + handler JS `window.scrollTo({ behavior: 'smooth' })` di `src/components/header.js` (offset header dinamis, hormati `prefers-reduced-motion`). Tidak perlu perubahan kode — dicatat sebagai task terpenuhi
+- [x] **7. Verifikasi pasca-deploy** — Cloudflare Email Routing **aktif** (`waitlist@` & `hello@` → email pribadi, verifikasi email masuk sukses); `og-image.png` live & preview social media tampil; **Lighthouse** hasil bagus (sesuai target ≥90); halaman dicek di Chrome & Firefox
 
 ---
 
