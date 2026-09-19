@@ -1,7 +1,7 @@
 # TECH-STACK — Adellhub Landing Page
 
-**Versi Dokumen:** 1.2.0  
-**Tanggal:** 2026-09-18
+**Versi Dokumen:** 1.3.0  
+**Tanggal:** 2026-09-19
 
 ---
 
@@ -63,6 +63,10 @@ adellhub/
 ├── index.html              # Entry point SPA utama
 ├── privacy-policy.html     # Halaman statis Kebijakan Privasi (multi-page entry)
 ├── terms-of-service.html   # Halaman statis Syarat & Ketentuan (multi-page entry)
+├── links/                  # Link-in-bio → /links/ (multi-page entry `links`)
+│   ├── index.html          # Profil + kartu link (rendered via script.js)
+│   ├── styles.css          # Bauhaus — tokens sama dgn halaman utama
+│   └── script.js           # ES module: config LINKS + ikon glyph inline
 ├── vite.config.js          # Konfigurasi Vite (rollupOptions.input untuk multi-page)
 ├── package.json
 └── README.md
@@ -132,7 +136,7 @@ Daftar skills yang harus digunakan AI Agent selama pengerjaan:
 | Build Command | `npm run build` |
 | Output Dir | `dist/` |
 | Dev Command | `npm run dev` |
-| Build Config | Multi-page: `index.html` + `privacy-policy.html` + `terms-of-service.html` (`vite.config.js` → `rollupOptions.input`) |
+| Build Config | Multi-page: `index.html` + `privacy-policy.html` + `terms-of-service.html` + `links/index.html` (`vite.config.js` → `rollupOptions.input`) |
 | Security Headers | `public/_headers` → otomatis diterapkan Cloudflare Pages ke seluruh route |
 | Email | Cloudflare Email Routing **aktif**: `waitlist@adellhub.biz.id` & `hello@adellhub.biz.id` → email pribadi |
 

@@ -8,8 +8,9 @@
  * ── KONFIGURASI KONTEN ─────────────────────────────────────────────────
  * Ubah `LINKS` di bawah (title, description, url, dan ikon).
  * Ikon per link:
- *   image    — hasil ES import dari `./images/*.svg` (brand, warna asli)
- *   svgIcon  — string SVG inline (zero network request)
+ *   svgIcon  — string SVG inline (zero network request) — DIREKOMENDASIKAN
+ *   image    — hasil ES import dari file SVG; folder `./images/` perlu
+ *              dibuat ulang jika fitur ini dipakai lagi
  * ────────────────────────────────────────────────────────────────────────
  */
 

@@ -1,8 +1,8 @@
 # TASKS — Link-in-Bio (folder `links/`) — Adellhub
 
-**Versi Dokumen:** 1.8.0  
+**Versi Dokumen:** 1.10.0  
 **Terakhir Diperbarui:** 2026-09-19  
-**Status Keseluruhan:** 🟢 Seluruh phase selesai — menunggu verifikasi visual user di `/links/`  
+**Status Keseluruhan:** 🟢 Seluruh phase selesai + revisi — menunggu deploy user (direncanakan rilis **1.1.0**)  
 **Branch:** `develop`
 
 > **Instruksi untuk AI Agent:**
@@ -156,16 +156,21 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 - [x] Isi daftar link (3, dari user): **Situs Resmi** (globe inline → `https://adellhub.biz.id`), **Instagram** (`@adellhub` → `instagram.com/adellhub`), **TikTok** (`@adellhub` → `tiktok.com/@adellhub`)
 - [x] Hapus konten lama sepenuhnya: LinkedIn/CV/Wiki/GitHub/IG pribadi/YouTube/Spotify dari `LINKS`; ikon inline `fileIcon`/`bookIcon` dibuang; SVG tak terpakai dihapus (`linkedin/github/youtube/spotify.svg`) → `links/images/` kini `instagram.svg` + `tiktok.svg` (baru)
 - [x] JSON-LD: `Person` → **`Organization`** (konsisten halaman utama), name Adellhub, url `/links/`, `sameAs` = Instagram + TikTok — placeholder meta/komentar dihapus
-- [ ] (Opsional, butuh konfirmasi) tambah tombol/link dari halaman utama `index.html` menuju `/links/` — **belum dikonfirmasi user**
+- [x] (Opsional) tambah tombol/link dari halaman utama `index.html` menuju `/links/` — **diputuskan user: TIDAK** (halaman diakses langsung via URL; task ditutup 2026-09-19)
 
 **Hasil Phase L-6 (2026-09-19):**
-- Konten final terpasang; build & preview: `/links/` 200, `<h1>Adellhub`, tagline, JSON-LD Organization, `sameAs` IG+TikTok, `mailto:` intact; TikTok + Instagram SVG ter-inline di bundle JS (`.data:image/svg+xml`); halaman utama 200; `npm audit` 0
-- 3 kartu ter-render via `LINKS` (JS runtime) — **audit visual final oleh user di `/links/`**
+- Konten final terpasang; build & preview: `/links/` 200, `<h1>Adellhub`, tagline, JSON-LD Organization, `sameAs` IG+TikTok, `mailto:` intact; halaman utama 200; `npm audit` 0
+- 3 kartu ter-render via `LINKS` (JS runtime) — **audit visual final oleh user di `/links/`** (ikon sempat pakai SVG brand; migrasi ke glyph inline monokrom tercatat di "Revisi pasca-L-6" di bawah)
 
 **Revisi pasca-L-6 (umpan balik visual user, 2026-09-19):**
 - Ikon kartu Instagram & TikTok tak lagi `<img>` brand berwarna (terlihat seperti "foto default" memenuhi tile 48×48) → diganti **glyph kanonik monokrom filled** (`fill="currentColor"`, charcoal 24px via CSS tile) — seragam dengan globe Situs Resmi di tile Bauhaus yang sama
 - `links/images/` dihapus (folder kini kosong); seluruh ikon murni string inline (`svgIcon`)
 - Verifikasi build/preview: bundle `links-BWatV58D.js` 5.51 kB, **tanpa `data:image/svg+xml`**, path glyph IG (`M12 0C8.74`) & TikTok (`M12.525.02`) ter-inline; halaman utama & legal 200
+
+**Revisi pasca-L-6 #2 — latar statis anti-glitch (umpan balik visual user, 2026-09-19):**
+- Gejala: di mobile, ring (lingkaran kiri), kotak merah kiri-bawah, dan dot kanan-atas **sesekali ikut naik/turun saat scroll**. Audit: **tidak ada animasi CSS di `.geo-bg`** — ini glitch repaint elemen `position: fixed` saat scroll/pengubahan toolbar mobile (bukan animasi)
+- Keputusan user: **anti-jank, dekorasi tetap** → `.geo-bg` di-promote ke layer kompositor (`transform: translateZ(0)` + `will-change: transform`) & `overflow: hidden` dihapus → dekorasi benar-benar statis tanpa repaint saat scroll; tampilan tidak berubah
+- Terverifikasi di build CSS: `.geo-bg{z-index:-1;will-change:transform;pointer-events:none;position:fixed;inset:0;transform:translateZ(0)}`
 
 ---
 
@@ -181,4 +186,4 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 | Phase L-5 | Integrasi Vite & QA Build | 🟢 Selesai |
 | Phase L-6 | Input Konten Final | 🟢 Selesai |
 
-**Sisa setalah seluruh phase:** push user → deploy → verifikasi visual `/links/` (render 3 kartu, responsive 360–1280, reduced-motion, kontras) → (opsional) tombol `/links/` dari halaman utama.
+**Sisa setelah seluruh phase:** push user → deploy (direncanakan rilis **1.1.0**) → `/links/` live di `https://adellhub.biz.id/links/` → verifikasi visual final (render 3 kartu, responsive 360–1280, reduced-motion, kontras, scroll anti-glitch).

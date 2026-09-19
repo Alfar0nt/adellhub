@@ -131,7 +131,10 @@ h1, h2, h3 {
   position: fixed;
   inset: 0;
   z-index: -1;
-  overflow: hidden;
+  /* Anti-jank mobile: lapisan ini di-promote ke layer kompositor sendiri
+     agar tidak ikut ter-repaint saat scroll (pergeseran sekali-sekali). */
+  transform: translateZ(0);
+  will-change: transform;
   pointer-events: none;
 }
 

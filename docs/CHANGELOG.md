@@ -43,25 +43,24 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ---
 
-## [Unreleased]
+## [1.1.0] — 2026-09-19
+
+Halaman **link-in-bio `/links/`** — redesign penuh dari versi lama (dark glassmorphism + background video) menjadi Bauhaus Adellhub, terintegrasi build Vite.
 
 ### Added
-- **`links/` konten final (Phase L-6):** profil diberi identitas — nama **Adellhub**, role **Startup Indonesia**, deskripsi "Ekosistem bisnis startup IT: Adellwork, Adelltech, dan Adellbooth."; daftar link diisi 3 tautan resmi dari user: **Situs Resmi** (`adellhub.biz.id`, ikon globe inline baru), **Instagram** (`@adellhub`), **TikTok** (`@adellhub`, ikon brand baru `images/tiktok.svg` — motif hitam TikTok + glyph putih, konsisten gaya SVG brand lain). JSON-LD dikonversi `Person` → **`Organization`** (konsisten halaman utama) dgn `sameAs` = Instagram + TikTok
-- **`links/` ikon baru:** `images/tiktok.svg` (72×72, `#010101` + glyph putih) via skill `svg-icon-generator`; ikon inline `globeIcon` utk kartu "Situs Resmi" (st 24×24 stroke, satu gaya dgn `fileIcon`/`bookIcon`)
-- **`vite.config.js` (Phase L-5):** entry `links` ditambahkan ke `rollupOptions.input` → build kini menghasilkan `dist/links/index.html`; `/links/` ikut ter-deploy bersama halaman utama. Verifikasi `vite preview`: `/links/` HTTP 200 + semua aset (`profile.jpg`, CSS, JS) ter-rewrite ke path hashed; 5 brand SVG ter-inline (data URI); `npm audit` tetap 0 vulnerabilities
-- **Link-in-bio `links/`, Phase L-1 — redesign Bauhaus Adellhub:** struktur HTML semantik ulang (header wordmark ADELLHUB → main → footer, satu `<h1>`, sr-only `h2` utk section Tautan), meta SEO/OG/twitter + canonical `https://adellhub.biz.id/links/`, `lang="id"`, latar geometris statis (`dot grid` + aksen merah + ring) pengganti background video, design tokens warna/font/motion menyatu dengan design system halaman utama (`src/style.css`)
+- **Halaman `/links/` (Phase L-1 s.d. L-5):** entry `links` di `vite.config.js` → `dist/links/index.html` ikut ter-deploy di `https://adellhub.biz.id/links/`. Struktur HTML semantik (header wordmark ADELLHUB → main → footer, satu `<h1>`, sr-only `<h2>`), `lang="id"`, meta title/description/OG/twitter + canonical, **JSON-LD `Organization`** (name Adellhub, `sameAs` = Instagram + TikTok), latar geometris statis Bauhaus (`dot grid` + kotak merah + ring) pengganti background video, `preload` LCP foto profil
+- **`links/script.js`:** ditulis ulang jadi ES module kompatibel Vite — config `LINKS` terpusat, `safeExternalUrl` allowlist `http/https` + `escapeHtml` (pola `modal.js`), DocumentFragment single-reflow + stagger 60ms, guard `prefers-reduced-motion`. **Ikon kartu glyph monokrom inline** (`fill="currentColor"`, charcoal 24px via tile) — globe utk "Situs Resmi", glyph kanonik Instagram & TikTok — seragam di tile Bauhaus, tanpa request aset
+- **`links/styles.css`:** ditulis ulang — tokens menyatu design system halaman utama (`src/style.css`), kartu `bauhaus-card` hard shadow, judul uppercase + bullet merah 6px, hover gated `(hover:hover) and (pointer:fine)`, `contain: content`, touch target ≥44px (`pointer: coarse`), breakpoint 360/480/768/1280, `prefers-reduced-motion`, `:focus-visible`
+- **Konten final (Phase L-6):** nama **Adellhub**, role **Startup Indonesia**, deskripsi "Ekosistem bisnis startup IT: Adellwork, Adelltech, dan Adellbooth."; daftar link dari user: **Situs Resmi** (`adellhub.biz.id`), **Instagram** (`@adellhub`), **TikTok** (`@adellhub`); tombol kontak `mailto:hello@adellhub.biz.id`
+
 ### Changed
-- **`links/` ikon kartu monokrom (revisi post-L-6, umpan balik visual user):** ikon Instagram & TikTok dari `<img>` brand berwarna (data-URI — tampak seperti "foto" memenuhi tile 48×48) → **glyph kanonik monokrom filled** inline (`fill="currentColor"`, `aria-hidden`), dirender 24px **charcoal** via `.link-icon-container svg` → seragam dengan globe "Situs Resmi" di tile Bauhaus. Bundle `links-*.js` 5.51 kB tanpa `data:image/svg+xml`
-- **`links/` (Phase L-4 — Aksesibilitas, SEO & Responsiveness):** JSON-LD `Person` ditambahkan (name placeholder + `sameAs` tautan sosial/Wiki); ikon kartu → `alt=""` (dekoratif) + `aria-label="{judul} — buka di tab baru"` per link; meta description & OG/twitter desc diperpanjang ke 133 karakter; `@media (pointer: coarse)` menambah wordmark `min-height:44px` + menghilangkan tap highlight; breakpoint `360px` ditambah (padding 16px, gap kartu 8px, desc 12px). Kontras token AA & hierarki heading (h1 → h2 sr-only → h3) diverifikasi
-- **`links/` (Phase L-3 — Interaksi & Animasi):** `renderLinks()` kini menghormati `prefers-reduced-motion` (stagger delay & `will-change` dilewati bila aktif — hemat CPU/baterai), ikon kartu diberi `loading="lazy"` (praktik performa dipertahankan); transisi `.link-card` dirapikan ke `transform` + `box-shadow` saja. Hover tetap gated `(hover:hover) and (pointer:fine)` sejak phase awal; `:focus-visible` outline 2px arang konsisten dengan halaman utama
-- **`links/styles.css`:** ditulis ulang penuh — dark glassmorphism + Inter saja → Bauhaus (`#F5F0E8`/`#1A1A1A`/`#D2251C`, Space Grotesk + Inter, kartu `bauhaus-card` dgn hard shadow, hover gated `(hover:hover)`, `contain: content`, `prefers-reduced-motion`). Label kartu link **uppercase** + bullet merah 6px (kesepakatan tim; keputusan Phase L-2)
-- **`links/script.js`:** ditulis ulang → ES module kompatibel Vite — ikon brand pakai ES import (`./images/*.svg`), config `LINKS` terpusat (placeholder s/d L-6), `safeExternalUrl` allowlist `http/https` + `escapeHtml` (pola `modal.js`), DocumentFragment single-reflow + stagger entri dipertahankan. `initBackgroundVideo()` dihapus total
-- **`links/index.html`:** `<script>` klasik `defer` → `<script type="module">` (syarat bundling Vite)
-- **`links/script.js` (sementara):** `initBackgroundVideo()` kini no-op karena elemen `#bg-video` dihapus; rewrite penuh direncanakan di Phase L-2
+- **Latar statis anti-glitch:** `.geo-bg` di-promote ke layer kompositor (`transform: translateZ(0)` + `will-change: transform`), `overflow: hidden` dihapus — dekorasi `position: fixed` tidak lagi "ikut naik/turun" sesekali saat scroll di mobile (bukan animasi — hanya glitch repaint layar fixed)
+- **Aksesibilitas & SEO (L-4):** kontras token AA diverifikasi, ikon kartu `alt=""` (dekoratif) + `aria-label="{judul} — buka di tab baru"`, meta description 133 karakter, wordmark `min-height:44px` di pointer coarse, tap highlight dihilangkan
+- **Interaksi & animasi (L-3):** stagger & `will-change` kartu dilewati saat `prefers-reduced-motion`, `loading="lazy"` pada aset, transisi `.link-card` dirapikan ke `transform` + `box-shadow`
+
 ### Removed
-- **`links/images/`:** seluruh file SVG brand dihapus — `linkedin.svg`, `github.svg`, `youtube.svg`, `spotify.svg` (konten lama) lalu `instagram.svg` + `tiktok.svg` (direvisi jadi glyph inline monokrom); **folder `links/images/` dihapus total**
-- **`links/script.js`:** konten lama LINKS (LinkedIn/CV/Wiki/GitHub/IG pribadi/YouTube/Spotify) + ikon inline `fileIcon`/`bookIcon` dibuang
-- **`links/`:** markup & aset background video (`video-container`, `#bg-video`, overlay, `letter-bg.mp4`)
+- **Konten lama `links/`:** 7 link personal (LinkedIn/CV/Wiki/GitHub/IG pribadi/YouTube/Spotify), ikon inline `fileIcon`/`bookIcon`, seluruh `links/images/*.svg` (folder `images/` dihapus total), markup & aset background video (`video-container`, `#bg-video`, overlay, `letter-bg.mp4`)
+- **10 file tak terpakai hasil audit L-0:** `test.md`, `resume.png`, `resume-v2.png`, `wiki.png`, `wordpress.png`, `dev.png`, `amazon.svg`, `facebook.svg`, `google.svg`, `twitter.svg`
 
 ## [1.0.1] — 2026-09-18
 

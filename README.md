@@ -1,6 +1,6 @@
 # adellhub
 
-Landing page satu halaman untuk Adellhub — ekosistem startup IT (Adellwork, Adelltech, Adellbooth). Dibangun dengan Vite + Vanilla JS, desain Bauhaus.
+Landing page satu halaman untuk Adellhub — ekosistem startup IT (Adellwork, Adelltech, Adellbooth). Dibangun dengan Vite + Vanilla JS, desain Bauhaus. Termasuk halaman **link-in-bio** di **`https://adellhub.biz.id/links/`**.
 
 **🔴 Live:** https://adellhub.biz.id (Cloudflare Pages, custom domain).
 
@@ -30,7 +30,7 @@ npm run preview  # preview build → http://localhost:4173
 
 ## Deployment — Cloudflare Pages
 
-Landing page ini statis (SPA + halaman legal), di-build ke folder `dist/`, dan di-deploy ke **Cloudflare Pages**. **Status: sudah live** di `https://adellhub.biz.id` (Git integration + custom domain). Instruksi di bawah sebagai referensi untuk setup serupa atau re-deploy.
+Landing page ini statis (SPA + halaman legal + link-in-bio), di-build ke folder `dist/`, dan di-deploy ke **Cloudflare Pages**. **Status: sudah live** di `https://adellhub.biz.id` (Git integration + custom domain). Instruksi di bawah sebagai referensi untuk setup serupa atau re-deploy.
 
 ### Via Git Integration (Recommended)
 
@@ -116,7 +116,11 @@ adellhub/
 ├── index.html                  # SPA entry
 ├── privacy-policy.html         # Kebijakan Privasi (static, multi-page)
 ├── terms-of-service.html       # Syarat & Ketentuan (static, multi-page)
-└── vite.config.js              # Vite config (multi-page input)
+├── links/                      # Link-in-bio → /links/ (Vite entry `links`)
+│   ├── index.html
+│   ├── styles.css              # Bauhaus (tokens sama dgn halaman utama)
+│   └── script.js               # ES module: config LINKS + ikon glyph inline
+└── vite.config.js              # Vite config (multi-page input: main, privacy, terms, links)
 ```
 
 ## Tech Stack
