@@ -123,20 +123,21 @@ export async function onRequestPost(context) {
   const origin = request.headers.get('Origin') || '';
 
   // 0. Rate limiting (bypass untuk localhost/debugging)
-  let clientIP = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For')?.split(',')[0].trim() || '127.0.0.1';
-  const isLocalhost = clientIP === '127.0.0.1' || clientIP === '::1';
-  if (!isLocalhost) {
-    const allowed = await checkRateLimit(clientIP);
-    if (!allowed) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Terlalu banyak permintaan. Silakan coba lagi dalam 60 detik.' }),
-        {
-          status: 429,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-    }
-  }
+  // COMMENTED: Debugging production error - Cache API may throw exception
+  // let clientIP = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For')?.split(',')[0].trim() || '127.0.0.1';
+  // const isLocalhost = clientIP === '127.0.0.1' || clientIP === '::1';
+  // if (!isLocalhost) {
+  //   const allowed = await checkRateLimit(clientIP);
+  //   if (!allowed) {
+  //     return new Response(
+  //       JSON.stringify({ success: false, error: 'Terlalu banyak permintaan. Silakan coba lagi dalam 60 detik.' }),
+  //       {
+  //         status: 429,
+  //         headers: { 'Content-Type': 'application/json' },
+  //       }
+  //     );
+  //   }
+  // }
 
   // 1. CORS Validation: Block request dari origin yang tidak diizinkan
   if (origin && !isOriginAllowed(origin)) {
