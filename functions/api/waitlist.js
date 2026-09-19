@@ -3,24 +3,47 @@
  * Menerima data pendaftaran waitlist dan mengirim notifikasi ke grup Telegram (Topic).
  */
 
-const ALLOWED_ORIGINS = [
-  'https://adellhub.biz.id',
-  'http://localhost:3000',
-  'http://localhost:5173',
-  'http://127.0.0.1:3000',
-  'http://127.0.0.1:5173',
-];
+const PRODUCTION_ORIGIN = 'https://adellhub.biz.id';
+
+function isOriginAllowed(origin) {
+  if (!origin) return true; // Direct / same-origin request
+  if (origin === PRODUCTION_ORIGIN || origin.endsWith('.pages.dev')) return true;
+
+  // Mendukung pengujian lokal (localhost, 127.0.0.1, LAN IP seperti Wrangler port 8788, Vite 3000/5173)
+  try {
+    const url = new URL(origin);
+    const host = url.hostname;
+    if (
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host === '0.0.0.0' ||
+      host.startsWith('192.168.') ||
+      host.startsWith('10.') ||
+      host.startsWith('172.')
+    ) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+
+  return false;
+}
 
 function getCorsHeaders(request) {
   const origin = request.headers.get('Origin') || '';
-  const isAllowed = ALLOWED_ORIGINS.includes(origin) || origin.endsWith('.pages.dev');
+  const allowed = isOriginAllowed(origin);
 
   return {
-    'Access-Control-Allow-Origin': isAllowed ? origin : 'https://adellhub.biz.id',
+    'Access-Control-Allow-Origin': allowed ? (origin || 'https://adellhub.biz.id') : 'https://adellhub.biz.id',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
   };
+}
+
+function stripHtmlTags(str) {
+  return String(str || '').replace(/<[^>]*>/g, '').trim();
 }
 
 function escapeHtml(str) {
@@ -52,6 +75,11 @@ function formatWIB(date = new Date()) {
 }
 
 export async function onRequestOptions(context) {
+  const origin = context.request.headers.get('Origin') || '';
+  if (origin && !isOriginAllowed(origin)) {
+    return new Response(null, { status: 403 });
+  }
+
   return new Response(null, {
     status: 204,
     headers: getCorsHeaders(context.request),
@@ -60,9 +88,22 @@ export async function onRequestOptions(context) {
 
 export async function onRequestPost(context) {
   const { request, env } = context;
+  const origin = request.headers.get('Origin') || '';
+
+  // 1. CORS Validation: Block request dari origin yang tidak diizinkan
+  if (origin && !isOriginAllowed(origin)) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Forbidden: Origin tidak diizinkan' }),
+      {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
   const corsHeaders = getCorsHeaders(request);
 
-  // 1. Validasi Content-Type
+  // 2. Validasi Content-Type
   const contentType = request.headers.get('content-type') || '';
   if (!contentType.includes('application/json')) {
     return new Response(
@@ -74,7 +115,7 @@ export async function onRequestPost(context) {
     );
   }
 
-  // 2. Parse payload dengan perlindungan batas ukuran (max 10KB)
+  // 3. Parse payload dengan perlindungan batas ukuran (max 10KB)
   let body;
   try {
     const rawText = await request.text();
@@ -107,7 +148,7 @@ export async function onRequestPost(context) {
     formOpenedAt, // Timestamp modal dibuka
   } = body || {};
 
-  // 3. Anti-Spam: Honeypot check (jika field tersembunyi terisi, tolak secara silent)
+  // 4. Anti-Spam: Honeypot check (jika field tersembunyi terisi, tolak secara silent)
   if (website && String(website).trim().length > 0) {
     return new Response(
       JSON.stringify({ success: true, message: 'Pendaftaran berhasil diterima' }),
@@ -118,7 +159,7 @@ export async function onRequestPost(context) {
     );
   }
 
-  // 4. Anti-Spam: Time-to-submit check (bot biasanya submit < 2 detik)
+  // 5. Anti-Spam: Time-to-submit check (bot biasanya submit < 2 detik)
   if (formOpenedAt && typeof formOpenedAt === 'number') {
     const timeTaken = Date.now() - formOpenedAt;
     if (timeTaken > 0 && timeTaken < 2000) {
@@ -132,12 +173,13 @@ export async function onRequestPost(context) {
     }
   }
 
-  // 5. Validasi field wajib
-  const trimmedName = String(name || '').trim();
-  const trimmedEmail = String(email || '').trim();
-  const trimmedService = String(service || 'Adellhub').trim();
+  // 6. Input Sanitization & Validation
+  // Bersihkan tag HTML dari input string
+  const cleanName = stripHtmlTags(name);
+  const cleanEmail = stripHtmlTags(email);
+  const cleanService = stripHtmlTags(service) || 'Adellhub';
 
-  if (!trimmedName) {
+  if (!cleanName) {
     return new Response(
       JSON.stringify({ success: false, error: 'Nama lengkap wajib diisi' }),
       {
@@ -147,7 +189,7 @@ export async function onRequestPost(context) {
     );
   }
 
-  if (trimmedName.length > 100) {
+  if (cleanName.length > 100) {
     return new Response(
       JSON.stringify({ success: false, error: 'Nama maksimal 100 karakter' }),
       {
@@ -157,8 +199,8 @@ export async function onRequestPost(context) {
     );
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+  // Cegah newline / CRLF injection pada email
+  if (/[\r\n]/.test(cleanEmail)) {
     return new Response(
       JSON.stringify({ success: false, error: 'Format email tidak valid' }),
       {
@@ -168,7 +210,18 @@ export async function onRequestPost(context) {
     );
   }
 
-  if (trimmedEmail.length > 254) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!cleanEmail || !emailRegex.test(cleanEmail)) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Format email tidak valid' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      }
+    );
+  }
+
+  if (cleanEmail.length > 254) {
     return new Response(
       JSON.stringify({ success: false, error: 'Email maksimal 254 karakter' }),
       {
@@ -178,7 +231,17 @@ export async function onRequestPost(context) {
     );
   }
 
-  // 6. Konfigurasi kredensial Telegram dari environment
+  if (cleanService.length > 100) {
+    return new Response(
+      JSON.stringify({ success: false, error: 'Nama layanan maksimal 100 karakter' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      }
+    );
+  }
+
+  // 7. Konfigurasi kredensial Telegram dari environment
   const token = env.TELEGRAM_BOT_TOKEN;
   const chatId = env.TELEGRAM_CHAT_ID;
   const threadIdRaw = env.TELEGRAM_THREAD_ID;
@@ -198,16 +261,16 @@ export async function onRequestPost(context) {
   }
 
   const threadId = threadIdRaw ? parseInt(threadIdRaw, 10) : undefined;
-  const clientDevice = userAgent || request.headers.get('User-Agent') || 'Unknown device';
+  const clientDevice = stripHtmlTags(userAgent || request.headers.get('User-Agent') || 'Unknown device').slice(0, 200);
   const timestampWIB = formatWIB(new Date());
 
-  // 7. Format pesan Telegram dengan HTML escaping
+  // 8. Format pesan Telegram dengan HTML escaping menyeluruh
   const messageLines = [
     '🔔 <b>Pendaftaran Waitlist Baru!</b>',
     '',
-    `👤 <b>Nama:</b> ${escapeHtml(trimmedName)}`,
-    `📧 <b>Email:</b> ${escapeHtml(trimmedEmail)}`,
-    `🏷️ <b>Layanan:</b> ${escapeHtml(trimmedService)}`,
+    `👤 <b>Nama:</b> ${escapeHtml(cleanName)}`,
+    `📧 <b>Email:</b> ${escapeHtml(cleanEmail)}`,
+    `🏷️ <b>Layanan:</b> ${escapeHtml(cleanService)}`,
     `🕐 <b>Waktu:</b> ${timestampWIB}`,
     `📱 <b>Device:</b> ${escapeHtml(clientDevice)}`,
     '',
@@ -225,7 +288,7 @@ export async function onRequestPost(context) {
     telegramPayload.message_thread_id = threadId;
   }
 
-  // 8. Kirim notifikasi ke Telegram Bot API
+  // 9. Kirim notifikasi ke Telegram Bot API
   try {
     const telegramRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',

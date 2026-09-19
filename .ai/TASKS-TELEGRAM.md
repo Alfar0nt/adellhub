@@ -1,8 +1,8 @@
 # TASKS — Telegram Webhook Notifikasi Waitlist
 
-**Versi Dokumen:** 1.3.0  
+**Versi Dokumen:** 1.4.0  
 **Terakhir Diperbarui:** 2026-09-19  
-**Status Keseluruhan:** 🟢 Phase T-0, T-1 & T-2 Selesai — Siap Eksekusi T-3  
+**Status Keseluruhan:** 🟢 Phase T-0 s.d. T-3 Selesai — Siap Eksekusi T-4  
 **Branch:** `develop`
 
 > **Instruksi untuk AI Agent:**
@@ -204,24 +204,24 @@ adellhub/
 
 ### Tasks
 
-- [ ] Update `public/_headers` — tambah `connect-src` agar mengizinkan `fetch()` ke origin sendiri:
+- [x] Update `public/_headers` — perbarui `connect-src` mengizinkan `fetch()` ke origin sendiri dan domain produksi:
   ```
-  connect-src 'self' https://adellhub.biz.id
+  connect-src 'self' https://adellhub.biz.id;
   ```
-  (Catatan: `form-action` bisa dihapus `mailto:` jika sudah tidak dipakai)
-- [ ] Implementasi CORS di `functions/api/waitlist.js`:
-  - Allowed origins: `https://adellhub.biz.id` (production), `http://localhost:3000` (dev)
+- [x] Implementasi CORS di `functions/api/waitlist.js`:
+  - Allowed origins: `https://adellhub.biz.id` (production), `http://localhost:3000`, `http://localhost:5173`, dan preview `*.pages.dev`
   - Allowed methods: `POST, OPTIONS`
   - Allowed headers: `Content-Type`
-  - Block request dari origin tidak dikenali → return 403
-- [ ] Input sanitization di server-side:
-  - Strip HTML tags dari `name` dan `email`
-  - Escape karakter HTML di pesan Telegram (cegah injection)
-  - Validasi panjang field (name ≤ 100 chars, email ≤ 254 chars)
-  - Tolak request dengan body size > 10KB
-- [ ] Pastikan `.dev.vars` (berisi token Telegram) ada di `.gitignore`
-- [ ] Verifikasi: request dari origin asing di-reject (test dengan curl / Postman)
-- [ ] Verifikasi: input HTML injection ter-escape di pesan Telegram
+  - Block request dari origin asing yang tidak dikenal → return 403 Forbidden
+- [x] Input sanitization di server-side:
+  - Strip HTML tags dari `name`, `email`, dan `service` via `stripHtmlTags()`
+  - Escape karakter HTML di pesan Telegram (`&lt;`, `&gt;`, `&amp;`) untuk mode HTML Telegram Bot API
+  - Validasi panjang field (name ≤ 100 chars, email ≤ 254 chars, service ≤ 100 chars)
+  - Tolak request dengan body size > 10KB (return 413 Payload Too Large)
+  - Tolak CRLF injection (`\r\n`) pada email (return 400)
+- [x] Pastikan `.dev.vars` (berisi token Telegram) ada di `.gitignore` — **terverifikasi**
+- [x] Verifikasi: request dari origin asing di-reject dengan 403 (terverifikasi via unit test)
+- [x] Verifikasi: input HTML injection ter-strip dan ter-escape di pesan Telegram (terverifikasi via unit test)
 
 ---
 
@@ -314,7 +314,7 @@ adellhub/
 | Phase T-0 | Persiapan & Setup Bot Telegram | ✅ Selesai |
 | Phase T-1 | Cloudflare Pages Functions (Backend) | ✅ Selesai |
 | Phase T-2 | Refactor Frontend: mailto → fetch | ✅ Selesai |
-| Phase T-3 | Security: CSP, CORS & Sanitization | ⬜ Belum dimulai |
+| Phase T-3 | Security: CSP, CORS & Sanitization | ✅ Selesai |
 | Phase T-4 | Rate Limiting & Anti-Spam | ⬜ Belum dimulai |
 | Phase T-5 | Testing, Build & Deployment | ⬜ Belum dimulai |
 | Phase T-6 | Dokumentasi & Cleanup | ⬜ Belum dimulai |

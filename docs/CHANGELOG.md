@@ -45,6 +45,15 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ## [Unreleased] — Telegram Webhook Notifikasi Waitlist
 
+- **Developer Experience & Local Testing:**
+  - Menambahkan script `"dev:pages": "npm run build && wrangler pages dev dist --ip 0.0.0.0"` pada `package.json` untuk menjalankan local dev server lengkap dengan Cloudflare Pages Functions.
+  - Memperluas CORS check di `functions/api/waitlist.js` agar mendukung origin pengujian lokal secara dinamis (`localhost`, `127.0.0.1`, LAN IP seperti port `8788`, `3000`, `5173`) tanpa mengorbankan keamanan origin produksi.
+- **Security Hardening: CSP, CORS & Input Sanitization (Phase T-3):**
+  - Content Security Policy (CSP) di `public/_headers` diperbarui pada direktif `connect-src` dengan domain produksi eksplisit (`connect-src 'self' https://adellhub.biz.id;`).
+  - Strict CORS validation di `functions/api/waitlist.js`: request yang memuat header `Origin` asing di luar allowlist ditolak langsung dengan status `HTTP 403 Forbidden` (baik pada request utama `POST` maupun preflight `OPTIONS`).
+  - Server-side input sanitization via `stripHtmlTags()` untuk membersihkan tag HTML berbahaya dari input `name`, `email`, dan `service` sebelum diproses.
+  - Proteksi terhadap CRLF injection (`\r\n`) pada field email.
+  - Validasi panjang karakter ketat (nama ≤ 100, email ≤ 254, service ≤ 100) dan batas ukuran payload maksimal 10KB (HTTP 413).
 - **Frontend Refactor Modal Waitlist (Phase T-2):** Form waitlist di `src/components/modal.js` kini mengirim data asynchronous via `fetch('/api/waitlist')` sebagai pengganti `mailto:` langsung.
   - Loading state interaktif dengan spinner berputar bergaya Bauhaus (animasi `transform` murni dan ramah `prefers-reduced-motion`).
   - Tombol submit dan field input dinonaktifkan (`aria-busy="true"`) selama proses pengiriman untuk mencegah double submission.
