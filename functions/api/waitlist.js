@@ -4,10 +4,11 @@
  */
 
 const PRODUCTION_ORIGIN = 'https://adellhub.biz.id';
+const WWW_ORIGIN = 'https://www.adellhub.biz.id';
 
 function isOriginAllowed(origin) {
   if (!origin) return false; // Block request tanpa Origin header
-  if (origin === PRODUCTION_ORIGIN || origin.endsWith('.pages.dev')) return true;
+  if (origin === PRODUCTION_ORIGIN || origin === WWW_ORIGIN || origin.endsWith('.pages.dev')) return true;
 
   // Mendukung pengujian lokal (localhost, 127.0.0.1, LAN IP seperti Wrangler port 8788, Vite 3000/5173)
   try {
@@ -53,36 +54,36 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
-// async function checkRateLimit(clientIP) {
-//   const CACHE_KEY = `rate_limit:${clientIP}`;
-//   const CACHE_TTL = 60;
-//   const MAX_REQUESTS = 5;
-//
-//   const cache = caches.default;
-//   const cached = await cache.match(CACHE_KEY);
-//
-//   if (cached) {
-//     const { count, resetAt } = await cached.json();
-//     if (Date.now() > resetAt) {
-//       await cache.put(CACHE_KEY, new Response(JSON.stringify({ count: 1, resetAt: Date.now() + CACHE_TTL * 1000 }), {
-//         headers: { 'Cache-Control': `max-age=${CACHE_TTL}` }
-//       }));
-//       return true;
-//     }
-//     if (count >= MAX_REQUESTS) {
-//       return false;
-//     }
-//     await cache.put(CACHE_KEY, new Response(JSON.stringify({ count: count + 1, resetAt }), {
-//       headers: { 'Cache-Control': `max-age=${CACHE_TTL}` }
-//     }));
-//     return true;
-//   }
-//
-//   await cache.put(CACHE_KEY, new Response(JSON.stringify({ count: 1, resetAt: Date.now() + CACHE_TTL * 1000 }), {
-//     headers: { 'Cache-Control': `max-age=${CACHE_TTL}` }
-//   }));
-//   return true;
-// }
+async function checkRateLimit(clientIP) {
+  const CACHE_KEY = `rate_limit:${clientIP}`;
+  const CACHE_TTL = 60;
+  const MAX_REQUESTS = 5;
+
+  const cache = caches.default;
+  const cached = await cache.match(CACHE_KEY);
+
+  if (cached) {
+    const { count, resetAt } = await cached.json();
+    if (Date.now() > resetAt) {
+      await cache.put(CACHE_KEY, new Response(JSON.stringify({ count: 1, resetAt: Date.now() + CACHE_TTL * 1000 }), {
+        headers: { 'Cache-Control': `max-age=${CACHE_TTL}` }
+      }));
+      return true;
+    }
+    if (count >= MAX_REQUESTS) {
+      return false;
+    }
+    await cache.put(CACHE_KEY, new Response(JSON.stringify({ count: count + 1, resetAt }), {
+      headers: { 'Cache-Control': `max-age=${CACHE_TTL}` }
+    }));
+    return true;
+  }
+
+  await cache.put(CACHE_KEY, new Response(JSON.stringify({ count: 1, resetAt: Date.now() + CACHE_TTL * 1000 }), {
+    headers: { 'Cache-Control': `max-age=${CACHE_TTL}` }
+  }));
+  return true;
+}
 
 function formatWIB(date = new Date()) {
   try {
@@ -122,21 +123,20 @@ export async function onRequestPost(context) {
   const origin = request.headers.get('Origin') || '';
 
   // 0. Rate limiting (bypass untuk localhost/debugging)
-  // COMMENTED: Debugging production error - rate limiting may cause "Worker threw exception"
-  // let clientIP = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For')?.split(',')[0].trim() || '127.0.0.1';
-  // const isLocalhost = clientIP === '127.0.0.1' || clientIP === '::1';
-  // if (!isLocalhost) {
-  //   const allowed = await checkRateLimit(clientIP);
-  //   if (!allowed) {
-  //     return new Response(
-  //       JSON.stringify({ success: false, error: 'Terlalu banyak permintaan. Silakan coba lagi dalam 60 detik.' }),
-  //       {
-  //         status: 429,
-  //         headers: { 'Content-Type': 'application/json' },
-  //       }
-  //     );
-  //   }
-  // }
+  let clientIP = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For')?.split(',')[0].trim() || '127.0.0.1';
+  const isLocalhost = clientIP === '127.0.0.1' || clientIP === '::1';
+  if (!isLocalhost) {
+    const allowed = await checkRateLimit(clientIP);
+    if (!allowed) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Terlalu banyak permintaan. Silakan coba lagi dalam 60 detik.' }),
+        {
+          status: 429,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+  }
 
   // 1. CORS Validation: Block request dari origin yang tidak diizinkan
   if (origin && !isOriginAllowed(origin)) {

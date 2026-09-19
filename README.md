@@ -79,6 +79,7 @@ Endpoint serverless `POST /api/waitlist` (Cloudflare Pages Functions) membaca 3 
 ### Rate Limiting & Security Hardening
 
 - **Rate limiting:** Maksimal **5 request per menit per IP** (Cloudflare Cache API). Request melebihi batas → HTTP 429.
+- **CORS allowed origins:** `https://adellhub.biz.id`, `https://www.adellhub.biz.id`, `*.pages.dev`, dan origin lokal (`localhost`, `127.0.0.1`, LAN IP).
 - **CORS strict:** Hanya origin `adellhub.biz.id`, `*.pages.dev`, dan origin lokal (`localhost`, `127.0.0.1`, LAN IP) yang diizinkan.
 - **Input validation & sanitization:** HTML stripping, CRLF blocking, panjang karakter ketat, payload max 10KB.
 - **HTML escaping:** Semua input di-escape sebelum dikirim ke Telegram (mencegah XSS di notifikasi).
