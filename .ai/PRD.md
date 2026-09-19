@@ -221,7 +221,7 @@ File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
 | 1.1.0 | 2026-09-18 | Sinkronisasi skill referensi & struktur |
 | 1.2.0 | 2026-09-18 | Kontak final (email, WA, IG), palet warna kontras AA (`#D2251C`/`#757575`), tambahan dokumen legal (privacy/terms), judul kontak "MARI TERHUBUNG" |
 | 1.3.0 | 2026-09-18 | Status **live** di `https://adellhub.biz.id` (Cloudflare Pages); Functional Checklist terverifikasi; Email Routing & og-image aktif |
-| 1.4.0 | 2026-09-19 | Waitlist via **Cloudflare Pages Functions** (`POST /api/waitlist`) + otomatis kirim notifikasi ke **Telegram grup** (Topics, `adellhub_waitlist_bot`); anti-spam ringan (honeypot + timestamp <2s + length 10KB); security hardening (CORS strict, HTML escaping, rate limiting 5 req/min, input validation & sanitization); fix: support `www.adellhub.biz.id` origin |
+| 1.4.0 | 2026-09-19 | Waitlist via **Cloudflare Pages Functions** (`POST /api/waitlist`) + otomatis kirim notifikasi ke **Telegram grup** (Topics, `adellhub_waitlist_bot`); anti-spam ringan (honeypot + timestamp <2s + length 10KB); security hardening (CORS strict, HTML escaping, input validation & sanitization); fix: support `www.adellhub.biz.id` origin |
 
 ---
 

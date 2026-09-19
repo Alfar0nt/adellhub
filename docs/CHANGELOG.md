@@ -57,6 +57,7 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
   - Rate limiting bypassed untuk localhost (`127.0.0.1`, `::1`) agar development tetap nyaman.
 - **Production Fix v1 (2026-09-19):**
   - Fix: Tambahkan `https://www.adellhub.biz.id` ke allowed origins (request dari production website pakai `www` subdomain).
+  - Rate limiting (Cache API) di-comment — production error "Worker threw exception (1101)", debug perlu.
 - **Developer Experience & Local Testing:**
   - Menambahkan script `"dev:pages": "npm run build && wrangler pages dev dist --ip 0.0.0.0"` pada `package.json` untuk menjalankan local dev server lengkap dengan Cloudflare Pages Functions.
   - Memperluas CORS check di `functions/api/waitlist.js` agar mendukung origin pengujian lokal secara dinamis (`localhost`, `127.0.0.1`, LAN IP seperti port `8788`, `3000`, `5173`) tanpa mengorbankan keamanan origin produksi.
