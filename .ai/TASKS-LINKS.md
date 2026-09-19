@@ -1,8 +1,8 @@
 # TASKS — Link-in-Bio (folder `links/`) — Adellhub
 
-**Versi Dokumen:** 1.3.0  
+**Versi Dokumen:** 1.8.0  
 **Terakhir Diperbarui:** 2026-09-19  
-**Status Keseluruhan:** 🟡 Phase L-2 selesai — menunggu instruksi lanjut Phase L-3 + konten final dari user  
+**Status Keseluruhan:** 🟢 Seluruh phase selesai — menunggu verifikasi visual user di `/links/`  
 **Branch:** `develop`
 
 > **Instruksi untuk AI Agent:**
@@ -93,10 +93,16 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 **Tujuan:** Micro-interaction halus sesuai filosofi animasi PRD — hanya `transform` & `opacity`.
 **Skill:** `find-animation-opportunities`
 
-- [ ] Hover efek kartu: gated `@media (hover: hover) and (pointer: fine)` — kartu naik (translateY) + hard shadow, aksen merah, tanpa repaint (transisi hanya transform/opacity/color)
-- [ ] `prefers-reduced-motion`: matikan animasi stagger & transisi (ganti CSS + cek JS)
-- [ ] Fokus state `:focus-visible` kontras tinggi di semua tombol/link
-- [ ] Pertahankan praktik performa dari kode lama yang masih relevan: `will-change` sementara saat animasi, DocumentFragment single-reflow untuk render links, `loading="lazy"` untuk gambar di bawah fold
+- [x] Hover efek kartu: gated `@media (hover: hover) and (pointer: fine)` — kartu naik (translateY) + hard shadow, aksen merah, tanpa repaint (transisi hanya transform/opacity/color) — **sejak L-1; dirapikan di L-3**
+- [x] `prefers-reduced-motion`: matikan animasi stagger & transisi (ganti CSS + cek JS) — **CSS global sejak L-1; guard JS ditambah di L-3**
+- [x] Fokus state `:focus-visible` kontras tinggi di semua tombol/link — **base rule 2px arang offset 3px sejak L-1**
+- [x] Pertahankan praktik performa dari kode lama yang masih relevan: `will-change` sementara saat animasi, DocumentFragment single-reflow untuk render links, `loading="lazy"` untuk gambar di bawah fold
+
+**Hasil Phase L-3 (2026-09-19):**
+- Audit animasi skill `find-animation-opportunities`: stagger 60ms (rare/first-load, boleh) + hover near-imperceptible 240ms (tens/day) + press feedback 160ms — dipertahankan; **tidak ada tambahan animasi baru** (restraint; halaman tanpa modal/toggle/list dinamis)
+- JS `renderLinks()`: cek `prefers-reduced-motion` → **skip stagger delay + `will-change`** bila aktif; ikon kartu ditambah `loading="lazy"` + `decoding="async"`
+- CSS: transisi `.link-card` dirapikan dari 3 properti → `transform` + `box-shadow` saja (hapus `background-color` yang tidak dipakai)
+- Verifikasi dev: script.js 200, guard reduced-motion & lazy terlihat di modul ter-transform
 
 ---
 
@@ -105,11 +111,19 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 **Tujuan:** Lolos WCAG AA dan rapi di semua layar — standar PRD Adellhub.
 **Skill:** `semantic-html-and-seo`
 
-- [ ] Kontras teks utama ≥ 4.5:1 (token warna Bauhaus sudah dirancang kontras AA)
-- [ ] Touch targets ≥ 44px pada pointer coarse; `mobile-nav`-style tap highlight dihilangkan
-- [ ] Alt text deskriptif, `aria-label` pada tiap link, heading hierarchy valid
-- [ ] Responsive: breakpoint 360px, 480px, 768px, 1280px — container max-width ~680px tetap, padding rapi
-- [ ] Meta OG/twitter/JSON-LD lengkap; canonical mengarah `https://adellhub.biz.id/links/`
+- [x] Kontras teks utama ≥ 4.5:1 (token warna Bauhaus sudah dirancang kontras AA) — **verified sejak awal**
+- [x] Touch targets ≥ 44px pada pointer coarse; `mobile-nav`-style tap highlight dihilangkan
+- [x] Alt text deskriptif, `aria-label` pada tiap link, heading hierarchy valid
+- [x] Responsive: breakpoint 360px, 480px, 768px, 1280px — container max-width ~680px tetap, padding rapi
+- [x] Meta OG/twitter/JSON-LD lengkap; canonical mengarah `https://adellhub.biz.id/links/`
+
+**Hasil Phase L-4 (2026-09-19):**
+- JSON-LD `Person` ditambahkan di `<head>`: name `Nama Anda` (PLACEHOLDER), url `/links/`, `sameAs` = 6 tautan sosial/Wiki (mengikuti konten final L-6)
+- `script.js`: ikon `<img alt="">` (dekoratif — judul terlihat di sebelahnya), tiap kartu dgn `aria-label="{judul} — buka di tab baru"` (eksplisit utk pembaca layar)
+- `styles.css` `@media (pointer: coarse)`: wordmark `min-height:44px`, `-webkit-tap-highlight-color: transparent` untuk kartu/tombol/wordmark; breakpoint `360px` tambahan (padding 16px, gap kartu 8px, desc 12px)
+- Meta description & OG/twitter desc diperpanjang → **133 karakter** (120–160)
+- Heading hierarchy valid: h1 (nama) → h2 sr-only (Tautan) → h3 (judul kartu); kontras token AA; 480/768/1280 sudah terpenuhi layout fluid
+- Verifikasi dev: JSON-LD, description, canonical, alt="", aria-label, lazy — semua OK di output ter-transform
 
 ---
 
@@ -118,23 +132,40 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 **Tujuan:** Memastikan `/links/` ikut ter-build dan ter-deploy dengan benar.
 **Skill:** — (setup)
 
-- [ ] Tambah `links/index.html` ke `rollupOptions.input` di `vite.config.js`
-- [ ] Pastikan aset (profile image, ikon SVG, CSS) ter-resolve Vite tanpa error; bersihkan file tidak terpakai dari `links/`
-- [ ] `npm run build` → verifikasi output `dist/links/index.html` + aset (dan halaman utama tetap utuh)
-- [ ] `npm run preview` → smoke test: `/links/` HTTP 200, konten render (JS jalan), tampilan responsive
-- [ ] `npm audit` — pastikan tetap 0 vulnerabilities (seharusnya tanpa dependency baru)
+- [x] Tambah `links/index.html` ke `rollupOptions.input` di `vite.config.js`
+- [x] Pastikan aset (profile image, ikon SVG, CSS) ter-resolve Vite tanpa error; bersihkan file tidak terpakai dari `links/`
+- [x] `npm run build` → verifikasi output `dist/links/index.html` + aset (dan halaman utama tetap utuh)
+- [x] `npm run preview` → smoke test: `/links/` HTTP 200, konten render (JS jalan), tampilan responsive
+- [x] `npm audit` — pastikan tetap 0 vulnerabilities (seharusnya tanpa dependency baru)
+
+**Hasil Phase L-5 (2026-09-19):**
+- `vite.config.js` (+1 line): `links: fileURLToPath(new URL('./links/index.html', import.meta.url))`
+- CLI build OK: `dist/links/index.html` (6.0 kB), `dist/assets/profile-*.jpg`, `dist/assets/links-*.css`, `dist/assets/links-*.js`; **5 brand SVG ter-inline jadi data URI** (di bawah `assetsInlineLimit`) → tanpa request tambahan; halaman utama (index/privacy/terms) tetap ter-build
+- Preview smoke (`vite preview`, port 4173): `/`, `/links/`, legal pages, `/favicon.svg` — semua **200**; asset ref di HTML ter-rewrite ke path hashed (`assets/links-*.js/css`, `assets/profile-*.jpg`); JSON-LD/canonical/OG/title dipertahankan
+- `npm audit`: **0 vulnerabilities**
+- Catatan: render kartu (runtime JS) tidak bisa diverifikasi via curl — dicek visual oleh user di `/links/` (dev/preview); audite akhir L-6
 
 ---
 
-## Phase L-6 — Input Konten Final (menunggu user)
+## Phase L-6 — Input Konten Final 🟢 Selesai
 
 **Tujuan:** Mengganti placeholder dengan konten asli.
-**Skill:** —
+**Skill:** `svg-icon-generator` (ikom TikTok baru)
 
-- [ ] Isi data profil: nama, deskripsi, foto (dari user)
-- [ ] Isi daftar link: title, URL, deskripsi, ikon (dari user)
-- [ ] Update meta title/description/Language sesuai konten final
-- [ ] (Opsional, butuh konfirmasi) tambah tombol/link dari halaman utama `index.html` menuju `/links/`
+- [x] Isi data profil: nama **Adellhub**, role **Startup Indonesia**, deskripsi **"Ekosistem bisnis startup IT: Adellwork, Adelltech, dan Adellbooth."** — foto `profile.jpg` dipertahankan
+- [x] Isi daftar link (3, dari user): **Situs Resmi** (globe inline → `https://adellhub.biz.id`), **Instagram** (`@adellhub` → `instagram.com/adellhub`), **TikTok** (`@adellhub` → `tiktok.com/@adellhub`)
+- [x] Hapus konten lama sepenuhnya: LinkedIn/CV/Wiki/GitHub/IG pribadi/YouTube/Spotify dari `LINKS`; ikon inline `fileIcon`/`bookIcon` dibuang; SVG tak terpakai dihapus (`linkedin/github/youtube/spotify.svg`) → `links/images/` kini `instagram.svg` + `tiktok.svg` (baru)
+- [x] JSON-LD: `Person` → **`Organization`** (konsisten halaman utama), name Adellhub, url `/links/`, `sameAs` = Instagram + TikTok — placeholder meta/komentar dihapus
+- [ ] (Opsional, butuh konfirmasi) tambah tombol/link dari halaman utama `index.html` menuju `/links/` — **belum dikonfirmasi user**
+
+**Hasil Phase L-6 (2026-09-19):**
+- Konten final terpasang; build & preview: `/links/` 200, `<h1>Adellhub`, tagline, JSON-LD Organization, `sameAs` IG+TikTok, `mailto:` intact; TikTok + Instagram SVG ter-inline di bundle JS (`.data:image/svg+xml`); halaman utama 200; `npm audit` 0
+- 3 kartu ter-render via `LINKS` (JS runtime) — **audit visual final oleh user di `/links/`**
+
+**Revisi pasca-L-6 (umpan balik visual user, 2026-09-19):**
+- Ikon kartu Instagram & TikTok tak lagi `<img>` brand berwarna (terlihat seperti "foto default" memenuhi tile 48×48) → diganti **glyph kanonik monokrom filled** (`fill="currentColor"`, charcoal 24px via CSS tile) — seragam dengan globe Situs Resmi di tile Bauhaus yang sama
+- `links/images/` dihapus (folder kini kosong); seluruh ikon murni string inline (`svgIcon`)
+- Verifikasi build/preview: bundle `links-BWatV58D.js` 5.51 kB, **tanpa `data:image/svg+xml`**, path glyph IG (`M12 0C8.74`) & TikTok (`M12.525.02`) ter-inline; halaman utama & legal 200
 
 ---
 
@@ -145,7 +176,9 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 | Phase L-0 | Analisis, Audit & Persiapan | 🟢 Selesai |
 | Phase L-1 | Design System Bauhaus & Struktur HTML | 🟢 Selesai |
 | Phase L-2 | Komponen Profil & Link Cards | 🟢 Selesai |
-| Phase L-3 | Interaksi & Animasi | 🔴 Belum |
-| Phase L-4 | Aksesibilitas, SEO & Responsiveness | 🔴 Belum |
-| Phase L-5 | Integrasi Vite & QA Build | 🔴 Belum |
-| Phase L-6 | Input Konten Final | 🔴 Belum (tergantung user) |
+| Phase L-3 | Interaksi & Animasi | 🟢 Selesai |
+| Phase L-4 | Aksesibilitas, SEO & Responsiveness | 🟢 Selesai |
+| Phase L-5 | Integrasi Vite & QA Build | 🟢 Selesai |
+| Phase L-6 | Input Konten Final | 🟢 Selesai |
+
+**Sisa setalah seluruh phase:** push user → deploy → verifikasi visual `/links/` (render 3 kartu, responsive 360–1280, reduced-motion, kontras) → (opsional) tombol `/links/` dari halaman utama.
