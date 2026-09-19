@@ -45,6 +45,14 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ## [Unreleased]
 
+### Added
+- **Link-in-bio `links/`, Phase L-1 — redesign Bauhaus Adellhub:** struktur HTML semantik ulang (header wordmark ADELLHUB → main → footer, satu `<h1>`, sr-only `h2` utk section Tautan), meta SEO/OG/twitter + canonical `https://adellhub.biz.id/links/`, `lang="id"`, latar geometris statis (`dot grid` + aksen merah + ring) pengganti background video, design tokens warna/font/motion menyatu dengan design system halaman utama (`src/style.css`)
+### Changed
+- **`links/styles.css`:** ditulis ulang penuh — dark glassmorphism + Inter saja → Bauhaus (`#F5F0E8`/`#1A1A1A`/`#D2251C`, Space Grotesk + Inter, kartu `bauhaus-card` dgn hard shadow, hover gated `(hover:hover)`, `contain: content`, `prefers-reduced-motion`)
+- **`links/script.js` (sementara):** `initBackgroundVideo()` kini no-op karena elemen `#bg-video` dihapus; rewrite penuh direncanakan di Phase L-2
+### Removed
+- **`links/`:** markup & aset background video (`video-container`, `#bg-video`, overlay, `letter-bg.mp4`)
+
 ## [1.0.1] — 2026-09-18
 
 ### Changed

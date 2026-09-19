@@ -1,8 +1,8 @@
 # TASKS — Link-in-Bio (folder `links/`) — Adellhub
 
-**Versi Dokumen:** 1.1.0  
+**Versi Dokumen:** 1.2.0  
 **Terakhir Diperbarui:** 2026-09-19  
-**Status Keseluruhan:** 🟡 Phase L-0 selesai — menunggu instruksi lanjut Phase L-1 + konten final dari user  
+**Status Keseluruhan:** 🟡 Phase L-1 selesai — menunggu instruksi lanjut Phase L-2 + konten final dari user  
 **Branch:** `develop`
 
 > **Instruksi untuk AI Agent:**
@@ -49,12 +49,19 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 **Tujuan:** Membangun fondasi visual Bauhaus dan struktur halaman yang sesuai PRD.
 **Skill:** `frontend-design`, `semantic-html-and-seo`, `svg-icon-generator`
 
-- [ ] **(AI)** Baca skill `frontend-design` sebelum implementasi CSS
-- [ ] Ganti seluruh `styles.css` (hapus theme dark glassmorphism, ganti design tokens Bauhaus): `--color-bg #F5F0E8`, `--color-dark #1A1A1A`, `--color-accent #D2251C`, tokens spacing 8px & motion (`--duration-fast`, `--duration-base`), sesuai PRD Adellhub
-- [ ] Font: Space Grotesk (display) + Inter (body) via Google Fonts (preconnect + preload, pola optimal dari `index.html` utama)
-- [ ] Restrukturisasi `links/index.html`: semantic landmarks (`<main>`, `<header>`, `<section>`, `<footer>`), satu `<h1>`, meta title/description/OG/twitter/canonical `https://adellhub.biz.id/links/`, `lang` sesuai konten final
-- [ ] Hapus markup & aset background video (`video-container`, `#bg-video`, `letter-bg.mp4`, overlay)
-- [ ] Latar statis Bauhaus: geometris off-white (dot grid / arcs / square aksen — SVG inline)
+- [x] **(AI)** Baca skill `frontend-design` sebelum implementasi CSS
+- [x] Ganti seluruh `styles.css` (hapus theme dark glassmorphism, ganti design tokens Bauhaus): `--color-bg #F5F0E8`, `--color-dark #1A1A1A`, `--color-accent #D2251C`, tokens spacing 8px & motion (`--duration-fast`, `--duration-base`), sesuai PRD Adellhub
+- [x] Font: Space Grotesk (display) + Inter (body) via Google Fonts (preconnect + stylesheet — pola sama dengan `index.html` utama)
+- [x] Restrukturisasi `links/index.html`: semantic landmarks (`<header>`, `<main>`, `<section>`, `<footer>`), satu `<h1>`, meta title/description/OG/twitter/canonical `https://adellhub.biz.id/links/`, `lang="id"` (placeholder — sesuaikan di L-6)
+- [x] Hapus markup & aset background video (`video-container`, `#bg-video`, `letter-bg.mp4`, overlay)
+- [x] Latar statis Bauhaus: geometris off-white (dot grid / arcs / square aksen — `.geo-bg`, `position: fixed`, `aria-hidden`)
+
+**Hasil Phase L-1 (2026-09-19):**
+- `links/index.html` ditulis ulang: wordmark ADELLHUB (konfirmasi user), profil dgn framing geometris (persegi + kotak merah pojok + ring), kartu link `bauhaus-card`, footer copyright — **placeholder** jelas utk L-6
+- `links/styles.css` ditulis ulang: tokens dari design system utama, `.geo-bg` statis, `.btn` outline Bauhaus, hover gated `(hover:hover) (pointer:fine)`, `contain: content` pada kartu, `prefers-reduced-motion` global
+- `letter-bg.mp4` dihapus; markup `<video>` hilang (verifikasi: tidak ada `video/letter-bg/bg-video`)
+- Verifikasi: dev server `/links/` 200 (HTML/CSS/JS/profile.jpg), `npm run build` tetap hijau (sit main tak terganggu)
+- `script.js` **belum diubah** (rewrite Vite-compatible di Phase L-2) — `initBackgroundVideo` kini no-op (elemen `#bg-video` tidak ada)
 
 ---
 
@@ -125,7 +132,7 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 | Phase | Nama | Status |
 |-------|------|--------|
 | Phase L-0 | Analisis, Audit & Persiapan | 🟢 Selesai |
-| Phase L-1 | Design System Bauhaus & Struktur HTML | 🔴 Belum |
+| Phase L-1 | Design System Bauhaus & Struktur HTML | 🟢 Selesai |
 | Phase L-2 | Komponen Profil & Link Cards | 🔴 Belum |
 | Phase L-3 | Interaksi & Animasi | 🔴 Belum |
 | Phase L-4 | Aksesibilitas, SEO & Responsiveness | 🔴 Belum |

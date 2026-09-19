@@ -1,30 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Signals to Brave/Chrome that this page already uses a dark theme.
-         Prevents the browser from applying its own dark-mode GPU filter on top
-         of the page content (which would compound compositing cost on mobile). -->
-    <meta name="color-scheme" content="dark">
-    <title>Dhiar's Link-In-Bio</title>
-    <meta name="description" content="Welcome to my personal link-in-bio page. Connect with me on various platforms.">
+    <meta name="theme-color" content="#F5F0E8">
 
-    <!-- Preconnect to font origins for faster DNS lookup -->
+    <!-- Primary Meta Tags -->
+    <title>Adellhub — Tautan & Portofolio | Startup Indonesia</title>
+    <meta name="title" content="Adellhub — Tautan & Portofolio | Startup Indonesia">
+    <meta name="description" content="Koleksi tautan resmi Adellhub: portofolio, media sosial, dan proyek. Semua akses terangkum dalam satu halaman.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Adellhub Team">
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://adellhub.biz.id/links/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Google Fonts: Space Grotesk & Inter (pola sama dengan halaman utama) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
 
-    <!-- Non-render-blocking Google Fonts: loads as print, swaps to screen when ready -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    </noscript>
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adellhub.biz.id/links/">
+    <meta property="og:site_name" content="Adellhub">
+    <meta property="og:title" content="Adellhub — Tautan & Portofolio">
+    <meta property="og:description" content="Koleksi tautan resmi Adellhub: portofolio, media sosial, dan proyek. Semua akses terangkum dalam satu halaman.">
+    <meta property="og:image" content="https://adellhub.biz.id/og-image.png">
+    <meta property="og:locale" content="id_ID">
 
-    <link rel="icon" href="https://file.garden/Z5YVSGXMBSWGuJIs/logo.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://adellhub.biz.id/links/">
+    <meta name="twitter:title" content="Adellhub — Tautan & Portofolio">
+    <meta name="twitter:description" content="Koleksi tautan resmi Adellhub: portofolio, media sosial, dan proyek. Semua akses terangkum dalam satu halaman.">
+    <meta name="twitter:image" content="https://adellhub.biz.id/og-image.png">
 
-    <!-- Preload the LCP image (profile picture) to speed up Largest Contentful Paint -->
+    <!-- Preload LCP image (foto profil) -->
     <link rel="preload" href="./profile.jpg" as="image" fetchpriority="high">
 
     <!-- Main CSS -->
@@ -32,50 +48,61 @@
 </head>
 
 <body>
-    <!-- Background Video -->
-    <div class="video-container">
-        <!--
-            No <source> tag here.
-            The video src is set lazily by script.js after checking:
-              - prefers-reduced-motion
-              - network speed (2G/3G → skip video, show CSS fallback)
-              - data saver mode
-        -->
-        <video muted loop playsinline id="bg-video" preload="none" aria-hidden="true"></video>
-        <div class="overlay"></div>
+    <!-- Latar geometris statis Bauhaus (dekoratif — pengganti background video) -->
+    <div class="geo-bg" aria-hidden="true">
+        <span class="geo-bg-dots"></span>
+        <span class="geo-bg-accent"></span>
+        <span class="geo-bg-ring"></span>
     </div>
 
-    <!-- Main Content -->
+    <header class="site-header">
+        <a class="wordmark" href="/" aria-label="Adellhub — kembali ke beranda">
+            <span class="wordmark-mark" aria-hidden="true"></span>
+            <span class="wordmark-text">ADELLHUB</span>
+        </a>
+    </header>
+
     <main class="container">
         <!-- Profile Section -->
-        <header class="profile-section">
-            <!--
-                fetchpriority="high" — tells browser to fetch this image before other resources.
-                decoding="async"     — lets browser decode image off the main thread.
-            -->
-            <img src="./profile.jpg" alt="Profile Picture" class="profile-pic" id="profile-pic" fetchpriority="high"
-                decoding="async" width="250" height="250">
-            <h1 class="profile-name" id="profile-name">Dhiar Harianto<br>-DevOps Learner-</h1>
-            <p class="profile-description" id="profile-description">Surabaya, East Java</p>
+        <section class="profile-wrap" aria-labelledby="profile-heading">
+            <div class="profile-media">
+                <span class="profile-ring" aria-hidden="true"></span>
+                <div class="profile-frame">
+                    <span class="profile-corner" aria-hidden="true"></span>
+                    <img src="./profile.jpg" alt="Foto profil" class="profile-pic" id="profile-pic"
+                        fetchpriority="high" decoding="async" width="250" height="250">
+                </div>
+            </div>
 
-            <a href="mailto:contact@dhiar.my.id" class="mail-btn" id="mail-btn">
+            <!-- PLACEHOLDER — konten ini diganti di Phase L-6 dengan konten final dari user -->
+            <h1 class="profile-name" id="profile-heading">Nama Anda</h1>
+            <p class="profile-role">Role / Posisi</p>
+            <p class="profile-desc">Deskripsi singkat tentang Anda dan tautan yang Anda bagikan.</p>
+            <a href="mailto:hello@adellhub.biz.id" class="btn btn-outline" id="mail-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     aria-hidden="true">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                Contact Me
+                Hubungi Saya
             </a>
-        </header>
+            <!-- /PLACEHOLDER -->
+        </section>
 
         <!-- Links Section -->
-        <section class="links-section" id="links-container">
-            <!-- Links injected by script.js (deferred, non-blocking) -->
+        <section class="links-wrap" aria-labelledby="links-heading">
+            <h2 class="sr-only" id="links-heading">Tautan</h2>
+            <div class="links-list" id="links-container">
+                <!-- Kartu link dirender oleh script.js (rewrite penuh di Phase L-2) -->
+            </div>
         </section>
     </main>
 
-    <!-- defer: script downloads in parallel, runs only after HTML is parsed — never blocks rendering -->
+    <footer class="site-footer">
+        <p>© 2026 Adellhub. Semua hak cipta dilindungi.</p>
+    </footer>
+
     <script src="script.js" defer></script>
 </body>
 
