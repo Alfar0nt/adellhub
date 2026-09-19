@@ -289,12 +289,27 @@ export async function onRequestPost(context) {
   }
 
   // 7. Konfigurasi kredensial Telegram dari environment
-  const token = env.TELEGRAM_BOT_TOKEN;
-  const chatId = env.TELEGRAM_CHAT_ID;
-  const threadIdRaw = env.TELEGRAM_THREAD_ID;
+  let token, chatId, threadIdRaw;
+  try {
+    token = env.TELEGRAM_BOT_TOKEN;
+    chatId = env.TELEGRAM_CHAT_ID;
+    threadIdRaw = env.TELEGRAM_THREAD_ID;
+  } catch (err) {
+    console.error('Telegram env binding error:', err);
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'Layanan saat ini tidak tersedia. Silakan coba lagi nanti.',
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      }
+    );
+  }
 
   if (!token || !chatId) {
-    console.error('Telegram config missing');
+    console.error('Telegram config missing - token:', !!token, 'chatId:', !!chatId);
     return new Response(
       JSON.stringify({
         success: false,
