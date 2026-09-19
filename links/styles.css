@@ -1,0 +1,407 @@
+:root {
+    --text-color: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-hover: rgba(255, 255, 255, 0.2);
+    --btn-bg: rgba(255, 255, 255, 0.9);
+    --btn-text: #000000;
+    /* Tells Brave (and Chrome) that this page already has a dark theme.
+       Without this, Brave's "dark mode" composites an invert+hue-rotate
+       GPU filter over the entire page ON TOP of the backdrop-filter layers —
+       causing a double compositing pass on every frame. */
+    color-scheme: dark;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    /* Prevent scrollbar flash on load */
+    overflow-y: scroll;
+    /* Smooth native scrolling — CSS-based, zero JS overhead.
+       Works on both desktop (trackpad/wheel) and mobile (touch flick). */
+    scroll-behavior: smooth;
+    /* Prevents pull-to-refresh on Android Chrome which causes a visible
+       "snap" as the page rubber-bands and the video container repositions */
+    overscroll-behavior-y: contain;
+    /* iOS momentum scrolling — enables native inertial scroll */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Background Video Styles */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Use dynamic viewport height on mobile to prevent the "teleport" jump
+       caused by Android's URL bar showing/hiding during scroll.
+       100vh = static (includes area behind URL bar) → layout recalculates → snap.
+       100dvh = dynamic (adjusts as URL bar appears/disappears) → smooth.
+       Fallback: 100vh for browsers that don't support dvh. */
+    height: 100vh;
+    height: 100dvh;
+    z-index: -1;
+    overflow: hidden;
+    background-color: #111827;
+    /*
+     * GPU COMPOSITING FIX — solves the mobile "background jump" bug.
+     *
+     * Root cause: on Android (Chrome/Brave), position:fixed elements are
+     * repainted on the MAIN THREAD when the URL bar shows/hides during scroll
+     * or during kinetic (momentum) scroll momentum wind-down. Because this
+     * repaint is synchronous with JS execution, the element visually "snaps"
+     * to its recalculated position instead of staying smoothly in place.
+     *
+     * translate3d(0,0,0) promotes the element to its own GPU compositor layer.
+     * Once on the compositor, the browser handles its position entirely on the
+     * GPU thread — completely decoupled from main-thread scroll repaints, so
+     * the background never jumps again.
+     *
+     * will-change: transform keeps the compositor layer alive permanently so it
+     * never gets demoted and re-promoted mid-scroll (which causes a stutter).
+     *
+     * backface-visibility: hidden is a companion hint that prevents certain
+     * Android GPUs from discarding and re-uploading the texture on each frame.
+     *
+     * isolation: isolate creates a stacking context that prevents the fixed
+     * element from being affected by z-index changes in scrolling content.
+     */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    isolation: isolate;
+    /* Prevents the browser from using this element's bounds to calculate
+       scroll snap points or overscroll glow, both of which cause jitter */
+    overscroll-behavior: none;
+}
+
+#bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Keep the video itself on the compositor layer so frame rendering
+       stays on GPU and doesn't trigger layout/paint on the main thread.
+       translate3d is preferred over translateZ for broader Android GPU compat. */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Dark gradient overlay for contrast */
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.8));
+    /* Keep overlay on compositor so it stacks above video without triggering
+       a main-thread repaint on mobile scroll */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    /* contain: paint tells the browser this element's rendering is independent
+       of its siblings — avoids unnecessary repaints of the overlay when
+       adjacent content scrolls */
+    contain: paint;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 680px;
+    padding: 3rem 1.5rem;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* contain: layout + paint scopes both layout recalculations AND paint
+       invalidation to this subtree — the browser knows nothing outside this
+       box needs repainting when content inside it changes (or scrolls).
+       size is intentionally omitted: this element's height IS its content,
+       so the browser must measure it for correct scroll-bar sizing. */
+    contain: layout paint;
+}
+
+/* Profile Section */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    /* Shortened: 0.8s → 0.3s. Fewer frames spent managing a compositing layer. */
+    animation: fadeInDown 0.3s ease-out;
+}
+
+.profile-pic {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.25rem;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    /* Only transition transform — always GPU-composited, never triggers repaint */
+    transition: transform 0.25s ease;
+}
+
+.profile-name {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.profile-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 400px;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.mail-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    /* 'transition: all' was here before — it triggered repaint for every
+       CSS property on every frame. Explicitly listed properties only. */
+    transition: transform 0.25s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Links Section */
+.links-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.link-card {
+    display: flex;
+    align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    /* 'transition: all' → specific properties only.
+       background-color and border-color are paint-only (acceptable since they
+       don't trigger layout). transform is compositor-only (zero paint cost). */
+    transition: transform 0.25s ease, background-color 0.2s ease, border-color 0.2s ease;
+    /* Shortened: 0.8s → 0.3s — reduces how long 7 promoted compositor layers
+       are alive simultaneously on the GPU */
+    animation: fadeInUp 0.3s ease-out backwards;
+    /* contain: content = layout + paint + style.
+       Each card's visual changes (hover, animation) are scoped to itself —
+       the browser won't repaint neighboring cards when one is hovered. */
+    contain: content;
+}
+
+/* Staggered animation delays handled by JS */
+
+.link-icon-container {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-right: 1.25rem;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link-icon-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.link-icon-container svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-color);
+}
+
+.link-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.link-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.link-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Share Icon */
+.share-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
+    opacity: 0;
+    /* opacity is GPU-composited — no repaint, safe to transition */
+    transition: opacity 0.2s ease;
+    margin-left: 0.5rem;
+}
+
+/* ─── Hover Effects — pointer devices only ───────────────────────────────────
+   @media (hover: hover) targets ONLY devices with a genuine hover pointer
+   (mouse, trackpad). Touch/mobile screens report (hover: none).
+
+   This is critical for mobile performance:
+     1. On Android, `:hover` can get "stuck" after a tap, forcing the browser
+        to keep the hovered state rendered on an extra GPU layer.
+     2. Chrome on Android still evaluates hover selectors even when (hover: none),
+        spending CPU time checking hover rules on every touch event.
+     3. Skipping this block entirely on mobile = fewer style recalculations,
+        zero stuck-hover frames, and no unnecessary layer promotions. */
+@media (hover: hover) {
+    .profile-pic:hover {
+        transform: scale(1.05);
+    }
+
+    .mail-btn:hover {
+        background-color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .link-card:hover {
+        background: var(--glass-hover);
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .link-card:hover .share-icon {
+        opacity: 1;
+    }
+}
+
+/* Keyframe Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        /* Reduced from 20px — smaller travel distance, less GPU overdraw */
+        transform: translateY(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 640px) {
+    .container {
+        padding: 2rem 1.25rem;
+    }
+
+    .profile-pic {
+        width: 96px;
+        height: 96px;
+    }
+
+    .profile-name {
+        font-size: 1.35rem;
+    }
+
+    .link-title {
+        font-size: 1rem;
+    }
+
+    /* Remove backdrop-filter on mobile entirely.
+       backdrop-filter: blur() forces the GPU to: read every pixel behind the
+       element → composite them → apply the blur kernel → composite the result.
+       This happens for EACH card on EVERY animation frame.
+       On low/mid-range Android this single property is the #1 cause of dropped
+       frames and micro-stuttering.
+       A semi-opaque solid background gives a nearly identical visual result
+       with zero compositing overhead. */
+    .link-card {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(0, 0, 0, 0.5);
+        border-color: rgba(255, 255, 255, 0.15);
+        /* Removes the default blue/grey tap highlight on Android Chrome.
+           The highlight triggers a synchronous paint on every touchstart,
+           adding ~1-2ms of main-thread work per tap. */
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* On mobile, drop the GPU compositing layer from the overlay.
+       With backdrop-filter already removed, the overlay's translate3d creates
+       a redundant layer. Fewer layers = less GPU memory pressure on low-end
+       devices, reducing scroll jank. */
+    .overlay {
+        transform: none;
+        -webkit-transform: none;
+    }
+}
+
+/* ─── Reduced Motion ──────────────────────────────────────────────────────────
+   Honor the OS/browser "Reduce Motion" accessibility preference.
+   On low-end devices users often enable this to reduce battery/CPU usage.
+   Disabling animations also avoids layout thrashing from transform keyframes. */
+@media (prefers-reduced-motion: reduce) {
+
+    .profile-section,
+    .link-card {
+        animation: none;
+    }
+
+    .profile-pic,
+    .mail-btn,
+    .link-card,
+    .share-icon {
+        transition: none;
+    }
+}
