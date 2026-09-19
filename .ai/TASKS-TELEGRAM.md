@@ -1,8 +1,8 @@
 # TASKS — Telegram Webhook Notifikasi Waitlist
 
-**Versi Dokumen:** 1.5.0  
+**Versi Dokumen:** 1.5.1  
 **Terakhir Diperbarui:** 2026-09-19  
-**Status Keseluruhan:** 🟢 Phase T-4 Selesai (terverifikasi) — T-5 Batch Lokal Selesai; Deploy Produksi & E2E Production Pending  
+**Status Keseluruhan:** 🟢 Phase T-6 Selesai (prod fixed) — T-4 & T-5 Terverifikasi; Deploy Produksi Live, Rate Limiting (Cache API) di-comment, support `www.adellhub.biz.id`  
 **Branch:** `develop`
 
 > **Instruksi untuk AI Agent:**

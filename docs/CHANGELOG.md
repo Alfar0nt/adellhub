@@ -43,6 +43,19 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ---
 
+## [1.2.0] — 2026-09-19
+
+### Added
+- **Cloudflare Pages Functions Backend:** Endpoint serverless `POST /api/waitlist` di `functions/api/waitlist.js` untuk menerima data pendaftaran waitlist dan meneruskannya ke Telegram Bot API.
+  - Mendukung grup Telegram bertopik (`message_thread_id`) via integer parsing.
+  - Notifikasi terformat rapi dengan mode HTML Telegram (`Nama`, `Email`, `Layanan`, `Waktu WIB`, `Device`).
+  - CORS preflight & response headers untuk origin produksi (`adellhub.biz.id`, `www.adellhub.biz.id`) dan lokal (`localhost`, `127.0.0.1`, LAN IP).
+- **Security Hardening:** CSP, strict CORS validation, HTML escaping, input sanitization.
+- **Anti-Spam:** Honeypot field, time-to-submit verification (min 2 detik), payload max 10KB.
+- **Local Testing:** Script `"dev:pages"` untuk test endpoint via `wrangler pages dev`.
+
+---
+
 ## [Unreleased] — Telegram Webhook Notifikasi Waitlist
 
 - **Testing, Verifikasi & Anti-Spam Hardening (Phase T-4 & T-5):**
