@@ -43,6 +43,24 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ---
 
+## [Unreleased] — Telegram Webhook Notifikasi Waitlist
+
+- **Frontend Refactor Modal Waitlist (Phase T-2):** Form waitlist di `src/components/modal.js` kini mengirim data asynchronous via `fetch('/api/waitlist')` sebagai pengganti `mailto:` langsung.
+  - Loading state interaktif dengan spinner berputar bergaya Bauhaus (animasi `transform` murni dan ramah `prefers-reduced-motion`).
+  - Tombol submit dan field input dinonaktifkan (`aria-busy="true"`) selama proses pengiriman untuk mencegah double submission.
+  - Penanganan error responsif dengan container alert terstruktur (`role="alert"`), menyertakan fallback tautan `mailto:` langsung yang terisi otomatis jika koneksi gagal atau server offline.
+  - Tombol CTA1 pada popup kartu layanan (`openModal`) dialihkan langsung membuka form modal waitlist (`openWaitlistForm`) untuk pengalaman in-app yang mulus.
+  - Field honeypot anti-bot tersembunyi secara aksesibel (`tabindex="-1"`, `aria-hidden="true"`).
+- **Cloudflare Pages Functions Backend (Phase T-1):** Endpoint serverless `POST /api/waitlist` di `functions/api/waitlist.js` untuk menerima data pendaftaran waitlist dan meneruskannya ke Telegram Bot API.
+  - Mendukung grup Telegram bertopik (`message_thread_id`) via integer parsing.
+  - Notifikasi terformat rapi dengan mode HTML Telegram (`Nama`, `Email`, `Layanan`, `Waktu WIB`, `Device`).
+  - Proteksi anti-spam terintegrasi: honeypot field (`website`), batas ukuran payload (10KB), dan time-to-submit verification (min 2 detik).
+  - Sanitasi karakter HTML (`&`, `<`, `>`) guna mencegah HTML parsing error di Telegram.
+  - CORS preflight & response headers untuk origin produksi (`adellhub.biz.id`) dan lokal (`localhost:3000`).
+- **Setup & Kredensial Bot Telegram (Phase T-0):** Bot Telegram `@adellhub_waitlist_bot` terhubung ke topik grup tujuan (`message_thread_id: 2`), kredensial tersimpan aman via Cloudflare Dashboard Environment Variables dan `.dev.vars` lokal ter-ignore oleh `.gitignore`.
+
+---
+
 ## [1.1.0] — 2026-09-19
 
 Halaman **link-in-bio `/links/`** — redesign penuh dari versi lama (dark glassmorphism + background video) menjadi Bauhaus Adellhub, terintegrasi build Vite.

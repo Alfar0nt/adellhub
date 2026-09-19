@@ -19,6 +19,8 @@ dist-ssr/
 .env.*
 !.env.example
 *.local
+.dev.vars
+.dev.vars.*
 
 # Security tooling (vibe-check prompt/*)
 vibe-check/

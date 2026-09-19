@@ -156,7 +156,7 @@ export function openModal({ title, subtitle, message, cta1Text, cta1Action, cta2
     });
   } else if (cta1Btn) {
     cta1Btn.addEventListener('click', () => {
-      window.location.href = `mailto:${WAITLIST_EMAIL}?subject=${encodeURIComponent(`Daftar Waitlist ${title}`)}&body=${encodeURIComponent(`Halo tim Adellhub,\n\nSaya tertarik untuk bergabung dengan waitlist layanan ${title}.\n\nTerima kasih.`)}`;
+      openWaitlistForm({ service: title || 'Adellhub' });
     });
   }
 
@@ -169,6 +169,7 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
     closeModal();
   }
 
+  const formOpenedAt = Date.now();
   const safeService = escapeHtml(service);
   const modalBackdrop = document.createElement('div');
   modalBackdrop.className = 'modal-backdrop waitlist-backdrop';
@@ -194,6 +195,12 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
         </p>
 
         <form id="waitlist-form" class="waitlist-form" novalidate>
+          <!-- Anti-bot honeypot field (hidden from assistive tech and visual users) -->
+          <div class="sr-only" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+            <label for="waitlist-website">Website</label>
+            <input type="text" id="waitlist-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
           <div class="form-field">
             <label class="form-label" for="waitlist-name">Nama <span class="form-required" aria-hidden="true">*</span></label>
             <input class="form-input" type="text" id="waitlist-name" name="name" autocomplete="name" placeholder="Nama lengkap Anda" required />
@@ -205,11 +212,16 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
             <input class="form-input" type="email" id="waitlist-email" name="email" autocomplete="email" placeholder="nama@email.com" required />
             <span class="form-error" data-error-for="waitlist-email" aria-live="polite"></span>
           </div>
+
+          <!-- Global Form Error Alert with Email Fallback -->
+          <div id="waitlist-global-error" class="form-global-error" role="alert" aria-live="assertive"></div>
         </form>
       </div>
 
       <div class="modal-footer">
-        <button type="submit" form="waitlist-form" class="btn btn-primary modal-btn-cta1">Gabung Waitlist</button>
+        <button type="submit" form="waitlist-form" id="waitlist-submit-btn" class="btn btn-primary modal-btn-cta1">
+          <span class="btn-text">Gabung Waitlist</span>
+        </button>
       </div>
 
     </div>
@@ -225,10 +237,13 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
     }
   });
 
-  // Client-side validation + mailto submit
+  // Form elements
   const form = modalBackdrop.querySelector('#waitlist-form');
   const nameInput = modalBackdrop.querySelector('#waitlist-name');
   const emailInput = modalBackdrop.querySelector('#waitlist-email');
+  const honeypotInput = modalBackdrop.querySelector('#waitlist-website');
+  const submitBtn = modalBackdrop.querySelector('#waitlist-submit-btn');
+  const globalErrorEl = modalBackdrop.querySelector('#waitlist-global-error');
 
   const setError = (input, message) => {
     const errorEl = modalBackdrop.querySelector(`[data-error-for="${input.id}"]`);
@@ -282,14 +297,14 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
       </div>
 
       <div class="modal-body">
-<div class="waitlist-success" role="status" aria-live="polite">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-              <circle cx="28" cy="28" r="26" fill="var(--color-dark)" />
-              <path d="M18 29 L25 36 L39 22" stroke="var(--color-accent)" stroke-width="4" stroke-linecap="square" />
-            </svg>
-            <h3 id="waitlist-success-title" class="modal-title">Terima kasih, ${escapeHtml(name)}!</h3>
+        <div class="waitlist-success" role="status" aria-live="polite">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <circle cx="28" cy="28" r="26" fill="var(--color-dark)" />
+            <path d="M18 29 L25 36 L39 22" stroke="var(--color-accent)" stroke-width="4" stroke-linecap="square" />
+          </svg>
+          <h3 id="waitlist-success-title" class="modal-title">Terima kasih, ${escapeHtml(name)}!</h3>
           <p class="modal-message">
-            Permintaan akses awal ${safeService} telah kami terima. Kami akan mengirim kabar melalui email Anda segera setelah layanan resmi diluncurkan.
+            Permintaan akses awal ${safeService} telah kami terima. Notifikasi pendaftaran telah diteruskan ke tim Adellhub dan kami akan segera mengabari Anda melalui email.
           </p>
         </div>
       </div>
@@ -308,8 +323,42 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
     doneBtn.focus({ preventScroll: true });
   };
 
-  form.addEventListener('submit', (e) => {
+  const showFormError = (errorMessage, nameVal, emailVal) => {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('btn-loading');
+      submitBtn.removeAttribute('aria-busy');
+      submitBtn.innerHTML = '<span class="btn-text">Coba Kirim Ulang</span>';
+    }
+    nameInput.disabled = false;
+    emailInput.disabled = false;
+
+    if (globalErrorEl) {
+      const fallbackSubject = encodeURIComponent(`Daftar Waitlist ${service} — Adellhub`);
+      const fallbackBody = encodeURIComponent(
+        `Halo tim Adellhub,\n\nSaya tertarik untuk bergabung dengan waitlist ${service}.\n\nNama: ${nameVal}\nEmail: ${emailVal}\n\nTerima kasih.`
+      );
+      const mailtoUrl = `mailto:${WAITLIST_EMAIL}?subject=${fallbackSubject}&body=${fallbackBody}`;
+
+      globalErrorEl.innerHTML = `
+        <p><strong>Pendaftaran belum terkirim:</strong> ${escapeHtml(errorMessage)}</p>
+        <p>Silakan coba kembali atau kirim data Anda langsung via email:</p>
+        <a href="${mailtoUrl}" class="fallback-mail-link">
+          Kirim via Email (${escapeHtml(WAITLIST_EMAIL)}) &rarr;
+        </a>
+      `;
+      globalErrorEl.classList.add('form-error-visible');
+    }
+  };
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Reset pesan error global sebelumnya
+    if (globalErrorEl) {
+      globalErrorEl.classList.remove('form-error-visible');
+      globalErrorEl.innerHTML = '';
+    }
 
     if (!validate()) {
       const firstInvalid = form.querySelector('[aria-invalid="true"]');
@@ -319,21 +368,49 @@ export function openWaitlistForm({ service = 'Adellhub' } = {}) {
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
-    const subject = `Waitlist ${service} — Adellhub`;
-    const body = [
-      'Halo tim Adellhub,',
-      '',
-      `Saya tertarik untuk bergabung dengan waitlist ${service}.`,
-      '',
-      `Nama: ${name}`,
-      `Email: ${email}`,
-      '',
-      'Terima kasih.',
-    ].join('\n');
+    const website = honeypotInput ? honeypotInput.value : '';
 
-    window.location.href = `mailto:${WAITLIST_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // Aktifkan loading state
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('btn-loading');
+      submitBtn.setAttribute('aria-busy', 'true');
+      submitBtn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span><span class="btn-text">Mengirim...</span>';
+    }
+    nameInput.disabled = true;
+    emailInput.disabled = true;
 
-    showSuccess(name);
+    const payload = {
+      name,
+      email,
+      service,
+      userAgent: navigator.userAgent || '',
+      timestamp: new Date().toISOString(),
+      formOpenedAt,
+      website,
+    };
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (response.ok && data && data.success) {
+        showSuccess(name);
+      } else {
+        const errMsg = (data && data.error) || 'Terjadi kesalahan pada server saat memproses data.';
+        showFormError(errMsg, name, email);
+      }
+    } catch (err) {
+      console.error('Waitlist submission failed:', err);
+      showFormError('Koneksi terputus atau server tidak dapat dijangkau.', name, email);
+    }
   });
 
   attachModal(modalBackdrop);

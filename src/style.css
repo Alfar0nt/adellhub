@@ -1428,6 +1428,78 @@ section[id] {
   display: block;
 }
 
+/* Global error alert in modal */
+.form-global-error {
+  display: none;
+  background-color: var(--color-surface);
+  border: var(--border-width-thick) solid var(--color-accent);
+  padding: var(--space-3);
+  margin-top: var(--space-2);
+  color: var(--color-dark);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.form-global-error.form-error-visible {
+  display: block;
+}
+
+.form-global-error p {
+  margin: 0 0 var(--space-1) 0;
+  font-weight: 500;
+}
+
+.form-global-error .fallback-mail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-decoration: underline;
+  word-break: break-all;
+  margin-top: var(--space-1);
+}
+
+.form-global-error .fallback-mail-link:hover {
+  color: var(--color-dark);
+}
+
+/* Button Loading State (Bauhaus Square Spinner) */
+.btn-loading {
+  pointer-events: none;
+  opacity: 0.85;
+  cursor: not-allowed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  animation: spin-square 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin-square {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-spinner {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
 /* Success state after form submission */
 .waitlist-success {
   display: flex;
