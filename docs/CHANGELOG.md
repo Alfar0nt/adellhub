@@ -50,6 +50,11 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
   - Validasi server-side terverifikasi: content-type salah → `415`, JSON malformed → `400`, nama/email/service > batas panjang → `400`, payload > 10KB → `413`, email berisi CRLF → `400`.
   - Anti-spam terverifikasi end-to-end: field honeypot (`website`) yang terisi → respons sukses silent (`200`) tanpa mengirim Telegram; submit instan (< 2 detik) → respons silent tanpa notifikasi Telegram.
   - End-to-end (real Telegram): data waitlist valid terkirim ke grup via Bot API dengan `message_thread_id` yang tepat — terkonfirmasi notifikasi tiba di topik tujuan.
+- **Security Hardening & Rate Limiting (Phase T-6):**
+  - Strict CORS mode — block request tanpa header `Origin` (mencegah bypass via curl/wget).
+  - Rate limiting via Cloudflare Cache API: maksimal **5 request per menit per IP** (HTTP 429 jika melebihi).
+  - Error messages digeneralisir — tidak bocorkan detail internal ke user.
+  - Rate limiting bypassed untuk localhost (`127.0.0.1`, `::1`) agar development tetap nyaman.
 - **Developer Experience & Local Testing:**
   - Menambahkan script `"dev:pages": "npm run build && wrangler pages dev dist --ip 0.0.0.0"` pada `package.json` untuk menjalankan local dev server lengkap dengan Cloudflare Pages Functions.
   - Memperluas CORS check di `functions/api/waitlist.js` agar mendukung origin pengujian lokal secara dinamis (`localhost`, `127.0.0.1`, LAN IP seperti port `8788`, `3000`, `5173`) tanpa mengorbankan keamanan origin produksi.

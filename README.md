@@ -76,6 +76,13 @@ Endpoint serverless `POST /api/waitlist` (Cloudflare Pages Functions) membaca 3 
 - Setel di **Cloudflare Dashboard → Pages → project → Settings → Environment variables** (untuk production).
 - Untuk **pengembangan lokal**, isi `.dev.vars` di root proyek (format `KEY=value`, otomatis dibaca `wrangler pages dev`) — pastikan tidak commit: `.dev.vars` sudah ada di `.gitignore`.
 
+### Rate Limiting & Security Hardening
+
+- **Rate limiting:** Maksimal **5 request per menit per IP** (Cloudflare Cache API). Request melebihi batas → HTTP 429.
+- **CORS strict:** Hanya origin `adellhub.biz.id`, `*.pages.dev`, dan origin lokal (`localhost`, `127.0.0.1`, LAN IP) yang diizinkan.
+- **Input validation & sanitization:** HTML stripping, CRLF blocking, panjang karakter ketat, payload max 10KB.
+- **HTML escaping:** Semua input di-escape sebelum dikirim ke Telegram (mencegah XSS di notifikasi).
+
 ### Test Lokal Endpoint (Wrangler)
 
 ```bash
