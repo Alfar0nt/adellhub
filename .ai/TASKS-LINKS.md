@@ -1,8 +1,8 @@
 # TASKS — Link-in-Bio (folder `links/`) — Adellhub
 
-**Versi Dokumen:** 1.2.0  
+**Versi Dokumen:** 1.3.0  
 **Terakhir Diperbarui:** 2026-09-19  
-**Status Keseluruhan:** 🟡 Phase L-1 selesai — menunggu instruksi lanjut Phase L-2 + konten final dari user  
+**Status Keseluruhan:** 🟡 Phase L-2 selesai — menunggu instruksi lanjut Phase L-3 + konten final dari user  
 **Branch:** `develop`
 
 > **Instruksi untuk AI Agent:**
@@ -70,10 +70,21 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 **Tujuan:** Membangun ulang profil & kartu link bergaya Bauhaus.
 **Skill:** `svg-icon-generator`, `find-animation-opportunities`
 
-- [ ] Rewrite `script.js` menjadi setup yang kompatibel Vite (data config links terpisah/terpusat — mudah diedit saat konten final datang)
-- [ ] Profile section: avatar dengan framing geometris Bauhaus (bukan lingkaran glass), nama, deskripsi, tombol kontak email (outline/accent, bukan pill glass)
-- [ ] Kartu link bergaya `bauhaus-card` (border 2px charcoal, hard shadow, label uppercase, aksen merah kecil) — ikuti pola kartu layanan/portfolio halaman utama Adellhub
-- [ ] Ikon link: inline SVG geometris/generik + brand SVG lokal yang relevan (pertahankan `linkedin.svg`, `github.svg`, `instagram.svg`, `spotify.svg`, `youtube.svg`); ikuti allowlist seperti `safeExternalUrl` (hanya skema http/https)
+- [x] Rewrite `script.js` menjadi setup yang kompatibel Vite (data config links terpisah/terpusat — mudah diedit saat konten final datang)
+- [x] Profile section: avatar dengan framing geometris Bauhaus, nama, deskripsi, tombol kontak email (outline/accent, bukan pill glass) — **dibangun di Phase L-1**
+- [x] Kartu link bergaya `bauhaus-card` (border 2px charcoal, hard shadow, label **uppercase + bullet merah 6px** — konfirmasi user, aksen merah kecil) — ikuti pola kartu layanan/portfolio halaman utama Adellhub
+- [x] Ikon link: inline SVG geometris/generik + brand SVG lokal yang relevan (pertahankan `linkedin.svg`, `github.svg`, `instagram.svg`, `spotify.svg`, `youtube.svg`); ikuti allowlist seperti `safeExternalUrl` (hanya skema http/https)
+
+**Hasil Phase L-2 (2026-09-19):**
+- `links/script.js` ditulis ulang → **ES module kompatibel Vite** (pola `src/components/portfolio.js`):
+  - Ikon brand di-import: `import linkedinIcon from './images/linkedin.svg'` dst → URL asset ditangani Vite, aman di build
+  - `LINKS` config terpusat di atas (placeholder — konten final di L-6); ikon `image` (import) / `svgIcon` (inline) dibedakan
+  - `safeExternalUrl` allowlist `^https?:` (fallback `#`) + `escapeHtml` — pola `modal.js`
+  - Pertahankan: DocumentFragment single-reflow, stagger 60ms, `will-change` sementara (skip mobile <480px), `rel="noopener noreferrer"`
+  - `initBackgroundVideo()` **dihapus total** (video sudah tidak ada)
+- `links/index.html`: `<script>` → `type="module"`
+- `links/styles.css`: judul kartu **uppercase** (Space Grotesk 700) + `.link-head` flex dengan `.link-bullet` merah 6px (pola `feature-bullet` halaman utama)
+- Verifikasi dev server: index 200 + modul ter-transform (`import … /links/images/*.svg?import`), 5 SVG 200 — semua wiring OK; build produksi penuh diverifikasi di Phase L-5 (butuh entry vite.config)
 
 ---
 
@@ -133,7 +144,7 @@ Folder `links/` berisi proyek **link-in-bio** (portfolio personal) yang lama —
 |-------|------|--------|
 | Phase L-0 | Analisis, Audit & Persiapan | 🟢 Selesai |
 | Phase L-1 | Design System Bauhaus & Struktur HTML | 🟢 Selesai |
-| Phase L-2 | Komponen Profil & Link Cards | 🔴 Belum |
+| Phase L-2 | Komponen Profil & Link Cards | 🟢 Selesai |
 | Phase L-3 | Interaksi & Animasi | 🔴 Belum |
 | Phase L-4 | Aksesibilitas, SEO & Responsiveness | 🔴 Belum |
 | Phase L-5 | Integrasi Vite & QA Build | 🔴 Belum |
