@@ -1,7 +1,7 @@
 /**
  * Bauhaus Modal / Overlay Component
  * Accessible dialogs with Bauhaus geometric styling, backdrop, and keyboard ESC handling.
- * Includes: service "Coming Soon" overlay + waitlist registration form modal (mailto based).
+ * Includes: service "Coming Soon" overlay + waitlist registration form modal (fetch to /api/waitlist, with mailto fallback on error).
  */
 
 export const WAITLIST_EMAIL = 'waitlist@adellhub.biz.id';

@@ -11,6 +11,7 @@
 |-------|-----------|-------|--------|
 | Build Tool | **Vite** | 8.3.0 (pinned) | Fast HMR, zero-config, output optimal |
 | Base Language | **Vanilla JavaScript** | ES2022+ | Ringan, tidak perlu framework berat untuk SPA sederhana |
+| Serverless Layer | **Cloudflare Pages Functions** | `functions/` (root, auto-detect) | Endpoint `POST /api/waitlist` + notifikasi Telegram tanpa backend/database |
 | Markup | **HTML5** | - | Semantic & accessible |
 | Styling | **Vanilla CSS** | CSS3 | Kontrol penuh untuk Bauhaus geometry & animasi |
 
@@ -41,6 +42,9 @@ adellhub/
 │   └── TASKS.md
 ├── docs/                   # Changelog & release notes
 │   └── CHANGELOG.md
+├── functions/              # **Cloudflare Pages Functions** (serverless layer)
+│   └── api/
+│       └── waitlist.js     # Endpoint `POST /api/waitlist` → validasi + kirim ke Telegram
 ├── public/                 # Static files (di-copy langsung ke dist/)
 │   ├── _headers            # Headers keamanan (Cloudflare Pages)
 │   ├── favicon.svg
@@ -110,6 +114,7 @@ adellhub/
 | Package | Versi | Fungsi |
 |---------|-------|--------|
 | `vite` | 8.3.0 (pinned, tanpa `^`) | Build tool & dev server — version pinning agar `npm audit` bersih |
+| `wrangler` | 4.135.0 (pinned eksak, tanpa `^`) | Dev tool Cloudflare Pages — test lokal endpoint & Functions via `wrangler pages dev` (README § lokal) |
 
 ---
 

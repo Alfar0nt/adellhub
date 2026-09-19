@@ -1,8 +1,8 @@
 # PRD — Adellhub Landing Page
 
-**Versi Dokumen:** 1.3.0  
-**Tanggal:** 2026-09-18  
-**Status:** Live — deploy Cloudflare Pages, seluruh checklist terverifikasi  
+**Versi Dokumen:** 1.4.0  
+**Tanggal:** 2026-09-19  
+**Status:** Live — deploy Cloudflare Pages, seluruh checklist terverifikasi; waitlist via serverless function + notifikasi Telegram  
 **Author:** Adellhub Team  
 **Skills yang Direferensikan:** `frontend-design`, `landing-page-generator`, `semantic-html-and-seo`, `find-animation-opportunities`, `svg-icon-generator`
 
@@ -14,7 +14,7 @@ Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holdi
 
 1. Memperkenalkan brand Adellhub dan tiga layanan di bawahnya.
 2. Membangun kredibilitas dan kepercayaan calon pengguna.
-3. Mengumpulkan daftar tunggu (waitlist) dari calon pengguna via email.
+3. Mengumpulkan daftar tunggu (waitlist) dari calon pengguna via Cloudflare Pages Functions + notifikasi otomatis ke grup Telegram tim.
 4. Mengarahkan audiens ke kanal sosial media resmi.
 
 ---
@@ -105,7 +105,7 @@ Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holdi
 |-------|-----------|-----------|
 | Pre-loader Geometris | Animasi bentuk geometris saat halaman dimuat | P1 |
 | Service Overlay | Modal/overlay "coming soon" dengan CTA waitlist | P1 |
-| Modal Form Waitlist | Form input email (submit via mailto:) | P1 |
+| Modal Form Waitlist | Form input Nama & Email; submit via Cloudflare Pages Functions (`POST /api/waitlist`) dengan notifikasi otomatis ke grup Telegram tim | P1 |
 | Micro-animations | Animasi CSS halus pada hover, scroll | P2 |
 | Sticky Header | Header tetap terlihat saat scroll | P2 |
 | Smooth Scroll | Navigasi antar section dengan smooth scroll | P2 |
@@ -221,6 +221,7 @@ File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
 | 1.1.0 | 2026-09-18 | Sinkronisasi skill referensi & struktur |
 | 1.2.0 | 2026-09-18 | Kontak final (email, WA, IG), palet warna kontras AA (`#D2251C`/`#757575`), tambahan dokumen legal (privacy/terms), judul kontak "MARI TERHUBUNG" |
 | 1.3.0 | 2026-09-18 | Status **live** di `https://adellhub.biz.id` (Cloudflare Pages); Functional Checklist terverifikasi; Email Routing & og-image aktif |
+| 1.4.0 | 2026-09-19 | Waitlist via **Cloudflare Pages Functions** (`POST /api/waitlist`) + otomatis kirim notifikasi ke **Telegram grup** (Topics, `adellhub_waitlist_bot`); anti-spam ringan (honeypot + timestamp <2s + length 10KB) |
 
 ---
 

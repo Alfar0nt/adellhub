@@ -45,6 +45,11 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ## [Unreleased] — Telegram Webhook Notifikasi Waitlist
 
+- **Testing, Verifikasi & Anti-Spam Hardening (Phase T-4 & T-5):**
+  - Seluruh endpoint `POST /api/waitlist` diverifikasi lokal via `wrangler pages dev`: CORS preflight (`OPTIONS`) mengembalikan `204` untuk origin allowlist produksi, `*.pages.dev`, dan origin lokal; ditolak `403` untuk origin asing.
+  - Validasi server-side terverifikasi: content-type salah → `415`, JSON malformed → `400`, nama/email/service > batas panjang → `400`, payload > 10KB → `413`, email berisi CRLF → `400`.
+  - Anti-spam terverifikasi end-to-end: field honeypot (`website`) yang terisi → respons sukses silent (`200`) tanpa mengirim Telegram; submit instan (< 2 detik) → respons silent tanpa notifikasi Telegram.
+  - End-to-end (real Telegram): data waitlist valid terkirim ke grup via Bot API dengan `message_thread_id` yang tepat — terkonfirmasi notifikasi tiba di topik tujuan.
 - **Developer Experience & Local Testing:**
   - Menambahkan script `"dev:pages": "npm run build && wrangler pages dev dist --ip 0.0.0.0"` pada `package.json` untuk menjalankan local dev server lengkap dengan Cloudflare Pages Functions.
   - Memperluas CORS check di `functions/api/waitlist.js` agar mendukung origin pengujian lokal secara dinamis (`localhost`, `127.0.0.1`, LAN IP seperti port `8788`, `3000`, `5173`) tanpa mengorbankan keamanan origin produksi.
@@ -55,7 +60,6 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
   - Proteksi terhadap CRLF injection (`\r\n`) pada field email.
   - Validasi panjang karakter ketat (nama ≤ 100, email ≤ 254, service ≤ 100) dan batas ukuran payload maksimal 10KB (HTTP 413).
 - **Frontend Refactor Modal Waitlist (Phase T-2):** Form waitlist di `src/components/modal.js` kini mengirim data asynchronous via `fetch('/api/waitlist')` sebagai pengganti `mailto:` langsung.
-  - Loading state interaktif dengan spinner berputar bergaya Bauhaus (animasi `transform` murni dan ramah `prefers-reduced-motion`).
   - Tombol submit dan field input dinonaktifkan (`aria-busy="true"`) selama proses pengiriman untuk mencegah double submission.
   - Penanganan error responsif dengan container alert terstruktur (`role="alert"`), menyertakan fallback tautan `mailto:` langsung yang terisi otomatis jika koneksi gagal atau server offline.
   - Tombol CTA1 pada popup kartu layanan (`openModal`) dialihkan langsung membuka form modal waitlist (`openWaitlistForm`) untuk pengalaman in-app yang mulus.

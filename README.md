@@ -21,9 +21,10 @@ npm install
 ## Development
 
 ```bash
-npm run dev      # dev server → http://localhost:3000
-npm run build    # production build → dist/
-npm run preview  # preview build → http://localhost:4173
+npm run dev        # dev server → http://localhost:3000
+npm run dev:pages  # build + uji lokal endpoint serverless (wrangler pages dev dist) → http://localhost:8788
+npm run build      # production build → dist/
+npm run preview    # preview build → http://localhost:4173
 ```
 
 ---
@@ -61,6 +62,30 @@ npx wrangler pages deploy dist/ --project-name adellhub
 ```
 
 Setelah deploy, tambahkan custom domain `adellhub.biz.id` di dashboard Cloudflare Pages (lihat langkah 5 di atas).
+
+### Environment Variables (Waitlist → Telegram)
+
+Endpoint serverless `POST /api/waitlist` (Cloudflare Pages Functions) membaca 3 variabel environment untuk mengirim notifikasi ke grup Telegram:
+
+| Variable | Contoh | Peran |
+|----------|--------|-------|
+| `TELEGRAM_BOT_TOKEN` | `<token dari @BotFather>` | Token bot Telegram (secret) |
+| `TELEGRAM_CHAT_ID` | `-1003957917701` | Chat ID grup Telegram bertopik |
+| `TELEGRAM_THREAD_ID` | `2` | `message_thread_id` topic/thread tujuan |
+
+- Setel di **Cloudflare Dashboard → Pages → project → Settings → Environment variables** (untuk production).
+- Untuk **pengembangan lokal**, isi `.dev.vars` di root proyek (format `KEY=value`, otomatis dibaca `wrangler pages dev`) — pastikan tidak commit: `.dev.vars` sudah ada di `.gitignore`.
+
+### Test Lokal Endpoint (Wrangler)
+
+```bash
+npm run dev:pages
+# → http://localhost:8788  (endpoint juga teruji: curl -X POST http://localhost:8788/api/waitlist)
+```
+
+`dev:pages` menjalankan build + `wrangler pages dev dist` — memuat `.dev.vars` dan menyajikan Functions (`/api/waitlist`) bersama aset statis.
+
+> **⚠️ Jangan commit secret:** `TELEGRAM_BOT_TOKEN` & `TELEGRAM_CHAT_ID` hanya di Cloudflare Dashboard (encrypted) dan `.dev.vars` lokal (ter-ignore) — bukan di kode.
 
 ### Headers & Keamanan
 

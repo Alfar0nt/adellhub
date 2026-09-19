@@ -1,8 +1,8 @@
 # TASKS — Telegram Webhook Notifikasi Waitlist
 
-**Versi Dokumen:** 1.4.0  
+**Versi Dokumen:** 1.5.0  
 **Terakhir Diperbarui:** 2026-09-19  
-**Status Keseluruhan:** 🟢 Phase T-0 s.d. T-3 Selesai — Siap Eksekusi T-4  
+**Status Keseluruhan:** 🟢 Phase T-4 Selesai (terverifikasi) — T-5 Batch Lokal Selesai; Deploy Produksi & E2E Production Pending  
 **Branch:** `develop`
 
 > **Instruksi untuk AI Agent:**
@@ -233,14 +233,16 @@ adellhub/
 
 ### Tasks
  
-- [ ] Proteksi Anti-Bot & Anti-Spam (ringan & zero-dependency):
--  - [ ] **Honeypot field:** Tambahkan hidden field `<input name="website" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">` di form
--  - [ ] Jika honeypot terisi pada saat submit → tolak secara silent (return 200/sukses palsu tapi tidak kirim notifikasi Telegram)
--  - [ ] **Timestamp check:** Catat waktu saat modal form dibuka (`formOpenedAt`), tolak submit jika waktu pengisian < 2 detik (bot detection)
--  - [ ] **Input length & format limits:** Batasi payload maksimal 10KB, nama ≤ 100 karakter, email valid format
--- [ ] Rate limiting level Cloudflare KV/D1: ditunda (tidak diperlukan untuk MVP)
--- [ ] Verifikasi: form submit instan (<2 detik) ditolak sebagai bot
--- [ ] Verifikasi: honeypot field tak terlihat oleh user namun menangkap bot submission
+- [x] Proteksi Anti-Bot & Anti-Spam (ringan & zero-dependency):
+  - [x] **Honeypot field:** Tambahkan hidden field `<input name="website" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">` di form
+  - [x] Jika honeypot terisi pada saat submit → tolak secara silent (return 200/sukses palsu tapi tidak kirim notifikasi Telegram)
+  - [x] **Timestamp check:** Catat waktu saat modal form dibuka (`formOpenedAt`), tolak submit jika waktu pengisian < 2 detik (bot detection)
+  - [x] **Input length & format limits:** Batasi payload maksimal 10KB, nama ≤ 100 karakter, email valid format
+- [x] Rate limiting level Cloudflare KV/D1: ditunda (tidak diperlukan untuk MVP)
+- [x] Verifikasi: form submit instan (<2 detik) ditolak sebagai bot — **terverifikasi** via `wrangler pages dev` + curl (POST dengan `formOpenedAt` = `Date.now()` → HTTP 200 silent, pesan "Pendaftaran berhasil diterima", tanpa memanggil Telegram)
+- [x] Verifikasi: honeypot field tak terlihat oleh user namun menangkap bot submission — **terverifikasi** (POST dengan field `website` terisi → HTTP 200 silent; field di form memakai `sr-only` + `tabindex="-1"` + `autocomplete="off"` + `aria-hidden="true"`)
+
+> **Catatan Verifikasi T-4 (2026-09-19):** Seluruh payload anti-spam sudah terimplementasi sejak Phase T-1/T-2; sesi ini memverifikasi perilakunya secara lokal dengan `wrangler pages dev dist` (`.dev.vars` terbaca otomatis). Daftar lengkap hasil test ada di CHANGELOG.
 
 ---
 
@@ -252,19 +254,19 @@ adellhub/
 
 ### Tasks
 
-- [ ] Test lokal dengan Wrangler:
+- [x] Test lokal dengan Wrangler — **selesai** (command aktual di bawah; `.dev.vars` dibaca otomatis, tidak perlu `--binding`):
   ```bash
-  npx wrangler pages dev dist/ --binding TELEGRAM_BOT_TOKEN=xxx TELEGRAM_CHAT_ID=xxx
+  npm run build && npx wrangler pages dev dist --port 8788
   ```
-  - [ ] Test submit form → cek notifikasi masuk di Telegram grup
-  - [ ] Test validasi error (nama kosong, email invalid)
-  - [ ] Test network error (matikan internet, cek fallback)
-  - [ ] Test rate limiting (submit beruntun)
-  - [ ] Test honeypot (isi field hidden, cek tidak terkirim)
-- [ ] `npm run build` → verifikasi output `dist/` utuh (halaman utama, legal, links tetap ada)
-- [ ] Verifikasi `functions/api/waitlist.js` ter-include oleh Cloudflare Pages (folder `functions/` di root)
+  - [x] Test submit form → cek notifikasi masuk di Telegram grup — **terverifikasi**: POST valid → HTTP 200, Telegram Bot API `ok:true` (pesan "Uji E2E Lokal (Wrangler)" masuk ke topic grup)
+  - [x] Test validasi error (nama kosong, email invalid) — **terverifikasi**: HTTP 400 masing-masing (termasuk nama >100 karakter, CRLF di email, content-type salah → 415, payload >10KB → 413, origin asing → 403)
+  - [ ] Test network error (matikan internet, cek fallback) — ⏳ manual browser (matikan jaringan → cek fallback `mailto:` tampil di modal)
+  - [ ] Test rate limiting (submit beruntun) — **N/A** (rate limiting KV/D1 memang ditunda; hanya anti-spam ringan aktif, submit instan <2 detik sudah ditolak)
+  - [x] Test honeypot (isi field hidden, cek tidak terkirim) — **terverifikasi** via curl (HTTP 200 silent, tanpa panggilan Telegram)
+- [x] `npm run build` → verifikasi output `dist/` utuh (halaman utama, legal, links tetap ada) — **terverifikasi** (index, privacy, terms, links + `_headers` & aset publik ter-copy)
+- [x] Verifikasi `functions/api/waitlist.js` ter-include oleh Cloudflare Pages (folder `functions/` di root) — **terverifikasi** (route `POST /api/waitlist` aktif di `wrangler pages dev`)
 - [ ] Deploy ke Cloudflare Pages:
-  - [ ] Push ke branch `feature/telegram-webhook`
+  - [ ] Push ke branch `develop`
   - [ ] Set environment variables di Cloudflare Dashboard:
     - `TELEGRAM_BOT_TOKEN` (encrypted)
     - `TELEGRAM_CHAT_ID` = `-1003957917701` (encrypted)
@@ -278,7 +280,7 @@ adellhub/
   - [ ] Verifikasi di mobile (responsive, touch targets)
   - [ ] Verifikasi `prefers-reduced-motion` dihormati (loading spinner)
 - [ ] Merge ke `main` setelah semua test pass
-- [ ] Update `docs/CHANGELOG.md` dengan entry versi baru
+- [x] Update `docs/CHANGELOG.md` dengan entry versi baru
 
 ---
 
@@ -315,9 +317,9 @@ adellhub/
 | Phase T-1 | Cloudflare Pages Functions (Backend) | ✅ Selesai |
 | Phase T-2 | Refactor Frontend: mailto → fetch | ✅ Selesai |
 | Phase T-3 | Security: CSP, CORS & Sanitization | ✅ Selesai |
-| Phase T-4 | Rate Limiting & Anti-Spam | ⬜ Belum dimulai |
-| Phase T-5 | Testing, Build & Deployment | ⬜ Belum dimulai |
-| Phase T-6 | Dokumentasi & Cleanup | ⬜ Belum dimulai |
+| Phase T-4 | Rate Limiting & Anti-Spam | ✅ Selesai (terverifikasi lokal) |
+| Phase T-5 | Testing, Build & Deployment | 🟡 Batch lokal selesai — deploy & E2E production pending |
+| Phase T-6 | Dokumentasi & Cleanup | 🟡 Sedang dikerjakan |
 
 ---
 
