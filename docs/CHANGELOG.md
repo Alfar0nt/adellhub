@@ -56,6 +56,38 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ---
 
+## [1.4.0] — 2026-09-20
+
+### Changed
+- **Logo system:**
+  - **Header logo (`src/components/header.js`)**: Ganti inline SVG → `<img src="/header-logo.svg">`, ukuran 64x64px → **32x32px** (lebih proporsional dengan teks ADELLHUB)
+  - **Footer logo (`src/components/contact.js` line 88-91)**: Ganti inline SVG mini (circle+rect, 24x24) → `<img src="/header-logo.svg">`, ukuran **32x32px**
+
+### Removed
+- **`public/ori-size-with-bg.svg`**: File SVG lama yang sudah di-override ke `header-logo.svg` — tidak direferensi di codebase
+
+### Verified
+- `npm run build` sukses — `header-logo.svg` (357 KB) dan `favicon.svg` (29 KB) ter-copy ke `dist/`
+- Logo header & footer proporsional dengan teks ADELLHUB, tidak terpotong di mobile
+
+---
+
+## [1.3.0] — 2026-09-20
+
+### Changed
+- **Logo system:**
+  - **Favicon (`public/favicon.svg`)**: Ganti dari simple placeholder (circle + rect) dengan logo kompleks `Adellhub-Logo-No-Text.svg` (viewBox 1095×1095) — browser scaling handle rendering ke ukuran tab (16x16/32x32)
+  - **Header logo (`src/components/header.js` line 21-24)**: Ganti viewBox `0 0 28 28` → `0 0 1095 1095`, ganti content SVG dari circle+rect dengan seluruh path dari `Adellhub-Logo-No-Text.svg` — width/height tetap 28px, scaling vector browser
+  - **Links profile (`links/index.html`)**: Ganti `src="./profile.jpg"` → `src="./Adellhub-Logo-With-Text.jpg"`, ganti `alt="Foto profil"` → `alt="Logo Adellhub"`, update preload href
+
+### Removed
+- **Favicon placeholder lama**: Simple circle (hitam, #1A1A1A) + rect (merah, #E63329) di background off-white — replaced by complex logo
+
+### Verified
+- `npm run build` sukses — asset `Adellhub-Logo-With-Text-B5I7s3ER.jpg` (66.04 kB) ter-bundle
+
+---
+
 ## [Unreleased] — Telegram Webhook Notifikasi Waitlist
 
 - **Testing, Verifikasi & Anti-Spam Hardening (Phase T-4 & T-5):**

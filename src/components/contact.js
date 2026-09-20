@@ -85,10 +85,7 @@ export function initFooter() {
   footer.innerHTML = `
     <div class="container footer-inner">
       <span class="footer-brand">
-        <svg class="logo-icon" width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="12" cy="16" r="10" fill="var(--color-bg)" />
-            <rect x="12" y="4" width="12" height="12" fill="var(--color-accent)" />
-          </svg>
+        <img src="/header-logo.svg" alt="Adellhub Logo" class="logo-icon" width="32" height="32" aria-hidden="true">
         <span class="footer-logo-text">ADELLHUB</span>
       </span>
       <nav class="footer-legal" aria-label="Dokumen legal">

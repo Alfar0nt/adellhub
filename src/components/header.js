@@ -18,10 +18,7 @@ export function initHeader() {
         
         <!-- Logo Wordmark with Bauhaus Geometric SVG -->
         <a href="#" class="header-logo" aria-label="Adellhub Beranda">
-          <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="12" cy="16" r="10" fill="var(--color-dark)" />
-            <rect x="12" y="4" width="12" height="12" fill="var(--color-accent)" />
-          </svg>
+          <img src="/header-logo.svg" alt="Adellhub Logo" class="logo-icon" width="64" height="64" aria-hidden="true">
           <span class="logo-text">ADELLHUB</span>
         </a>
 
