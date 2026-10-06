@@ -132,7 +132,12 @@ Form waitlist (`waitlist@adellhub.biz.id`) dan section kontak (`hello@adellhub.b
 
 ```
 adellhub/
-├── .ai/                        # Project documentation (PRD, TECH-STACK, TASKS)
+├── .ai/                        # Project documentation
+│   ├── PRD.md                  # Product Requirements Document
+│   ├── DESIGN.md               # Design System & Brand Guide (warna, tipografi, dll)
+│   ├── TRD.md                  # Technical Requirements Document (ex TECH-STACK.md)
+│   ├── APP-FLOW.md             # Alur aplikasi — user & dev flow
+│   └── IMPLEMENTATION-PLAN.md # Tracker implementasi & to-do list
 ├── docs/                       # CHANGELOG & source og-image.svg
 ├── public/                     # Static assets (Vite copies to dist/)
 │   ├── _headers                # Cloudflare Pages response headers (security)
@@ -144,7 +149,7 @@ adellhub/
 │   ├── main.js                 # Entry point
 │   ├── style.css               # Bauhaus design tokens & styles
 │   ├── components/             # Komponen modular JS
-│   ├── assets/images/          # SVG placeholder Bergaya Bauhaus
+│   ├── assets/images/          # SVG placeholder bergaya Bauhaus
 │   └── utils/
 ├── index.html                  # SPA entry
 ├── privacy-policy.html         # Kebijakan Privasi (static, multi-page)

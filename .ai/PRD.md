@@ -1,10 +1,16 @@
 # PRD — Adellhub Landing Page
 
-**Versi Dokumen:** 1.4.0  
-**Tanggal:** 2026-09-19  
+**Versi Dokumen:** 1.5.0  
+**Tanggal:** 2026-10-06  
 **Status:** Live — deploy Cloudflare Pages, seluruh checklist terverifikasi; waitlist via serverless function + notifikasi Telegram  
 **Author:** Adellhub Team  
 **Skills yang Direferensikan:** `frontend-design`, `landing-page-generator`, `semantic-html-and-seo`, `find-animation-opportunities`, `svg-icon-generator`
+
+> **Dokumen terkait:**
+> - Design System & Panduan Visual → [DESIGN.md](./DESIGN.md)
+> - Technical Requirements → [TRD.md](./TRD.md)
+> - Alur Aplikasi → [APP-FLOW.md](./APP-FLOW.md)
+> - Tracker Implementasi → [IMPLEMENTATION-PLAN.md](./IMPLEMENTATION-PLAN.md)
 
 ---
 
@@ -135,43 +141,20 @@ Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holdi
 
 ## 6. Estetika & Desain
 
-### 6.1 Referensi Visual
-File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
+> **Design System lengkap ada di [DESIGN.md](./DESIGN.md)** — mencakup palet warna, tipografi, grafis Bauhaus, layout & grid, komponen UI, animasi, aksesibilitas, dan design tokens CSS.
 
-### 6.2 Palet Warna
-| Token | Nilai | Keterangan |
-|-------|-------|------------|
-| `--color-bg` | `#F5F0E8` | Off-white / krem latar belakang |
-| `--color-dark` | `#1A1A1A` | Hitam arang untuk teks & bentuk gelap |
-| `--color-accent` | `#D2251C` | Merah Bauhaus — diturunkan dari `#E63329` agar lolos kontras WCAG AA (teks di white 5.22:1, di bg 4.60:1) |
-| `--color-white` | `#FFFFFF` | Putih murni |
-| `--color-gray` | `#757575` | Teks sekunder — diturunkan dari `#888888` (~4.6:1 rasio kontras placeholder) |
+Ringkasan singkat untuk konteks PRD:
 
-### 6.3 Tipografi
-- **Font:** `Space Grotesk` (Google Fonts) — primary display
-- **Font Alt:** `Inter` (Google Fonts) — body text
-- **Fallback Stack:** `'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`
-- **Heading 1:** 72–96px, weight 800, uppercase
-- **Heading 2:** 40–56px, weight 700
-- **Body:** 16–18px, weight 400
-- **Nav/Label:** 12–14px, weight 500, letter-spacing lebar
-- **Line length:** Maksimal 80 karakter per baris (dari skill `frontend-design`)
-
-> **⚠️ Anti-pattern dari skill `frontend-design` — HINDARI:**
-> - Jangan aksen satu kata saja di headline dengan warna/italic berbeda
-> - Jangan gunakan ALL CAPS untuk semua label (hanya untuk heading utama sesuai Bauhaus)
-> - Jangan gunakan numbered markers (01/02/03) kecuali konten benar-benar berurutan
-
-### 6.4 Grafis Bauhaus
-- Bentuk murni: lingkaran, setengah lingkaran, kotak, garis-garis sejajar, grid titik
-- Hanya merah dan hitam/arang (tidak ada gradien, tidak ada shadow berlebihan)
-- Implementasi via SVG inline atau CSS shapes
-- **Icon wajib SVG** — tidak menggunakan emoji sebagai icon (dari skill `landing-page-generator`)
+- **Referensi Visual:** `image.png` di root repo — Website MOCA Museum bergaya Bauhaus UI
+- **Palet:** Off-white `#F5F0E8` (bg) · Arang `#1A1A1A` (teks) · Merah `#D2251C` (aksen, WCAG AA) · Abu `#757575` (sekunder)
+- **Font:** Space Grotesk (display) + Inter (body) via Google Fonts
+- **Grafis:** Bentuk geometris murni (lingkaran, kotak, grid titik) — merah & arang, tanpa gradien
+- **Icon:** Wajib SVG inline — tidak menggunakan emoji (dari skill `svg-icon-generator`)
 
 ---
 
 ## 7. Tech Stack
-> Lihat detail di [TECH-STACK.md](./TECH-STACK.md)
+> Lihat detail di [TRD.md](./TRD.md) (Technical Requirements Document)
 
 ---
 
@@ -222,6 +205,7 @@ File: `image.png` (ada di root repo) — Website MOCA Museum dengan Bauhaus UI.
 | 1.2.0 | 2026-09-18 | Kontak final (email, WA, IG), palet warna kontras AA (`#D2251C`/`#757575`), tambahan dokumen legal (privacy/terms), judul kontak "MARI TERHUBUNG" |
 | 1.3.0 | 2026-09-18 | Status **live** di `https://adellhub.biz.id` (Cloudflare Pages); Functional Checklist terverifikasi; Email Routing & og-image aktif |
 | 1.4.0 | 2026-09-19 | Waitlist via **Cloudflare Pages Functions** (`POST /api/waitlist`) + otomatis kirim notifikasi ke **Telegram grup** (Topics, `adellhub_waitlist_bot`); anti-spam ringan (honeypot + timestamp <2s + length 10KB); security hardening (CORS strict, HTML escaping, input validation & sanitization); fix: support `www.adellhub.biz.id` origin |
+| 1.5.0 | 2026-10-06 | Restrukturisasi dokumentasi `.ai/`: Section 6 (Estetika & Desain) dipindah ke **DESIGN.md**; referensi tech stack diperbarui ke **TRD.md**; tambah link ke **APP-FLOW.md** & **IMPLEMENTATION-PLAN.md** |
 
 ---
 

@@ -43,16 +43,18 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ---
 
-## [1.2.0] — 2026-09-19
+## [docs] — 2026-10-06
 
-### Added
-- **Cloudflare Pages Functions Backend:** Endpoint serverless `POST /api/waitlist` di `functions/api/waitlist.js` untuk menerima data pendaftaran waitlist dan meneruskannya ke Telegram Bot API.
-  - Mendukung grup Telegram bertopik (`message_thread_id`) via integer parsing.
-  - Notifikasi terformat rapi dengan mode HTML Telegram (`Nama`, `Email`, `Layanan`, `Waktu WIB`, `Device`).
-  - CORS preflight & response headers untuk origin produksi (`adellhub.biz.id`, `www.adellhub.biz.id`) dan lokal (`localhost`, `127.0.0.1`, LAN IP).
-- **Security Hardening:** CSP, strict CORS validation, HTML escaping, input sanitization.
-- **Anti-Spam:** Honeypot field, time-to-submit verification (min 2 detik), payload max 10KB.
-- **Local Testing:** Script `"dev:pages"` untuk test endpoint via `wrangler pages dev`.
+### Changed (Dokumentasi)
+- **Restrukturisasi folder `.ai/`** — dokumentasi proyek dirapikan menjadi dokumen terpisah yang lebih modular:
+  - **`DESIGN.md`** (baru) — Design System & Brand Guide Adellhub; dipindahkan dari PRD.md Section 6. Berlaku lintas proyek dalam ekosistem Adellhub (landing page, link-in-bio, kampanye, sub-produk).
+  - **`TRD.md`** (rename dari `TECH-STACK.md`) — Technical Requirements Document; bagian Design Tokens dipindah ke `DESIGN.md`; ditambah Serverless Architecture & Security Features.
+  - **`APP-FLOW.md`** (baru) — Alur aplikasi lengkap dari sudut pandang user & developer: Landing Page, Link-in-Bio, halaman Legal, backend serverless, Build & Deploy flow.
+  - **`IMPLEMENTATION-PLAN.md`** (baru, gabungan) — Menggabungkan `TASKS.md` + `TASKS-LINKS.md` + `TASKS-TELEGRAM.md` menjadi satu tracker implementasi; open tasks di atas, completed tasks urut terbaru ke terlama.
+  - **`TECH-STACK.md`** dihapus (diganti `TRD.md`)
+  - **`TASKS.md`**, **`TASKS-LINKS.md`**, **`TASKS-TELEGRAM.md`** dihapus (digabung ke `IMPLEMENTATION-PLAN.md`)
+- **`PRD.md`** diperbarui ke v1.5.0 — Section 6 (Estetika & Desain) diganti referensi ke `DESIGN.md`; link ke semua dokumen terkait ditambahkan di header
+- **`README.md`** diperbarui — referensi file `.ai/` disesuaikan dengan nama dokumen baru
 
 ---
 
@@ -88,42 +90,39 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ---
 
-## [Unreleased] — Telegram Webhook Notifikasi Waitlist
+## [1.2.1] — 2026-09-19
 
-- **Testing, Verifikasi & Anti-Spam Hardening (Phase T-4 & T-5):**
-  - Seluruh endpoint `POST /api/waitlist` diverifikasi lokal via `wrangler pages dev`: CORS preflight (`OPTIONS`) mengembalikan `204` untuk origin allowlist produksi, `*.pages.dev`, dan origin lokal; ditolak `403` untuk origin asing.
-  - Validasi server-side terverifikasi: content-type salah → `415`, JSON malformed → `400`, nama/email/service > batas panjang → `400`, payload > 10KB → `413`, email berisi CRLF → `400`.
-  - Anti-spam terverifikasi end-to-end: field honeypot (`website`) yang terisi → respons sukses silent (`200`) tanpa mengirim Telegram; submit instan (< 2 detik) → respons silent tanpa notifikasi Telegram.
-  - End-to-end (real Telegram): data waitlist valid terkirim ke grup via Bot API dengan `message_thread_id` yang tepat — terkonfirmasi notifikasi tiba di topik tujuan.
-- **Security Hardening & Rate Limiting (Phase T-6):**
-  - Strict CORS mode — block request tanpa header `Origin` (mencegah bypass via curl/wget).
-  - Rate limiting via Cloudflare Cache API: maksimal **5 request per menit per IP** (HTTP 429 jika melebihi).
-  - Error messages digeneralisir — tidak bocorkan detail internal ke user.
-  - Rate limiting bypassed untuk localhost (`127.0.0.1`, `::1`) agar development tetap nyaman.
-- **Production Fix v1 (2026-09-19):**
-  - Fix: Tambahkan `https://www.adellhub.biz.id` ke allowed origins (request dari production website pakai `www` subdomain).
-  - Rate limiting (Cache API) di-comment — production error "Worker threw exception (1101)", debug perlu.
-- **Developer Experience & Local Testing:**
-  - Menambahkan script `"dev:pages": "npm run build && wrangler pages dev dist --ip 0.0.0.0"` pada `package.json` untuk menjalankan local dev server lengkap dengan Cloudflare Pages Functions.
-  - Memperluas CORS check di `functions/api/waitlist.js` agar mendukung origin pengujian lokal secara dinamis (`localhost`, `127.0.0.1`, LAN IP seperti port `8788`, `3000`, `5173`) tanpa mengorbankan keamanan origin produksi.
-- **Security Hardening: CSP, CORS & Input Sanitization (Phase T-3):**
-  - Content Security Policy (CSP) di `public/_headers` diperbarui pada direktif `connect-src` dengan domain produksi eksplisit (`connect-src 'self' https://adellhub.biz.id;`).
-  - Strict CORS validation di `functions/api/waitlist.js`: request yang memuat header `Origin` asing di luar allowlist ditolak langsung dengan status `HTTP 403 Forbidden` (baik pada request utama `POST` maupun preflight `OPTIONS`).
-  - Server-side input sanitization via `stripHtmlTags()` untuk membersihkan tag HTML berbahaya dari input `name`, `email`, dan `service` sebelum diproses.
-  - Proteksi terhadap CRLF injection (`\r\n`) pada field email.
-  - Validasi panjang karakter ketat (nama ≤ 100, email ≤ 254, service ≤ 100) dan batas ukuran payload maksimal 10KB (HTTP 413).
-- **Frontend Refactor Modal Waitlist (Phase T-2):** Form waitlist di `src/components/modal.js` kini mengirim data asynchronous via `fetch('/api/waitlist')` sebagai pengganti `mailto:` langsung.
-  - Tombol submit dan field input dinonaktifkan (`aria-busy="true"`) selama proses pengiriman untuk mencegah double submission.
-  - Penanganan error responsif dengan container alert terstruktur (`role="alert"`), menyertakan fallback tautan `mailto:` langsung yang terisi otomatis jika koneksi gagal atau server offline.
-  - Tombol CTA1 pada popup kartu layanan (`openModal`) dialihkan langsung membuka form modal waitlist (`openWaitlistForm`) untuk pengalaman in-app yang mulus.
-  - Field honeypot anti-bot tersembunyi secara aksesibel (`tabindex="-1"`, `aria-hidden="true"`).
-- **Cloudflare Pages Functions Backend (Phase T-1):** Endpoint serverless `POST /api/waitlist` di `functions/api/waitlist.js` untuk menerima data pendaftaran waitlist dan meneruskannya ke Telegram Bot API.
+Hardening, verifikasi, dan production fix untuk fitur Telegram Webhook Notifikasi Waitlist (diimplementasi di v1.2.0).
+
+### Added
+- **Production Fix:** Tambahkan `https://www.adellhub.biz.id` ke allowed CORS origins — request dari production website menggunakan `www` subdomain
+- **Strict CORS mode:** Block request tanpa header `Origin` (mencegah bypass via curl/wget tanpa origin header)
+- **Error messages digeneralisir** — tidak bocorkan detail internal ke user
+
+### Changed
+- **Rate limiting (Cache API) di-comment** — production error "Worker threw exception (1101)"; rate limiting KV/D1 ditunda, dapat dilanjutkan di versi berikutnya jika dibutuhkan
+- **Dev server script diperluas:** CORS check di `functions/api/waitlist.js` mendukung origin lokal dinamis (`localhost`, `127.0.0.1`, LAN IP, port `8788`/`3000`/`5173`) tanpa mengorbankan keamanan produksi
+
+### Verified
+- End-to-end (real Telegram): data waitlist valid terkirim ke grup via Bot API dengan `message_thread_id` yang tepat — notifikasi tiba di topik tujuan ✅
+- CORS preflight (`OPTIONS`) → `204` untuk allowlist; `403` untuk origin asing ✅
+- Validasi server-side: content-type salah → `415`, JSON malformed → `400`, panjang berlebih → `400`, payload >10KB → `413`, email CRLF → `400` ✅
+- Anti-spam: honeypot terisi → `200` silent; submit <2 detik → `200` silent ✅
+
+---
+
+## [1.2.0] — 2026-09-19
+
+### Added
+- **Cloudflare Pages Functions Backend:** Endpoint serverless `POST /api/waitlist` di `functions/api/waitlist.js` untuk menerima data pendaftaran waitlist dan meneruskannya ke Telegram Bot API.
   - Mendukung grup Telegram bertopik (`message_thread_id`) via integer parsing.
   - Notifikasi terformat rapi dengan mode HTML Telegram (`Nama`, `Email`, `Layanan`, `Waktu WIB`, `Device`).
-  - Proteksi anti-spam terintegrasi: honeypot field (`website`), batas ukuran payload (10KB), dan time-to-submit verification (min 2 detik).
-  - Sanitasi karakter HTML (`&`, `<`, `>`) guna mencegah HTML parsing error di Telegram.
-  - CORS preflight & response headers untuk origin produksi (`adellhub.biz.id`) dan lokal (`localhost:3000`).
-- **Setup & Kredensial Bot Telegram (Phase T-0):** Bot Telegram `@adellhub_waitlist_bot` terhubung ke topik grup tujuan (`message_thread_id: 2`), kredensial tersimpan aman via Cloudflare Dashboard Environment Variables dan `.dev.vars` lokal ter-ignore oleh `.gitignore`.
+  - CORS preflight & response headers untuk origin produksi (`adellhub.biz.id`, `www.adellhub.biz.id`) dan lokal (`localhost`, `127.0.0.1`, LAN IP).
+- **Security Hardening:** CSP (`connect-src` diperbarui), strict CORS validation, HTML escaping, input sanitization (`stripHtmlTags()`, CRLF blocking, length limits).
+- **Anti-Spam:** Honeypot field, time-to-submit verification (min 2 detik), payload max 10KB.
+- **Frontend Refactor Modal Waitlist:** Form di `src/components/modal.js` kini mengirim data via `fetch('/api/waitlist')` sebagai pengganti `mailto:` langsung. Loading state (`aria-busy`), error alert (`role="alert"`) + fallback `mailto:`, CTA1 overlay langsung buka waitlist form.
+- **Bot Telegram:** `@adellhub_waitlist_bot` terhubung ke topik grup (`message_thread_id: 2`); kredensial tersimpan via Cloudflare Dashboard Environment Variables dan `.dev.vars` lokal (ter-ignore `.gitignore`).
+- **Local Testing:** Script `"dev:pages"` untuk test endpoint lokal via `wrangler pages dev`.
 
 ---
 
@@ -146,10 +145,14 @@ Halaman **link-in-bio `/links/`** — redesign penuh dari versi lama (dark glass
 - **Konten lama `links/`:** 7 link personal (LinkedIn/CV/Wiki/GitHub/IG pribadi/YouTube/Spotify), ikon inline `fileIcon`/`bookIcon`, seluruh `links/images/*.svg` (folder `images/` dihapus total), markup & aset background video (`video-container`, `#bg-video`, overlay, `letter-bg.mp4`)
 - **10 file tak terpakai hasil audit L-0:** `test.md`, `resume.png`, `resume-v2.png`, `wiki.png`, `wordpress.png`, `dev.png`, `amazon.svg`, `facebook.svg`, `google.svg`, `twitter.svg`
 
+---
+
 ## [1.0.1] — 2026-09-18
 
 ### Changed
 - **Header mobile lebih ramping + auto-hide:** tinggi `.header-inner` mobile diturunkan 56px → **48px**. Header kini **menghilang saat user scroll ke bawah** (slide-out via `translateY(-100%)` setelah melewati 120px) dan **muncul kembali saat scroll ke atas** — konten tidak tertutup header saat membaca di mobile. Header tidak pernah disembunyikan saat menu mobile terbuka, dan auto-hide hanya aktif di `max-width: 768px` (desktop tidak berubah). Target sentuh hamburger tetap ≥44px; transisi slide dihormati `prefers-reduced-motion`
+
+---
 
 ## [1.0.0] — 2026-09-18
 
@@ -165,7 +168,7 @@ Rilis pertama — Adellhub landing page siap deploy ke **Cloudflare Pages**.
 - **Build & deployment verified:** `npm run build` sukses (multi-page: `index.html`, `privacy-policy.html`, `terms-of-service.html`); semua asset & `_headers` ter-copy ke `dist/`; smoke test `vite preview` HTTP 200 untuk seluruh route (HTML/CSS/JS/favicon)
 
 ### Docs
-- PRD → **1.2.0**, TECH-STACK → **1.2.0**, TASKS → **1.6.0** (seluruh phase selesai; commit + tag `v1.0.0` dilakukan manual)
+- PRD → **1.2.0**, TRD (ex TECH-STACK) → **1.2.0**, TASKS → **1.6.0** (seluruh phase selesai; commit + tag `v1.0.0` dilakukan manual)
 
 ---
 
