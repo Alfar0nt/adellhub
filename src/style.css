@@ -21,6 +21,11 @@
   --color-border: #1A1A1A;        /* High-contrast architectural structural lines */
   --color-border-subtle: rgba(26, 26, 26, 0.18);
 
+  /* Bauhaus Cobalt Blue — Adellroute Accent */
+  --color-adellroute: #1E40AF;
+  --color-adellroute-dark: #172554;
+  --color-adellroute-subtle: rgba(30, 64, 175, 0.08);
+
   /* Typography */
   --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -452,6 +457,19 @@ section[id] {
   color: var(--color-white);
 }
 
+.badge-route {
+  background-color: var(--color-adellroute);
+  border-color: var(--color-dark);
+  color: var(--color-white);
+  box-shadow: 2px 2px 0px var(--color-dark);
+}
+
+.badge-muted {
+  background-color: var(--color-surface-tint);
+  border-color: var(--color-border-subtle);
+  color: var(--color-gray);
+}
+
 /* Bauhaus Card Structure */
 .bauhaus-card {
   background-color: var(--color-surface);
@@ -781,8 +799,29 @@ section[id] {
 }
 
 @media (max-width: 768px) {
+  section[id] {
+    scroll-margin-top: 60px;
+  }
+
   .header-inner {
-    height: 48px;
+    height: 46px;
+  }
+
+  .header-logo {
+    gap: var(--space-2);
+    line-height: 1;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .logo-text {
+    font-size: var(--text-lg);
+    line-height: 1;
   }
 
   /* Auto-hide header on scroll down: slide out of view, slide back in on scroll up */
@@ -804,42 +843,59 @@ section[id] {
 
   .mobile-menu-toggle {
     display: flex;
+    width: 36px;
+    height: 36px;
+    gap: 5px;
+    position: relative;
   }
 
-  /* Animated mobile drawer: grid-rows 0fr → 1fr + fade + slide (avoids abrupt display swap)
-     Close transition keeps visibility delayed so the collapse plays fully first. */
+  /* Extended 44x44px touch target for WCAG 2.5.5 Level AAA compliance */
+  .mobile-menu-toggle::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+  }
+
+  .hamburger-line {
+    width: 18px;
+    height: 2px;
+  }
+
+  /* Mobile drawer: display none when closed to prevent any vertical phantom space leakage */
   .mobile-nav {
-    display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
-    visibility: hidden;
-    transition: grid-template-rows var(--duration-base) var(--ease-out),
-                opacity var(--duration-base) var(--ease-out),
-                visibility 0s linear var(--duration-base);
+    display: none;
   }
 
   .mobile-nav-list {
-    overflow: hidden;
-    min-height: 0;
     border-top: var(--border-width) solid var(--color-border);
-    padding: var(--space-6) 0 var(--space-8);
+    padding: var(--space-4) 0 var(--space-6);
   }
 
   .site-header.mobile-menu-open .mobile-nav {
-    grid-template-rows: 1fr;
-    opacity: 1;
-    visibility: visible;
-    transition: grid-template-rows var(--duration-base) var(--ease-out),
-                opacity var(--duration-base) var(--ease-out),
-                visibility 0s;
+    display: block;
+    animation: mobileNavFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes mobileNavFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .site-header.mobile-menu-open .hamburger-line:first-child {
-    transform: translateY(4px) rotate(45deg);
+    transform: translateY(3.5px) rotate(45deg);
   }
 
   .site-header.mobile-menu-open .hamburger-line:last-child {
-    transform: translateY(-4px) rotate(-45deg);
+    transform: translateY(-3.5px) rotate(-45deg);
   }
 }
 
@@ -1110,7 +1166,7 @@ section[id] {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 2.5rem);
 }
 
@@ -1135,6 +1191,86 @@ section[id] {
   .service-card-active:hover {
     transform: translateY(-5px);
     box-shadow: 8px 8px 0px var(--color-dark);
+  }
+}
+
+/* Highlighted Featured Card: Adellroute */
+.service-card-highlight {
+  grid-column: 1 / -1;
+  background-color: var(--color-surface);
+  border: 3px solid var(--color-adellroute);
+  box-shadow: 6px 6px 0px var(--color-adellroute);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card-highlight:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 0px var(--color-adellroute);
+  }
+}
+
+.service-card-highlight-inner {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: center;
+}
+
+.service-card-highlight-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.service-card-highlight-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.service-card-highlight-side .service-features {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.eyebrow-route {
+  color: var(--color-adellroute);
+}
+
+.btn-route {
+  background-color: var(--color-adellroute);
+  color: var(--color-white);
+  border: var(--border-width-thick) solid var(--color-dark);
+  box-shadow: 3px 3px 0px var(--color-dark);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-route:hover {
+    background-color: var(--color-adellroute-dark);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--color-dark);
+  }
+}
+
+.feature-bullet-route {
+  background-color: var(--color-adellroute);
+}
+
+/* Upcoming Card: More to Come */
+.service-card-upcoming {
+  background-color: rgba(245, 240, 232, 0.5);
+  border: 2px dashed var(--color-border);
+  box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card-upcoming:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-dark);
+    transform: translateY(-4px);
+    box-shadow: 4px 4px 0px var(--color-border);
   }
 }
 
@@ -1215,15 +1351,19 @@ section[id] {
   padding-top: var(--space-2);
 }
 
-@media (max-width: 960px) {
-  .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 680px) {
+@media (max-width: 860px) {
   .services-grid {
     grid-template-columns: 1fr;
+  }
+
+  .service-card-highlight-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .service-card-highlight-side .service-features {
+    border-top: 1px solid var(--color-border-subtle);
+    padding-top: var(--space-3);
   }
 }
 

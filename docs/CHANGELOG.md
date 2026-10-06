@@ -43,6 +43,29 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ---
 
+## [1.5.0] — 2026-10-06
+
+### Added (Phase 11 — Layanan Baru: Adellroute & More to Come)
+- **Layanan Adellroute (AI API Token Reseller):**
+  - Ditambahkan sebagai kartu layanan sorotan utama (#1 featured card) di grid Layanan Kami (`#services`).
+  - Diberikan skema warna pembeda **Cobalt Blue Bauhaus** (`--color-adellroute: #1E40AF`), border tebal 3px, box-shadow Cobalt Blue, serta badge status **`Currently Working`**.
+  - Ilustrasi vektor geometris SVG Bauhaus orisinal (viewBox 40×40) yang merepresentasikan neural AI routing core, sirkuit orthogonal, dan aliran token input/output.
+  - Proposisi nilai reseller token multi-model (OpenAI, Claude, DeepSeek, Gemini) dengan billing transparan per 1M token (input dan output terpisah), latensi rendah, serta API compatible OpenAI.
+  - Integrasi modal informasi Adellroute dan form waitlist langsung dengan context `{ service: 'Adellroute' }`.
+- **Layanan More to Come (Inovasi Mendatang):**
+  - Ditambahkan sebagai kartu layanan ke-5 (#5) penutup di grid Layanan Kami.
+  - Desain minimalis Bauhaus berlatar transparan lembut dengan border garis putus-putus (`2px dashed var(--color-border)`), ikon Bauhaus `+`, badge `Future Vision`, dan tombol usulan ide layanan.
+- **Layout Grid Responsif Layanan:**
+  - Layout desktop diubah menjadi 2-kolom seimbang di mana kartu Adellroute membentang penuh di baris teratas (`grid-column: 1 / -1`) dengan layout internal 2-kolom, diikuti 4 kartu lainnya dalam formasi 2×2 simetris tanpa slot kosong.
+
+### Fixed (Phase 10 — Top Navbar Mobile Symmetry & Compact Sizing)
+- **Eliminasi Ruang Kosong (Phantom Space):** Memperbaiki `#mobile-nav` dengan menyetel `display: none` saat tertutup sehingga padding drawer tidak lagi bocor ke dalam kontainer header dan menggelembungkan background navbar di mobile.
+- **Tinggi Navbar Mobile Lebih Fit & Samping:** Mengatur tinggi `.header-inner` di mobile menjadi `46px` (snug fit membungkus rapi tombol 36px dan logo 32px tanpa ruang vertikal terbuang).
+- **Skalasi & Simetri Logo:** Membatasi ukuran `.logo-icon` menjadi `32px × 32px` dengan `display: block` untuk menghilangkan celah baseline descender inline image.
+- **Tombol Toggle Ergonomis:** Menyesuaikan `.mobile-menu-toggle` ke `36px × 36px` dengan pseudo-element target sentuh `44px × 44px` (WCAG 2.5.5 Level AAA).
+
+---
+
 ## [docs] — 2026-10-06
 
 ### Changed (Dokumentasi)
