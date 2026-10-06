@@ -3,11 +3,20 @@
  * Rekam jejak dalam grid geometris dengan placeholder artistik bergaya Bauhaus.
  */
 
+import adellroutePreview from '../assets/images/adellroute-preview.svg';
 import adellworkPreview from '../assets/images/adellwork-preview.svg';
 import adelltechPreview from '../assets/images/adelltech-preview.svg';
 import adellboothPreview from '../assets/images/adellbooth-preview.svg';
 
 const portfolioItems = [
+  {
+    id: 'adellroute',
+    eyebrow: 'Adellroute by Adellhub',
+    title: 'AI Token Gateway & Routing',
+    desc: 'Arsitektur perutean token multi-model AI dengan billing per-token terukur dan monitoring latensi real-time.',
+    image: adellroutePreview,
+    alt: 'Komposisi geometris Bauhaus merepresentasikan arsitektur router token AI Adellroute: simpul neural network terhubung ke aliran data token input dan output dengan aksen biru kobalt.',
+  },
   {
     id: 'adellwork',
     eyebrow: 'Adellwork by Adellhub',
@@ -54,7 +63,7 @@ export function initPortfolio() {
         </p>
       </div>
 
-      <!-- Portfolio 3-Column Geometric Grid -->
+      <!-- Portfolio Geometric Grid (2x2) -->
       <div class="portfolio-grid">
         ${portfolioItems.map((item) => `
           <figure class="portfolio-card">

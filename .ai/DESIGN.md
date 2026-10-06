@@ -1,6 +1,6 @@
 # DESIGN — Adellhub Design System & Brand Guide
 
-**Versi Dokumen:** 1.0.0  
+**Versi Dokumen:** 1.1.0  
 **Tanggal:** 2026-10-06  
 **Status:** Aktif — berlaku untuk seluruh proyek dalam ekosistem Adellhub  
 **Author:** Adellhub Team  
@@ -35,6 +35,9 @@ Desain Adellhub diinspirasi oleh gerakan seni **Bauhaus** — estetika fungsiona
 | `--color-accent` | `#D2251C` | Merah Bauhaus — aksen, CTA, highlight geometris |
 | `--color-white` | `#FFFFFF` | Putih murni — latar kartu, teks di atas dark/accent |
 | `--color-gray` | `#757575` | Abu-abu — teks sekunder, placeholder, caption |
+| `--color-adellroute` | `#1E40AF` | Cobalt Blue Bauhaus — aksen khusus layanan Adellroute (AI token router) |
+| `--color-adellroute-dark` | `#172554` | Deep Cobalt — border penegas & elemen kontras Adellroute |
+| `--color-adellroute-subtle` | `rgba(30, 64, 175, 0.08)` | Biru kobalt transparan — latar hover & subtle badge |
 
 ### 2.2 Aksesibilitas & Kontras (WCAG AA)
 
@@ -244,6 +247,20 @@ Semua spacing menggunakan kelipatan **8px**:
 }
 ```
 
+### 6.3 Varian Kartu Khusus
+
+1. **Highlight Card (`.service-card-highlight` — Adellroute):**
+   - Menggunakan border tebal 3px Cobalt Blue (`#1E40AF`)
+   - Hard shadow tebal 6px Cobalt Blue: `box-shadow: 6px 6px 0 var(--color-adellroute)`
+   - Badge status: `.badge-route` berlatar belakang Cobalt Blue dengan teks putih
+   - Digunakan untuk menandai layanan yang sedang aktif dikerjakan (**Currently Working**)
+
+2. **Dashed Card (`.service-card-upcoming` — More to Come):**
+   - Border garis putus-putus: `border: 2px dashed var(--color-border)`
+   - Latar belakang lembut transparan
+   - Ikon geometris tanda tambah `+` (simbol ekspansi masa depan)
+   - Tombol outline untuk mengundang saran ide layanan dari komunitas/pengguna
+
 ### 6.3 Hard Shadow
 
 Hard shadow adalah elemen khas desain Bauhaus — gunakan konsisten di seluruh kartu dan CTA yang elevated:
@@ -352,6 +369,9 @@ Implementasi lengkap semua token desain:
   --color-accent:  #D2251C;   /* Merah Bauhaus (WCAG AA compliant) */
   --color-white:   #FFFFFF;
   --color-gray:    #757575;   /* Teks sekunder (WCAG AA compliant) */
+  --color-adellroute: #1E40AF; /* Cobalt Blue Bauhaus */
+  --color-adellroute-dark: #172554;
+  --color-adellroute-subtle: rgba(30, 64, 175, 0.08);
 
   /* === Typography === */
   --font-display: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -397,7 +417,13 @@ Implementasi lengkap semua token desain:
 - Style file: `public/legal.css` (shared)
 - Ikuti tipografi dan warna yang sama, layout dokumen sederhana (1-kolom, readable)
 
-### 10.4 Proyek Baru dalam Ekosistem Adellhub
+### 10.4 Webpage Stub Adellroute (`adellhub.biz.id/adellroute/`)
+
+- Style file: `adellroute/styles.css`
+- Menerapkan triad warna primer Bauhaus dengan dominasi Cobalt Blue `#1E40AF`
+- Layout teaser minimalis, hero section, grid model AI (4 kartu), arsitektur (3 kartu), dan form waitlist terintegrasi
+
+### 10.5 Proyek Baru dalam Ekosistem Adellhub
 
 Saat membuat proyek baru (kampanye landing page, sub-produk, dll):
 1. Copy token dari Section 9 ke file CSS utama proyek
@@ -413,3 +439,4 @@ Saat membuat proyek baru (kampanye landing page, sub-produk, dll):
 | Versi | Tanggal | Perubahan |
 |-------|---------|-----------|
 | 1.0.0 | 2026-10-06 | Dokumen awal — dipindahkan dari PRD.md v1.4.0 Section 6 (Estetika & Desain). Ditambah: Layout System, Komponen UI, panduan per proyek |
+| 1.1.0 | 2026-10-06 | Tambah token warna Cobalt Blue (`#1E40AF`), varian kartu khusus (Highlight Card Adellroute & Dashed Card More to Come), panduan styling webpage stub Adellroute |

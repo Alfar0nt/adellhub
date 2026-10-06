@@ -1,8 +1,8 @@
 # PRD — Adellhub Landing Page
 
-**Versi Dokumen:** 1.5.0  
+**Versi Dokumen:** 1.6.0  
 **Tanggal:** 2026-10-06  
-**Status:** Live — deploy Cloudflare Pages, seluruh checklist terverifikasi; waitlist via serverless function + notifikasi Telegram  
+**Status:** Live — deploy Cloudflare Pages; mendukung 4 layanan resmi (Adellroute, Adellwork, Adelltech, Adellbooth) + More to Come; serverless waitlist Telegram aktif  
 **Author:** Adellhub Team  
 **Skills yang Direferensikan:** `frontend-design`, `landing-page-generator`, `semantic-html-and-seo`, `find-animation-opportunities`, `svg-icon-generator`
 
@@ -16,12 +16,13 @@
 
 ## 1. Ringkasan Produk
 
-Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holding brand) untuk tiga layanan digital yang saat ini masih dalam tahap pengembangan. Landing page ini bertujuan untuk:
+Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holding brand) untuk empat layanan digital unggulan dan inisiatif masa depan. Landing page ini bertujuan untuk:
 
-1. Memperkenalkan brand Adellhub dan tiga layanan di bawahnya.
-2. Membangun kredibilitas dan kepercayaan calon pengguna.
-3. Mengumpulkan daftar tunggu (waitlist) dari calon pengguna via Cloudflare Pages Functions + notifikasi otomatis ke grup Telegram tim.
-4. Mengarahkan audiens ke kanal sosial media resmi.
+1. Memperkenalkan brand Adellhub dan empat layanan di bawahnya (Adellroute, Adellwork, Adelltech, Adellbooth) serta visi "More to Come".
+2. Menyoroti pengerjaan aktif platform Adellroute sebagai penyedia & router token API AI multi-model hemat biaya.
+3. Membangun kredibilitas dan kepercayaan calon pengguna, developer, dan mitra bisnis.
+4. Mengumpulkan daftar tunggu (waitlist) dari calon pengguna via Cloudflare Pages Functions + notifikasi otomatis ke grup Telegram tim.
+5. Mengarahkan audiens ke kanal sosial media resmi dan halaman rute khusus `/adellroute/`.
 
 ---
 
@@ -29,6 +30,7 @@ Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holdi
 
 | Segmen | Deskripsi |
 |--------|-----------|
+| Developer & AI Builders | Membutuhkan perutean token API AI hemat biaya, latensi rendah, dan kompatibel OpenAI |
 | Mahasiswa / Pelajar IT | Mencari bantuan tugas, proyek, atau mentoring teknis |
 | Pemilik Bisnis Kecil | Membutuhkan service ringan laptop/komputer |
 | Penyelenggara Event | Memerlukan solusi software photobooth |
@@ -38,21 +40,32 @@ Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holdi
 
 ## 3. Layanan yang Ditampilkan
 
-### 3.1 Adellwork by Adellhub
+### 3.1 Adellroute by Adellhub (Featured)
+- **Kategori:** Gateway & Reseller Token API AI
+- **Deskripsi:** Penyedia & Perutean API Token AI Multi-Model (OpenAI, Claude, DeepSeek, Gemini) dengan billing transparan per-token.
+- **Status:** Dalam pengerjaan aktif (**Currently Working** / Early Access)
+- **Pembeda Visual:** Cobalt Blue `#1E40AF`, border tebal 3px, box-shadow Cobalt Blue 6px, badge *Currently Working*.
+
+### 3.2 Adellwork by Adellhub
 - **Kategori:** Asisten & Mentoring IT
 - **Deskripsi:** Bantuan & Mentoring Asisten Tugas IT, Desain, Jaringan
 - **Status:** Dalam pengembangan (Coming Soon)
 - **Catatan:** Gunakan kata "Asisten" atau "Mentoring", bukan "joki"
 
-### 3.2 Adelltech by Adellhub
+### 3.3 Adelltech by Adellhub
 - **Kategori:** Layanan Teknologi / Reparasi
 - **Deskripsi:** Service Ringan & Debloating Laptop/Komputer
 - **Status:** Dalam pengembangan (Coming Soon)
 
-### 3.3 Adellbooth by Adellhub
+### 3.4 Adellbooth by Adellhub
 - **Kategori:** Software Photobooth
 - **Deskripsi:** Platform Software Photobooth All-in-One
 - **Status:** Dalam pengembangan (Coming Soon)
+
+### 3.5 More to Come (Adellhub Ecosystem)
+- **Kategori:** Inovasi Mendatang
+- **Deskripsi:** Kartu penutup geometris putus-putus (*dashed border*) untuk menampung eksplorasi dan usulan ide layanan berikutnya.
+- **Status:** Eksplorasi Terbuka (Future Vision)
 
 ---
 
@@ -79,20 +92,20 @@ Adellhub adalah ekosistem bisnis startup IT yang berfungsi sebagai payung (holdi
 - **Target:** Capture attention dalam ~2.6 detik pertama
 
 ### 4.3 Bagian Layanan (Step 3: Explain Value)
-- Tiga kotak geometris: Adellwork, Adelltech, Adellbooth
-- Tombol "Selengkapnya" → memicu **overlay/modal** (bukan navigasi halaman baru)
-- Isi overlay: Pesan "Layanan ini masih dalam progress" + dua CTA:
-  - **Gabung Waitlist via Email** → membuka modal form email
-  - **@adellhub via Sosial Media** → link Instagram `@adellhub`
-- **CTA copy:** Gunakan value-focused copy ("Gabung Waitlist" bukan "Submit")
+- Grid layanan responsif (2-kolom desktop):
+  - **Adellroute (#1 Featured):** Bentang penuh di baris teratas (`grid-column: 1 / -1`) dengan layout internal 2-kolom, styling Cobalt Blue Bauhaus, dan badge *Currently Working*.
+  - **Adellwork (#2), Adelltech (#3), Adellbooth (#4):** Tiga kartu layanan berbalut palet merah Bauhaus eksisting dengan badge *Coming Soon*.
+  - **More to Come (#5):** Kartu kelima berdesain minimalis garis putus-putus (*dashed*) dengan tombol usulan ide.
+- Tombol "Selengkapnya" → memicu **overlay/modal** detail unit + CTA Waitlist Early Access langsung.
 
 ### 4.4 Portofolio & Rekam Jejak (Step 2: Earn Trust)
-- Grid geometris bergaya Bauhaus
+- Grid geometris bergaya Bauhaus (formasi 2×2 di desktop/tablet, 1-kolom di mobile)
 - Judul: **"REKAM JEJAK KAMI"**
-- Gambar: Placeholder artistik bergaya Bauhaus yang di-generate untuk setiap layanan
-  - Adellbooth: UI mockup software photobooth
-  - Adelltech: Workspace reparasi
+- Empat placeholder artistik SVG orisinal berasio 16:10 (400×250):
+  - Adellroute: Arsitektur neural router token AI (Cobalt Blue + Bauhaus Matrix)
   - Adellwork: Flowchart mentoring
+  - Adelltech: Workspace reparasi laptop
+  - Adellbooth: UI mockup software photobooth
 - **Semua gambar wajib punya atribut `alt` deskriptif** (dari skill `semantic-html-and-seo`)
 
 ### 4.5 Kontak & Footer (Step 5: Make the Ask)
@@ -206,6 +219,7 @@ Ringkasan singkat untuk konteks PRD:
 | 1.3.0 | 2026-09-18 | Status **live** di `https://adellhub.biz.id` (Cloudflare Pages); Functional Checklist terverifikasi; Email Routing & og-image aktif |
 | 1.4.0 | 2026-09-19 | Waitlist via **Cloudflare Pages Functions** (`POST /api/waitlist`) + otomatis kirim notifikasi ke **Telegram grup** (Topics, `adellhub_waitlist_bot`); anti-spam ringan (honeypot + timestamp <2s + length 10KB); security hardening (CORS strict, HTML escaping, input validation & sanitization); fix: support `www.adellhub.biz.id` origin |
 | 1.5.0 | 2026-10-06 | Restrukturisasi dokumentasi `.ai/`: Section 6 (Estetika & Desain) dipindah ke **DESIGN.md**; referensi tech stack diperbarui ke **TRD.md**; tambah link ke **APP-FLOW.md** & **IMPLEMENTATION-PLAN.md** |
+| 1.6.0 | 2026-10-06 | Penambahan layanan Adellroute (AI token reseller) & More to Come; Webpage stub `/adellroute/`; Grid portfolio simetris 2×2 (4 kartu SVG); Update kepatuhan UU PDP & AI Acceptable Use Policy di dokumen legal; Optimasi navbar mobile 46px |
 
 ---
 

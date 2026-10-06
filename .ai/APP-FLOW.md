@@ -1,6 +1,6 @@
 # APP-FLOW — Alur Aplikasi Adellhub
 
-**Versi Dokumen:** 1.0.0  
+**Versi Dokumen:** 1.1.0  
 **Tanggal:** 2026-10-06  
 **Status:** Aktif  
 **Author:** Adellhub Team
@@ -15,11 +15,12 @@
 adellhub.biz.id/
 ├── /                          → Landing Page Utama (SPA)
 │   ├── #hero                  → Hero Section
-│   ├── #services              → Section Layanan
-│   ├── #portfolio             → Section Portofolio
+│   ├── #services              → Section Layanan (Adellroute, Adellwork, Adelltech, Adellbooth, More to Come)
+│   ├── #portfolio             → Section Portofolio (4 kartu geometris)
 │   └── #contact               → Section Kontak & Footer
 │
 ├── /links/                    → Link-in-Bio (halaman terpisah)
+├── /adellroute/               → Webpage Stub Teaser Adellroute (halaman terpisah)
 │
 ├── /privacy-policy.html       → Kebijakan Privasi (halaman statis)
 ├── /terms-of-service.html     → Syarat & Ketentuan (halaman statis)
@@ -82,16 +83,16 @@ Pengguna buka adellhub.biz.id
 ```
 [Section Layanan]
         │
-        ├── Klik "Selengkapnya" pada kartu Adellwork
-        ├── Klik "Selengkapnya" pada kartu Adelltech
-        └── Klik "Selengkapnya" pada kartu Adellbooth
-                │
-                ▼
-        [Overlay Modal "Coming Soon" muncul]
-          - Pesan: "Layanan ini masih dalam progress pengerjaan."
-          - CTA 1: [Gabung Waitlist] ────────────────→ Tutup overlay, buka Waitlist Form
-          - CTA 2: [@adellhub via Sosial Media] ──────→ Buka Instagram @adellhub di tab baru
-          - [X / Klik backdrop / Tekan ESC] ──────────→ Tutup overlay
+        ├── Klik "Selengkapnya" pada Adellroute (#1 Featured)
+        │       └── Buka modal detail Adellroute → [Gabung Waitlist Early Access]
+        ├── Klik "Selengkapnya" pada Adellwork (#2)
+        │       └── Buka modal "Coming Soon" → [Gabung Waitlist via Email]
+        ├── Klik "Selengkapnya" pada Adelltech (#3)
+        │       └── Buka modal "Coming Soon" → [Gabung Waitlist via Email]
+        ├── Klik "Selengkapnya" pada Adellbooth (#4)
+        │       └── Buka modal "Coming Soon" → [Gabung Waitlist via Email]
+        └── Klik "Usulkan Ide / Layanan" pada More to Come (#5)
+                └── Buka modal waitlist dengan konteks usulan layanan baru
 ```
 
 #### 2.1.4 Alur Waitlist Form
@@ -301,12 +302,15 @@ Vite memproses:
   ├── privacy-policy.html   → dist/privacy-policy.html
   ├── terms-of-service.html → dist/terms-of-service.html
   ├── links/index.html      → dist/links/index.html
+  ├── adellroute/index.html → dist/adellroute/index.html
   ├── src/main.js           → dist/assets/main-[hash].js
   ├── src/style.css         → dist/assets/style-[hash].css
   ├── links/script.js       → dist/assets/links-[hash].js
   ├── links/styles.css      → dist/assets/links-[hash].css
+  ├── adellroute/script.js  → dist/assets/adellroute-[hash].js
+  ├── adellroute/styles.css → dist/assets/adellroute-[hash].css
   └── public/*              → dist/* (copy langsung)
-        _headers, favicon.svg, og-image.png, legal.css
+        _headers, favicon.svg, og-image.png, legal.css, header-logo.svg
 
 npm run preview
   → http://localhost:4173 (preview build lokal)
@@ -357,3 +361,4 @@ URL: https://adellhub.biz.id ✅ Live
 | Versi | Tanggal | Perubahan |
 |-------|---------|-----------|
 | 1.0.0 | 2026-10-06 | Dokumen awal — alur lengkap Landing Page, Link-in-Bio, Legal, Backend, Build & Deploy |
+| 1.1.0 | 2026-10-06 | Tambah alur layanan Adellroute & More to Come; sitemap dan build flow multi-page `/adellroute/` |

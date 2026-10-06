@@ -1664,7 +1664,7 @@ section[id] {
 
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 2.5rem);
 }
 
@@ -1760,14 +1760,8 @@ section[id] {
   color: var(--color-gray);
 }
 
-/* Responsive: 3 → 2 → 1 column */
-@media (max-width: 960px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 680px) {
+/* Responsive: 2x2 grid (desktop & tablet) → 1 column (mobile) */
+@media (max-width: 768px) {
   .portfolio-grid {
     grid-template-columns: 1fr;
   }

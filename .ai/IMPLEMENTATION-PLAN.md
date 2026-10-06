@@ -1,8 +1,8 @@
 # IMPLEMENTATION PLAN — Adellhub
 
-**Versi Dokumen:** 1.1.0  
+**Versi Dokumen:** 1.2.0  
 **Tanggal:** 2026-10-06  
-**Status Keseluruhan:** 🟡 **IN PROGRESS** — Pengembangan layanan Adellroute (AI API Token Reseller), layanan More to Come, optimasi top navbar mobile, update portofolio & legal, serta persiapan rilis baru
+**Status Keseluruhan:** 🟢 **COMPLETED** — Seluruh fase implementasi (Phase 10 hingga Phase 15) telah selesai dikerjakan, terverifikasi build & testing, serta seluruh dokumentasi telah diperbarui secara menyeluruh  
 
 > **Dokumen ini mencakup seluruh tracker eksekusi:** Landing Page, Link-in-Bio, Waitlist Telegram, Layanan Baru (Adellroute & More to Come), Legal, dan Dokumentasi.
 
@@ -25,10 +25,10 @@
 |-------|-------|--------|
 | **Mobile Top Navbar Fix** | Phase 10 | ✅ Selesai |
 | **Layanan Adellroute & More to Come** | Phase 11 | ✅ Selesai |
-| **Portofolio & Rekam Jejak Adellroute** | Phase 12 | 🔴 Open |
-| **Sinkronisasi Legal, Metadata & SEO** | Phase 13 | 🔴 Open |
-| **Webpage Stub `/adellroute/`** | Phase 14 | 🔴 Open |
-| **QA, Build & Dokumentasi Akhir** | Phase 15 | 🔴 Open |
+| **Portofolio & Rekam Jejak Adellroute** | Phase 12 | ✅ Selesai |
+| **Sinkronisasi Legal, Metadata & SEO** | Phase 13 | ✅ Selesai |
+| **Webpage Stub `/adellroute/`** | Phase 14 | ✅ Selesai |
+| **QA, Build & Dokumentasi Akhir** | Phase 15 | ✅ Selesai |
 | **Landing Page (Core)** | Phase 0–9 + Post-Launch | ✅ Selesai |
 | **Link-in-Bio** | Phase L-0 – L-6 | ✅ Selesai |
 | **Telegram Waitlist** | Phase T-0 – T-6 | 🟡 Sebagian pending manual deployment |
@@ -38,163 +38,11 @@
 
 ## 🔴 Open Tasks (Belum Dikerjakan / Prioritas Saat Ini)
 
-Tasks diurutkan berdasarkan alur eksekusi dari Phase 10 hingga Phase 15:
+Berikut adalah task yang **belum selesai dan membutuhkan intervensi manual** oleh pemilik/tim:
 
 ---
 
-### 📱 Phase 10: Perbaikan & Optimasi Top Navbar Mobile (Symmetry & Compact Sizing) ✅
-**Tujuan:** Memperbaiki tampilan top navbar di mobile viewport agar simetris vertikal, tidak mepet ke batas atas layar, dan memiliki dimensi yang lebih compact & proporsional.  
-> **Skill Terkait:** [`frontend-design`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/frontend-design/SKILL.md) (komposisi, hierarki visual & dimensi), [`semantic-html-and-seo`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/semantic-html-and-seo/SKILL.md) (aksesibilitas tombol & target sentuh WCAG 2.5.5), [`find-animation-opportunities`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/find-animation-opportunities/SKILL.md) (transisi menu & sticky header).
-
-- [x] **10.1 Analisis & Penyesuaian Dimensi Header Mobile (`src/style.css`):**
-  - [x] Set tinggi `.header-inner` di breakpoint `@media (max-width: 768px)` menjadi `46px` (snug fit membungkus rapi tombol 36px dan logo 32px tanpa ruang kosong berlebih).
-  - [x] Pastikan layout flexbox memiliki `display: flex; align-items: center; justify-content: space-between;` tanpa offset margin/padding asimetris.
-- [x] **10.2 Skalasi Logo & Ikon Header di Mobile:**
-  - [x] Batasi ukuran `.logo-icon` di mobile menjadi `32px × 32px` dengan `display: block` (mengeliminasi whitespace/baseline descender bawaan image inline).
-  - [x] Sesuaikan ukuran teks `.logo-text` di mobile menjadi `var(--text-lg)` (~1.125rem / 18px) agar seimbang dengan logo 32px (`frontend-design`).
-  - [x] Verifikasi gap antara `.logo-icon` dan `.logo-text` proporsional (`gap: var(--space-2)`).
-- [x] **10.3 Presisi Tombol Hamburger Menu Toggle:**
-  - [x] Sesuaikan ukuran `.mobile-menu-toggle` menjadi `36px × 36px` dengan target sentuh ergonomis (`semantic-html-and-seo`).
-  - [x] Sesuaikan dimensi bar garis `.hamburger-line` (lebar 18px, tebal 2px, gap 5px) agar terpusat vertikal dan horizontal secara presisi.
-- [x] **10.4 Verifikasi Drawer & Sticky Scroll Mobile:**
-  - [x] Hilangkan space kosong phantom di bawah navbar dengan menyetel `.mobile-nav` menjadi `display: none` saat tertutup (mencegah padding drawer bocor ke layout kontainer header).
-  - [x] Terapkan animasi fade-in & slide halus saat drawer dibuka (`.mobile-menu-open`).
-  - [x] Pastikan transisi sticky header saat scroll (hide on scroll down, show on scroll up) tetap halus dan tidak glitchy (`find-animation-opportunities`).
-  - [x] Verifikasi build bundle `npm run build` sukses 100%.
-
----
-
-### ⚡ Phase 11: Penambahan Layanan Adellroute (AI API Reseller) & More to Come ✅
-**Tujuan:** Menambahkan 2 layanan baru sehingga total menjadi 4 layanan aktif + 1 layanan "More to Come", dengan highlight khusus untuk Adellroute.  
-> **Skill Terkait:** [`frontend-design`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/frontend-design/SKILL.md) (harmoni triad warna Bauhaus & hierarki kartu), [`svg-icon-generator`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/svg-icon-generator/SKILL.md) (vektor icon geometris 40×40), [`landing-page-generator`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/landing-page-generator/SKILL.md) (penjelasan proposisi nilai & CTA waitlist).
-
-- [x] **11.1 Definisi Desain & Warna Khusus Adellroute (Cobalt Blue Bauhaus):**
-  - [x] Terapkan prinsip triad warna primer Bauhaus dari `frontend-design`: Tambahkan token warna `--color-adellroute: #1E40AF;`, `--color-adellroute-dark: #172554;`, dan `--color-adellroute-subtle: rgba(30, 64, 175, 0.08);`.
-  - [x] Buat varian card `.service-card-highlight` dengan aksen border Cobalt Blue tebal 3px, box-shadow Cobalt Blue 6px, serta badge status **`Currently Working`**.
-- [x] **11.2 Implementasi Card Adellroute (`src/components/services.js`):**
-  - [x] Tempatkan Adellroute sebagai **kartu urutan pertama (#1)** di grid layanan (`landing-page-generator` Step 3: Explain Value).
-  - [x] Rancang geometric SVG icon khas Bauhaus untuk Adellroute mengikuti panduan `svg-icon-generator` (simbol routing node AI, kubus komputasi, dan panah aliran token berwarna Cobalt Blue dengan viewBox `0 0 40 40`).
-  - [x] Label / Eyebrow: `Adellroute by Adellhub`.
-  - [x] Judul: `Penyedia & Perutean API Token AI Multi-Model`.
-  - [x] Deskripsi: Layanan reseller dan router token API AI cerdas. Mendukung berbagai model AI unggulan dengan sistem pembayaran berbasis token transparan (input & output terpisah).
-  - [x] Poin fitur unggulan:
-    - Dukungan multi-model (OpenAI, Anthropic Claude, DeepSeek, Google Gemini).
-    - Penetapan harga transparan per sejuta token (input/output terukur).
-    - Latensi rendah, OpenAI-compatible API, dan pemantauan analitik penggunaan.
-  - [x] Status Badge: `Currently Working` dengan styling Cobalt Blue.
-  - [x] Tombol CTA: `Selengkapnya` (membuka modal detail Adellroute).
-- [x] **11.3 Konfigurasi Modal & Integrasi Waitlist Adellroute (`src/components/services.js` & `src/components/modal.js`):**
-  - [x] Tambahkan konfigurasi `adellroute` ke dalam `serviceModalConfig`:
-    - Title: `Adellroute by Adellhub`
-    - Subtitle: `Penyedia & Gateway API Token AI`
-    - Pesan: Penjelasan bahwa platform perutean token AI sedang dalam pengembangan intensif menuju rilis awal, mengundang developer/bisnis untuk mendaftar waitlist kuota token early access.
-    - CTA 1: `Gabung Waitlist Early Access` → memicu `openWaitlistForm({ service: 'Adellroute' })`.
-    - CTA 2: `@adellhub via Sosial Media`.
-- [x] **11.4 Pertahankan Kartu Eksisting (Adellwork, Adelltech, Adellbooth):**
-  - [x] Posisikan Adellwork sebagai kartu #2, Adelltech sebagai kartu #3, dan Adellbooth sebagai kartu #4.
-  - [x] Tetap gunakan palet merah Bauhaus eksisting dengan badge `Coming Soon`.
-- [x] **11.5 Implementasi Kartu "More to Come" (Inovasi Mendatang):**
-  - [x] Posisikan sebagai kartu ke-5 (#5) penutup di grid layanan.
-  - [x] Gaya visual minimalis Bauhaus (`frontend-design`): border garis putus-putus (`border: 2px dashed var(--color-border);`), latar belakang lembut/transparan.
-  - [x] Ikon geometris Bauhaus tanda tambah `+` (`svg-icon-generator`).
-  - [x] Eyebrow: `Adellhub Ecosystem`.
-  - [x] Judul: `Layanan Mendatang (More to Come)`.
-  - [x] Deskripsi: Ekosistem Adellhub akan terus berekspansi menghadirkan ragam solusi digital dan inovasi teknologi berikutnya sesuai kebutuhan industri.
-  - [x] CTA: Tombol `Usulkan Ide / Layanan` yang membuka modal waitlist/usulan ide.
-- [x] **11.6 Penataan Ulang Layout Grid Layanan (`src/style.css`):**
-  - [x] Perbarui grid `.services-grid` menjadi 2-kolom pada desktop di mana Adellroute membentang penuh di baris atas (`grid-column: 1 / -1`) dengan layout internal 2-kolom seimbang, diikuti 4 kartu lainnya dalam formasi 2×2 simetris tanpa celah kosong.
-  - [x] Pastikan tata letak rapi 1 kolom tumpuk pada tablet & mobile (`@media (max-width: 860px)`).
-
----
-
-### 🎨 Phase 12: Pembaruan Portofolio & Rekam Jejak (Adellroute Bauhaus Showcase)
-**Tujuan:** Menampilkan visualisasi Adellroute di section Rekam Jejak Kami (`#portfolio`).  
-> **Skill Terkait:** [`svg-icon-generator`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/svg-icon-generator/SKILL.md) (pembuatan ilustrasi vektor Bauhaus 400×250), [`semantic-html-and-seo`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/semantic-html-and-seo/SKILL.md) (semantik `<figure>`, `<figcaption>` & deskripsi `alt`), [`frontend-design`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/frontend-design/SKILL.md) (grid portofolio & proporsi visual).
-
-- [ ] **12.1 Pembuatan Grafis SVG Bauhaus Adellroute (`src/assets/images/adellroute-preview.svg`):**
-  - [ ] Buat ilustrasi vektor SVG geometris Bauhaus orisinal dengan rasio aspek standar (400×250) mengikuti panduan `svg-icon-generator`.
-  - [ ] Komposisi grafis: Simbol sentral representasi AI/Neural Router, simpul koneksi API, token input/output, dipadukan dengan aksen geometris Cobalt Blue `#1E40AF`, Merah Bauhaus `#E53935`, dan Charcoal `#1A1A1A`.
-- [ ] **12.2 Integrasi ke Komponen Portofolio (`src/components/portfolio.js`):**
-  - [ ] Import `adellroutePreview` dari `../assets/images/adellroute-preview.svg`.
-  - [ ] Tambahkan item Adellroute ke array `portfolioItems`:
-    - `id: 'adellroute'`
-    - `eyebrow: 'Adellroute by Adellhub'`
-    - `title: 'AI Token Gateway & Routing'`
-    - `desc: 'Arsitektur perutean token multi-model AI dengan billing per-token terukur dan monitoring latensi real-time.'`
-    - `alt`: Teks deskripsi aksesibilitas komprehensif sesuai standar `semantic-html-and-seo` ("Komposisi geometris Bauhaus merepresentasikan arsitektur router token AI Adellroute: simpul neural network terhubung ke aliran data token input dan output dengan aksen biru kobalt").
-- [ ] **12.3 Penyesuaian Grid Portofolio (`src/style.css`):**
-  - [ ] Sesuaikan `.portfolio-grid` untuk menampilkan 4 item secara simetris (2×2 grid di desktop/tablet atau 4 kolom responsif).
-
----
-
-### ⚖️ Phase 13: Pembaruan Legal, Metadata SEO, Schema & Referensi Ekosistem
-**Tujuan:** Memastikan seluruh dokumen hukum, SEO meta tags, Open Graph, dan teks referensi di seluruh proyek mencerminkan 4 layanan resmi.  
-> **Skill Terkait:** [`semantic-html-and-seo`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/semantic-html-and-seo/SKILL.md) (praktik terbaik SEO, meta description 150–160 karakter, validasi Open Graph, JSON-LD schema).
-
-- [ ] **13.1 Pembaruan Kebijakan Privasi (`privacy-policy.html`):**
-  - [ ] Update pengenalan layanan: sebutkan 4 layanan resmi (Adellroute, Adellwork, Adelltech, Adellbooth).
-  - [ ] Tambahkan ketentuan pemrosesan data Adellroute:
-    - Pengolahan prompt AI dan logging penggunaan token.
-    - Penegasan bahwa Adellroute tidak menggunakan data prompt/input pengguna untuk melatih model AI pihak ketiga.
-    - Kebijakan penyimpanan metadata transaksi dan kepatuhan terhadap UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP).
-- [ ] **13.2 Pembaruan Syarat & Ketentuan (`terms-of-service.html`):**
-  - [ ] Update Seksi 02 (Deskripsi Layanan): Cantumkan Adellroute sebagai penyedia layanan router & reseller token AI.
-  - [ ] Tambahkan klausul *Acceptable Use Policy* (Kebijakan Penggunaan Wajar) khusus API AI: larangan penggunaan untuk aktivitas ilegal, penipuan, malware, atau konten yang melanggar hukum.
-- [ ] **13.3 Pembaruan Metadata Landing Page Utama (`index.html`):**
-  - [ ] Update `<meta name="description">` (150–160 char) dan `<meta name="keywords">` menyertakan Adellroute dan reseller token AI (`semantic-html-and-seo`).
-  - [ ] Update Open Graph tags (`og:description`) dan Twitter Card (`twitter:description`).
-  - [ ] Update JSON-LD Structured Data Schema (`Organization`) menambahkan Adellroute pada deskripsi entitas bisnis tanpa trailing comma.
-- [ ] **13.4 Pembaruan Halaman Link-in-Bio (`links/index.html`):**
-  - [ ] Update bio description: `Ekosistem bisnis startup IT: Adellroute, Adellwork, Adelltech, dan Adellbooth.`
-- [ ] **13.5 Pembaruan Aset Visual Brand (`docs/og-image.svg`):**
-  - [ ] Update teks daftar layanan pada SVG OG image menjadi: `Adellroute · Adellwork · Adelltech · Adellbooth`.
-
----
-
-### 🌐 Phase 14: Pembuatan Webpage Stub `/adellroute/` & Konfigurasi Build
-**Tujuan:** Menyediakan landasan rute `/adellroute/` di repositori sebagai persiapan untuk pengembangan laman penuh di fase berikutnya.  
-> **Skill Terkait:** [`landing-page-generator`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/landing-page-generator/SKILL.md) (struktur landing page & alur konversi waitlist), [`semantic-html-and-seo`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/semantic-html-and-seo/SKILL.md) (semantik HTML5, single H1, canonical URL), [`frontend-design`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/frontend-design/SKILL.md) (gaya visual konsisten Bauhaus).
-
-- [ ] **14.1 Pembuatan Struktur Folder & Dokumen HTML (`adellroute/index.html`):**
-  - [ ] Buat halaman stub minimalis bergaya Bauhaus dengan title "Adellroute — Reseller & Gateway Token AI | Adellhub".
-  - [ ] Hero section singkat mengenai Adellroute dan status *In Development / Early Access* (`landing-page-generator` Step 1 & 4).
-  - [ ] Teaser model yang akan didukung (OpenAI, Claude, DeepSeek, Gemini).
-  - [ ] Komponen form waitlist langsung atau tombol trigger modal waitlist terintegrasi (`POST /api/waitlist`).
-  - [ ] Tautan kembali ke beranda utama Adellhub (`/`).
-- [ ] **14.2 Konfigurasi Multi-Page Rollup Vite (`vite.config.js`):**
-  - [ ] Daftarkan entry point `adellroute: resolve(__dirname, 'adellroute/index.html')` di bagian `build.rollupOptions.input` agar Vite mem-build halaman ini secara otomatis ke `dist/adellroute/index.html`.
-
----
-
-### 🧪 Phase 15: QA, Testing, Build Verification & Update Dokumentasi Lengkap
-**Tujuan:** Memvalidasi seluruh kode bebas error, performa prima, dan memperbarui seluruh berkas dokumentasi proyek.  
-> **Skill Terkait:** [`find-animation-opportunities`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/find-animation-opportunities/SKILL.md) (audit kehalusan motion & preferensi `prefers-reduced-motion`), [`semantic-html-and-seo`](file:///run/media/frank/Data/github-repo/adellhub/.agents/skills/semantic-html-and-seo/SKILL.md) (audit aksesibilitas, heading & meta tags).
-
-- [ ] **15.1 Verifikasi Build & Linting:**
-  - [ ] Jalankan `npm run build` dan pastikan seluruh halaman (`/`, `/links/`, `/adellroute/`, `/privacy-policy.html`, `/terms-of-service.html`) ter-bundle sempurna tanpa error.
-  - [ ] Periksa ukuran bundle dan pastikan tidak ada aset yang hilang atau broken link.
-- [ ] **15.2 Pengujian Fungsionalitas & Responsivitas:**
-  - [ ] Verifikasi tampilan top navbar mobile (proporsi 52px, logo 32px, tombol 36px, alignment vertikal presisi di berbagai ukuran layar).
-  - [ ] Verifikasi interaksi modal untuk Adellroute dan pengiriman waitlist context `{ service: 'Adellroute' }`.
-  - [ ] Verifikasi kepatuhan `prefers-reduced-motion` pada seluruh animasi baru (`find-animation-opportunities`).
-  - [ ] Verifikasi fallback dan link navigasi.
-- [ ] **15.3 Pembaruan Dokumentasi .ai/:**
-  - [ ] Update `.ai/PRD.md` (Versi 1.6.0 — masukkan Adellroute & More to Come, target audiens developer/AI builder).
-  - [ ] Update `.ai/DESIGN.md` (Dokumentasikan token warna Cobalt Blue `#1E40AF` dan gaya kartu highlight & dashed card).
-  - [ ] Update `.ai/TRD.md` (Perbarui arsitektur multi-page build dengan tambahan route `/adellroute/`).
-  - [ ] Update `.ai/APP-FLOW.md` (Perbarui diagram alur layanan & waitlist routing).
-- [ ] **15.4 Pembaruan Berkas Publik & Catatan Rilis:**
-  - [ ] Update `README.md` dengan deskripsi ekosistem 4 layanan, rute baru, dan status pengerjaan Adellroute.
-  - [ ] Update `docs/CHANGELOG.md` mencatat rilis versi terbaru lengkap dengan seluruh poin perubahan.
-  - [ ] Tandai task selesai di `IMPLEMENTATION-PLAN.md`.
-
----
-
-### 🚀 Tasks Pending Tim (Deployment & Release)
-
-Tasks berikut tetap dicatat sebagai item pending yang membutuhkan intervensi manual oleh pemilik/tim:
-
-### Telegram — Deployment & E2E Production (dari Phase T-5)
+### 🚀 Telegram — Deployment & E2E Production (dari Phase T-5)
 
 - [ ] **Deploy ke Cloudflare Pages (production):**
   - [ ] Push ke branch `develop` → merge ke `main`
@@ -213,12 +61,12 @@ Tasks berikut tetap dicatat sebagai item pending yang membutuhkan intervensi man
 - [ ] **Test network error (manual browser):** Matikan jaringan → cek fallback `mailto:` tampil di modal
 - [ ] **Merge ke `main`** setelah semua test pass
 
-### Telegram — Dokumentasi Cleanup (dari Phase T-6)
+### 🧹 Telegram — Dokumentasi Cleanup (dari Phase T-6)
 
 - [ ] Hapus referensi `mailto:` yang tidak terpakai lagi di kode (kecuali fallback text)
 - [ ] Verifikasi tidak ada secret/token yang ter-commit ke repo
 
-### Landing Page — Git Release (dari Phase 9)
+### 🏷️ Landing Page — Git Release (dari Phase 9)
 
 - [ ] **Commit semua perubahan** dengan pesan commit yang deskriptif — **dilakukan manual oleh tim**
 - [ ] **Tag git release: `v1.0.0`** — **dilakukan manual oleh tim**
@@ -228,6 +76,93 @@ Tasks berikut tetap dicatat sebagai item pending yang membutuhkan intervensi man
 ## ✅ Completed Tasks
 
 Tasks yang sudah selesai, **diurutkan dari yang paling baru ke paling lama** (terbaru di atas).
+
+---
+
+### 🧪 Phase 15: QA, Testing, Build Verification & Update Dokumentasi Lengkap ✅
+**Tanggal:** 2026-10-06 | **Versi:** v1.1.0
+
+- [x] **15.1 Verifikasi Build & Linting:**
+  - [x] Jalankan `npm run build` dan pastikan seluruh halaman (`/`, `/links/`, `/adellroute/`, `/privacy-policy.html`, `/terms-of-service.html`) ter-bundle sempurna tanpa error.
+  - [x] Periksa ukuran bundle dan pastikan tidak ada aset yang hilang atau broken link.
+- [x] **15.2 Pengujian Fungsionalitas & Responsivitas:**
+  - [x] Verifikasi tampilan top navbar mobile (proporsi 52px/46px, logo 32px, tombol 36px, alignment vertikal presisi di berbagai ukuran layar).
+  - [x] Verifikasi interaksi modal untuk Adellroute dan pengiriman waitlist context `{ service: 'Adellroute' }`.
+  - [x] Verifikasi kepatuhan `prefers-reduced-motion` pada seluruh animasi baru.
+  - [x] Verifikasi fallback dan link navigasi.
+- [x] **15.3 Pembaruan Dokumentasi .ai/:**
+  - [x] Update `.ai/PRD.md` (Versi 1.6.0 — masukkan Adellroute & More to Come, target audiens developer/AI builder).
+  - [x] Update `.ai/DESIGN.md` (Dokumentasikan token warna Cobalt Blue `#1E40AF` dan gaya kartu highlight & dashed card).
+  - [x] Update `.ai/TRD.md` (Perbarui arsitektur multi-page build dengan tambahan route `/adellroute/`).
+  - [x] Update `.ai/APP-FLOW.md` (Perbarui diagram alur layanan & waitlist routing).
+- [x] **15.4 Pembaruan Berkas Publik & Catatan Rilis:**
+  - [x] Update `README.md` dengan deskripsi ekosistem 4 layanan, rute baru, dan status pengerjaan Adellroute.
+  - [x] Update `docs/CHANGELOG.md` mencatat rilis versi terbaru lengkap dengan seluruh poin perubahan.
+  - [x] Tandai task selesai di `IMPLEMENTATION-PLAN.md`.
+
+---
+
+### 🌐 Phase 14: Pembuatan Webpage Stub `/adellroute/` & Konfigurasi Build ✅
+**Tanggal:** 2026-10-06 | **Versi:** v1.1.0
+
+- [x] **14.1 Pembuatan Struktur Folder & Dokumen HTML (`adellroute/index.html`):**
+  - [x] Buat halaman stub minimalis bergaya Bauhaus dengan title "Adellroute — Reseller & Gateway Token AI | Adellhub".
+  - [x] Hero section singkat mengenai Adellroute dan status *In Development / Early Access*.
+  - [x] Teaser model yang akan didukung (OpenAI, Claude, DeepSeek, Gemini).
+  - [x] Komponen form waitlist langsung atau tombol trigger modal waitlist terintegrasi (`POST /api/waitlist`).
+  - [x] Tautan kembali ke beranda utama Adellhub (`/`).
+- [x] **14.2 Konfigurasi Multi-Page Rollup Vite (`vite.config.js`):**
+  - [x] Daftarkan entry point `adellroute: fileURLToPath(new URL('./adellroute/index.html', import.meta.url))` di bagian `build.rollupOptions.input` agar Vite mem-build halaman ini secara otomatis ke `dist/adellroute/index.html`.
+
+---
+
+### ⚖️ Phase 13: Pembaruan Legal, Metadata SEO, Schema & Referensi Ekosistem ✅
+**Tanggal:** 2026-10-06 | **Versi:** v1.1.0
+
+- [x] **13.1 Pembaruan Kebijakan Privasi (`privacy-policy.html`):**
+  - [x] Update pengenalan layanan: sebutkan 4 layanan resmi (Adellroute, Adellwork, Adelltech, Adellbooth).
+  - [x] Tambahkan ketentuan pemrosesan data Adellroute (prompt AI, logging token, kepatuhan UU PDP).
+- [x] **13.2 Pembaruan Syarat & Ketentuan (`terms-of-service.html`):**
+  - [x] Update Seksi 02 (Deskripsi Layanan): Cantumkan Adellroute sebagai penyedia layanan router & reseller token AI.
+  - [x] Tambahkan klausul *Acceptable Use Policy* khusus API AI.
+- [x] **13.3 Pembaruan Metadata Landing Page Utama (`index.html`):**
+  - [x] Update `<meta name="description">`, `<meta name="keywords">`, Open Graph tags, Twitter Card.
+  - [x] Update JSON-LD Structured Data Schema (`Organization`) menambahkan Adellroute.
+- [x] **13.4 Pembaruan Halaman Link-in-Bio (`links/index.html`):**
+  - [x] Update bio description: `Ekosistem bisnis startup IT: Adellroute, Adellwork, Adelltech, dan Adellbooth.`
+- [x] **13.5 Pembaruan Aset Visual Brand (`docs/og-image.svg`):**
+  - [x] Update teks daftar layanan pada SVG OG image menjadi: `Adellroute · Adellwork · Adelltech · Adellbooth`.
+
+---
+
+### 🎨 Phase 12: Pembaruan Portofolio & Rekam Jejak (Adellroute Bauhaus Showcase) ✅
+**Tanggal:** 2026-10-06 | **Versi:** v1.1.0
+
+- [x] **12.1** Buat `src/assets/images/adellroute-preview.svg` — ilustrasi vektor Bauhaus geometris (400×250), Cobalt Blue `#1E40AF` + Merah `#E53935` + Charcoal `#1A1A1A`.
+- [x] **12.2** Import & tambahkan item Adellroute ke `portfolioItems` di `src/components/portfolio.js` (id, eyebrow, title, desc, alt aksesibel).
+- [x] **12.3** Sesuaikan `.portfolio-grid` di `src/style.css` menjadi 2×2 grid simetris di desktop.
+
+---
+
+### ⚡ Phase 11: Penambahan Layanan Adellroute (AI API Reseller) & More to Come ✅
+**Tanggal:** 2026-10-06 | **Versi:** v1.1.0
+
+- [x] **11.1** Tambah token warna `--color-adellroute: #1E40AF;`, `--color-adellroute-dark`, `--color-adellroute-subtle` di CSS.
+- [x] **11.2** Implementasi card Adellroute (kartu #1) di `src/components/services.js` — SVG icon, label, deskripsi, fitur unggulan, badge `Currently Working`, CTA modal.
+- [x] **11.3** Konfigurasi modal & waitlist Adellroute di `serviceModalConfig`.
+- [x] **11.4** Pertahankan kartu Adellwork (#2), Adelltech (#3), Adellbooth (#4).
+- [x] **11.5** Implementasi kartu "More to Come" (#5) — dashed border, ikon `+`, CTA usulan ide.
+- [x] **11.6** Perbarui grid `.services-grid` — Adellroute `grid-column: 1 / -1` di baris atas, 4 kartu lainnya 2×2.
+
+---
+
+### 📱 Phase 10: Perbaikan & Optimasi Top Navbar Mobile ✅
+**Tanggal:** 2026-10-06 | **Versi:** v1.1.0
+
+- [x] **10.1** Set tinggi `.header-inner` → `46px` di `@media (max-width: 768px)`, flexbox simetris.
+- [x] **10.2** Skalasi `.logo-icon` → `32px × 32px`, `.logo-text` → `var(--text-lg)`, gap proporsional.
+- [x] **10.3** Sesuaikan `.mobile-menu-toggle` → `36px × 36px`; hamburger lines 18px × 2px, gap 5px.
+- [x] **10.4** Fix phantom space drawer, animasi fade-in & slide halus, verifikasi sticky scroll.
 
 ---
 

@@ -1,7 +1,7 @@
 # TRD — Technical Requirements Document
 
 **Nama Dokumen:** Technical Requirements Document (TRD)  
-**Versi Dokumen:** 2.0.0  
+**Versi Dokumen:** 2.1.0  
 **Tanggal:** 2026-10-06  
 **Sebelumnya:** `TECH-STACK.md` v1.3.0  
 **Author:** Adellhub Team
@@ -78,6 +78,10 @@ adellhub/
 │   ├── index.html          # Profil + kartu link (rendered via script.js)
 │   ├── styles.css          # Bauhaus — tokens sama dgn halaman utama (ikuti DESIGN.md)
 │   └── script.js           # ES module: config LINKS + ikon glyph inline
+├── adellroute/             # Teaser Webpage Stub → /adellroute/ (multi-page entry `adellroute`)
+│   ├── index.html          # Hero, showcase model AI, form waitlist terintegrasi
+│   ├── styles.css          # Styling Bauhaus khusus dominasi Cobalt Blue #1E40AF
+│   └── script.js           # Form waitlist submit ke POST /api/waitlist
 ├── vite.config.js          # Konfigurasi Vite (rollupOptions.input untuk multi-page)
 ├── package.json
 └── README.md
@@ -147,7 +151,7 @@ Daftar skills yang digunakan AI Agent selama pengerjaan:
 | Output Dir | `dist/` |
 | Dev Command | `npm run dev` |
 | Dev + Serverless | `npm run dev:pages` (build + `wrangler pages dev dist`) |
-| Build Config | Multi-page: `index.html` + `privacy-policy.html` + `terms-of-service.html` + `links/index.html` |
+| Build Config | Multi-page: `index.html` + `privacy-policy.html` + `terms-of-service.html` + `links/index.html` + `adellroute/index.html` |
 | Security Headers | `public/_headers` → otomatis diterapkan Cloudflare Pages ke seluruh route |
 | Email | Cloudflare Email Routing **aktif**: `waitlist@adellhub.biz.id` & `hello@adellhub.biz.id` → email pribadi |
 
@@ -234,3 +238,4 @@ Daftar skills yang digunakan AI Agent selama pengerjaan:
 | 1.2.0 | 2026-09-18 | Tambah legal pages, multi-page Vite config |
 | 1.3.0 | 2026-09-19 | Tambah wrangler devDependency, script dev:pages, serverless architecture |
 | 2.0.0 | 2026-10-06 | Rename TECH-STACK.md → TRD.md; bagian Design Tokens dipindah ke DESIGN.md; tambah seksi Serverless Architecture, Security Features |
+| 2.1.0 | 2026-10-06 | Multi-page Rollup input untuk `/adellroute/` teaser stub; penambahan struktur berkas `adellroute/` (index.html, styles.css, script.js) |

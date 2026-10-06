@@ -58,7 +58,7 @@
   <rect x="60" y="268" width="46" height="5" fill="#D2251C"/>
 
   <!-- Services line -->
-  <text x="60" y="320" font-family="'Inter', 'Space Grotesk', sans-serif" font-size="28" font-weight="400" fill="#757575">Adellwork · Adelltech · Adellbooth</text>
+  <text x="60" y="320" font-family="'Inter', 'Space Grotesk', sans-serif" font-size="24" font-weight="400" fill="#757575">Adellroute · Adellwork · Adelltech · Adellbooth</text>
 
   <!-- URL -->
   <rect x="60" y="534" width="16" height="16" fill="#D2251C"/>

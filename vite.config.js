@@ -13,6 +13,7 @@ export default defineConfig({
         privacy: fileURLToPath(new URL('./privacy-policy.html', import.meta.url)),
         terms: fileURLToPath(new URL('./terms-of-service.html', import.meta.url)),
         links: fileURLToPath(new URL('./links/index.html', import.meta.url)),
+        adellroute: fileURLToPath(new URL('./adellroute/index.html', import.meta.url)),
       },
     },
   },

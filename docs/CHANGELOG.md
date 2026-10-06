@@ -45,6 +45,22 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ## [1.5.0] — 2026-10-06
 
+### Added (Phase 14 — Webpage Stub Teaser /adellroute/)
+- **Halaman Stub Mandiri `/adellroute/`:**
+  - Pembuatan entry point `adellroute/index.html` bergaya Bauhaus sebagai teaser platform sebelum pemindahan ke domain/subdomain khusus.
+  - Hero section, showcase 4 model AI unggulan (OpenAI, Claude, DeepSeek, Gemini), dan 3 pilar arsitektur skalabel.
+  - Form pendaftaran waitlist Early Access terintegrasi langsung ke endpoint serverless `POST /api/waitlist` dengan state loading, honeypot anti-spam, dan fallback mailto.
+  - Stylesheet modular `adellroute/styles.css` dan script `adellroute/script.js`.
+  - Konfigurasi multi-page Rollup Vite di `vite.config.js` mendaftarkan `adellroute: fileURLToPath(new URL('./adellroute/index.html', import.meta.url))`.
+
+### Added (Phase 12 — Showcase Rekam Jejak Adellroute)
+- **Aset Vektor Bauhaus Adellroute (`src/assets/images/adellroute-preview.svg`):**
+  - Ilustrasi vektor geometris Bauhaus orisinal (viewBox 400×250) menggambarkan arsitektur gateway token AI: ingress stream, central neural matrix core (Cobalt Blue `#1E40AF`), dan percabangan multi-model egress.
+- **Integrasi Komponen Portofolio (`src/components/portfolio.js`):**
+  - Penambahan Adellroute sebagai item pertama di Rekam Jejak Kami lengkap dengan semantik caption dan alt text aksesibilitas.
+- **Tata Letak Grid Portofolio Simetris (`src/style.css`):**
+  - Penataan `.portfolio-grid` menjadi formasi 2×2 simetris di desktop & tablet, dan responsif 1 kolom di mobile (`@media (max-width: 768px)`).
+
 ### Added (Phase 11 — Layanan Baru: Adellroute & More to Come)
 - **Layanan Adellroute (AI API Token Reseller):**
   - Ditambahkan sebagai kartu layanan sorotan utama (#1 featured card) di grid Layanan Kami (`#services`).
@@ -57,6 +73,20 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
   - Desain minimalis Bauhaus berlatar transparan lembut dengan border garis putus-putus (`2px dashed var(--color-border)`), ikon Bauhaus `+`, badge `Future Vision`, dan tombol usulan ide layanan.
 - **Layout Grid Responsif Layanan:**
   - Layout desktop diubah menjadi 2-kolom seimbang di mana kartu Adellroute membentang penuh di baris teratas (`grid-column: 1 / -1`) dengan layout internal 2-kolom, diikuti 4 kartu lainnya dalam formasi 2×2 simetris tanpa slot kosong.
+
+### Changed (Phase 13 — Sinkronisasi Legal, Metadata SEO, Schema & Referensi Ekosistem)
+- **Kebijakan Privasi (`privacy-policy.html`):**
+  - Pembaruan pengenalan 4 layanan resmi (Adellroute, Adellwork, Adelltech, Adellbooth).
+  - Ketentuan pencatatan metadata teknis transaksi token perutean API.
+  - Penegasan komitmen *No AI Training* (prompt pengguna tidak pernah digunakan untuk melatih model pihak ketiga).
+  - Kepatuhan tata kelola data terhadap UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP).
+- **Syarat & Ketentuan (`terms-of-service.html`):**
+  - Pembaruan deskripsi 4 unit layanan resmi.
+  - Penambahan klausul Kebijakan Penggunaan Wajar (*Acceptable Use Policy* / AUP) khusus API AI Adellroute.
+- **Metadata SEO & Schema (`index.html`):**
+  - Optimasi meta description (158 karakter, keyword-first), meta keywords, Open Graph, Twitter Card, dan JSON-LD Organization schema.
+- **Link-in-Bio & Brand SVG:**
+  - Update bio description di `links/index.html` dan baris teks layanan di `docs/og-image.svg`.
 
 ### Fixed (Phase 10 — Top Navbar Mobile Symmetry & Compact Sizing)
 - **Eliminasi Ruang Kosong (Phantom Space):** Memperbaiki `#mobile-nav` dengan menyetel `display: none` saat tertutup sehingga padding drawer tidak lagi bocor ke dalam kontainer header dan menggelembungkan background navbar di mobile.

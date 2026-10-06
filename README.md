@@ -1,6 +1,6 @@
 # adellhub
 
-Landing page satu halaman untuk Adellhub — ekosistem startup IT (Adellwork, Adelltech, Adellbooth). Dibangun dengan Vite + Vanilla JS, desain Bauhaus. Termasuk halaman **link-in-bio** di **`https://adellhub.biz.id/links/`**.
+Landing page satu halaman untuk Adellhub — ekosistem startup IT (Adellroute, Adellwork, Adelltech, Adellbooth) serta inisiatif masa depan. Dibangun dengan Vite + Vanilla JS, desain Bauhaus. Termasuk halaman **link-in-bio** di **`https://adellhub.biz.id/links/`** dan webpage stub **Adellroute** di **`https://adellhub.biz.id/adellroute/`**.
 
 **🔴 Live:** https://adellhub.biz.id (Cloudflare Pages, custom domain).
 
@@ -31,7 +31,7 @@ npm run preview    # preview build → http://localhost:4173
 
 ## Deployment — Cloudflare Pages
 
-Landing page ini statis (SPA + halaman legal + link-in-bio), di-build ke folder `dist/`, dan di-deploy ke **Cloudflare Pages**. **Status: sudah live** di `https://adellhub.biz.id` (Git integration + custom domain). Instruksi di bawah sebagai referensi untuk setup serupa atau re-deploy.
+Landing page ini statis (SPA + halaman legal + link-in-bio + webpage stub Adellroute), di-build ke folder `dist/`, dan di-deploy ke **Cloudflare Pages**. **Status: sudah live** di `https://adellhub.biz.id` (Git integration + custom domain). Instruksi di bawah sebagai referensi untuk setup serupa atau re-deploy.
 
 ### Via Git Integration (Recommended)
 
@@ -158,7 +158,11 @@ adellhub/
 │   ├── index.html
 │   ├── styles.css              # Bauhaus (tokens sama dgn halaman utama)
 │   └── script.js               # ES module: config LINKS + ikon glyph inline
-└── vite.config.js              # Vite config (multi-page input: main, privacy, terms, links)
+├── adellroute/                 # Teaser Webpage Stub → /adellroute/ (Vite entry `adellroute`)
+│   ├── index.html              # Hero, model showcase, integrated waitlist form
+│   ├── styles.css              # Bauhaus styling (aksen Cobalt Blue #1E40AF)
+│   └── script.js               # Submit waitlist via POST /api/waitlist
+└── vite.config.js              # Vite config (multi-page input: main, privacy, terms, links, adellroute)
 ```
 
 ## Tech Stack
