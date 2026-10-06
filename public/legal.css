@@ -59,6 +59,11 @@ img, svg {
   z-index: 10;
   background-color: #F5F0E8;
   border-bottom: 2px solid #1A1A1A;
+  transition: transform 0.2s ease-out;
+}
+
+.legal-topbar.legal-topbar-hidden {
+  transform: translateY(-100%);
 }
 
 .legal-topbar-inner {

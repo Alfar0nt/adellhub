@@ -111,5 +111,21 @@
     <footer class="legal-footer">
       <div class="legal-footer-inner">© 2026 Adellhub. All rights reserved.</div>
     </footer>
+    <script>
+      (function () {
+        var header = document.querySelector('.legal-topbar');
+        if (!header) return;
+        var lastY = window.scrollY;
+        window.addEventListener('scroll', function () {
+          var y = window.scrollY;
+          if (y > lastY && y > 120) {
+            header.classList.add('legal-topbar-hidden');
+          } else {
+            header.classList.remove('legal-topbar-hidden');
+          }
+          lastY = y;
+        }, { passive: true });
+      })();
+    </script>
   </body>
 </html>

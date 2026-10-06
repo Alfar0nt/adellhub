@@ -59,15 +59,15 @@ export function initHeader() {
   `;
 
   // Attach Sticky scroll behavior
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
   let lastScrollY = window.scrollY;
 
   const handleScroll = () => {
     const currentY = window.scrollY;
     header.classList.toggle('header-scrolled', currentY > 50);
 
-    // Hide header on scroll down (mobile only), reveal on scroll up
-    if (isMobile && !header.classList.contains('mobile-menu-open')) {
+    // Hide header on scroll down (all viewports), reveal on scroll up
+    if (!header.classList.contains('mobile-menu-open')) {
       if (currentY > lastScrollY && currentY > 120) {
         header.classList.add('header-hidden');
       } else {

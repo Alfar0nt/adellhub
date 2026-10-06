@@ -45,6 +45,19 @@ Form waitlist mengirim ke **`waitlist@adellhub.biz.id`** dan section kontak ke *
 
 ## [1.5.0] — 2026-10-06
 
+### Fixed & Changed (Header — Auto-hide Navbar di Semua Viewport & Halaman Legal)
+- **Bug Fix — Auto-hide Tidak Aktif di Desktop (`src/style.css`):**
+  - `.site-header.header-hidden` dan rule `transform` sebelumnya terkurung di dalam `@media (max-width: 768px)` sehingga tidak berefek di desktop/tablet.
+  - Rule `transform: translateY(-100%)` dan `transition: ... transform` dipindah ke scope global agar aktif di semua ukuran layar.
+- **Auto-hide Navbar Diperluas ke Semua Viewport (`src/components/header.js`):**
+  - Guard `isMobile` dihapus dari scroll handler; auto-hide kini berlaku di desktop, tablet, dan mobile.
+  - Header tersembunyi setelah scroll ke bawah > 120px, kembali muncul saat scroll ke atas.
+- **Auto-hide Topbar di Halaman Legal (`privacy-policy.html`, `terms-of-service.html`, `public/legal.css`):**
+  - Topbar `.legal-topbar` di halaman Kebijakan Privasi dan Syarat & Ketentuan kini juga auto-hide saat scroll ke bawah dan muncul kembali saat scroll ke atas — konsisten di mobile maupun desktop.
+  - Ditambahkan `transition: transform 0.2s ease-out` dan class `.legal-topbar-hidden` di `legal.css`.
+  - Inline scroll handler IIFE ditambahkan sebelum `</body>` di masing-masing halaman legal.
+
+
 ### Added (Phase 14 — Webpage Stub Teaser /adellroute/)
 - **Halaman Stub Mandiri `/adellroute/`:**
   - Pembuatan entry point `adellroute/index.html` bergaya Bauhaus sebagai teaser platform sebelum pemindahan ke domain/subdomain khusus.
